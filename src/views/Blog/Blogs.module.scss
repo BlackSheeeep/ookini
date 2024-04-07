@@ -1,0 +1,14 @@
+.listItem {
+    min-width: 80rem;
+    display: block;
+}
+.container {
+    width: 100rem;
+    margin-bottom: 2rem;
+}
+
+@media screen and (max-width: $mobile-width) {
+    .container {
+        margin-bottom: 4rem;
+    }
+}

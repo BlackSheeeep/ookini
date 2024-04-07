@@ -1,0 +1,57 @@
+.image {
+}
+.tag {
+    margin-bottom: 1rem;
+}
+.container {
+   width: 100%;
+   padding: 0 10rem;
+   :global {
+    .ant-divider {
+        margin-top: 0;
+    }
+   }
+}
+.rent {
+    margin-top: 4rem;
+}
+.icon {
+    margin-right: 1rem;
+    margin-top: 1rem;
+}
+.rentContent {
+    margin: 1rem;
+}
+.gallery {
+    margin-top: 4rem;
+    &:last-child {
+        margin-bottom: 4rem;
+    }
+}
+.imgWrapper {
+    border-radius: $border-radius;
+    margin: 2rem;
+    width: 20rem;
+    overflow: hidden;
+    :global {
+        .ant-image-img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
+.galleryImage {
+}
+.faq{
+    margin: 1rem;
+}
+@media screen and (max-width: $mobile-width) {
+    .container {
+        padding: 0 2rem;
+    }
+    .imgWrapper {
+        width: 25rem;
+        margin: 2rem 0;
+        border-radius: 10px;
+    }
+}

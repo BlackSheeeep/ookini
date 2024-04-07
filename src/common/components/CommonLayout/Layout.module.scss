@@ -1,0 +1,57 @@
+.header {
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    display: flex;
+    width: $full-screen-width;
+}
+.content {
+    min-height: 100vh;
+}
+.logo {
+    width: 15rem !important;
+    display: flex;
+    background-color: transparent;
+    align-items: center;
+}
+
+.headerContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+}
+.headerButton {
+    border-radius: 20px !important;
+    min-width: 120px
+}
+.footer {
+    width: $full-screen-width;
+    .footerContent {
+        color: white;
+       font-size: 14px;
+        font-family: ヒラギノ角ゴシック pro,hiragino kaku gothic pro,メイリオ,Meiryo,Osaka,ＭＳ Ｐゴシック,ms pgothic,brandon-grotesque,sans-serif,noto sans jp;
+    }
+}
+
+.container {
+    width: 100rem;
+    height: fit-content;
+    :global {
+        .ant-flex {
+            height: unset !important;
+        }
+    }
+}
+@media screen and (max-width: $mobile-width) {
+    .logo {
+        width: 50rem !important;
+    }
+    
+    .headerContent {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

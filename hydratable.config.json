@@ -1,0 +1,13 @@
+{
+  "crawlingUrls": [
+    "/home",
+    "/feePlanDetail",
+    "/storeDetail",
+    "/gallery",
+    "/newsroom",
+    "/blogs"
+  ],
+  "pageCount": 6,
+  "webroot": "ookini-production/build",
+  "delay": 30000
+}

@@ -1,0 +1,83 @@
+.listContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.container {
+  width: min(100%, $full-screen-width);
+  :global {
+    .title .ant-typography-secondary {
+      margin-bottom: 0;
+    }
+  }
+}
+.list {
+  // margin: 0 2rem;
+  width: 100%;
+}
+.listItem {
+  display: flex;
+  justify-content: center !important;
+}
+
+.card {
+  margin: 0 2rem;
+}
+.tabs {
+  width: 100%;
+}
+.cardContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.toDetail {
+  margin-top: 2rem;
+}
+.galleryTitle {
+  text-align: center;
+  margin-top: 0;
+}
+@media screen and (max-width: $mobile-width) {
+  .listContainer {
+    flex-direction: column;
+  }
+  .galleryImage {
+    border-radius: $mobile-border-radius;
+  }
+  .tabs {
+    width: min(100%, 100rem);
+    padding: 0 2rem;
+    :global {
+      .ant-tabs-nav-wrap {
+      }
+      .ant-tabs-tab {
+        margin-left: 1rem;
+      }
+    }
+  }
+  .card {
+    margin: 0 3rem;
+    padding: 2rem !important;
+  }
+  .galleryCard {
+    margin: 0 3rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    :global {
+      .ant-card-body {
+        padding-top: 4rem;
+      }
+    }
+  }
+  .miniList {
+    width:100%;
+    // max-height: 120rem;
+    // overflow: scroll;
+  }
+
+  .container {
+    padding: 0 3rem;
+
+  }
+}

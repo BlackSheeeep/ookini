@@ -1,0 +1,3 @@
+[submodule "ookini-production"]
+	path = ookini-production
+	url = git@jihulab.com:noob1/ookini-production.git

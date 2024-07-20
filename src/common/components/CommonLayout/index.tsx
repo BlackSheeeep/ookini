@@ -26,7 +26,7 @@ const CommonLayout: React.FC<IProps> = (props: IProps) => {
 
   return (
     <Flex gap="middle" wrap="wrap" className={LayoutScss.container}>
-      <Layout style={{ marginBottom: "var(--menu-height)" }}>
+      <Layout>
         <Affix offsetTop={0}>
           <Header className={utils.uniteClass(LayoutScss.header, "hf-bg")}>
             <HeaderContent />

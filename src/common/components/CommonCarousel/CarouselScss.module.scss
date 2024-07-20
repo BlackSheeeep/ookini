@@ -50,6 +50,7 @@
 .invisible {
   display: none;
 }
+
 @media screen and (max-width: $mobile-width) {
   .container {
     overflow: visible !important;

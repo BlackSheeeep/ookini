@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import "swiper/css/a11y";
 import utils from "common/utils";
 import { LeftCircleFilled, RightCircleFilled } from "@ant-design/icons";
+import { runtime } from "webpack";
 
 interface ICommonCarouselProps extends SwiperProps {
   children?: React.ReactChild[];
@@ -89,13 +90,16 @@ const CommonCarousel: React.FunctionComponent<ICommonCarouselProps> = (
         <LeftCircleFilled
           ref={prevElRef}
           size="large"
-          className={isProduction && isVisible ? "bounce" : ""}
+          className={utils.uniteClass(
+            isVisible ? "bounce" : "",
+            CarouselScss.btn
+          )}
           onClick={() => swiper?.slidePrev()}
           style={{
             color: "var(--primary-color)",
             position: "absolute",
             left: "12px",
-            fontSize: "10rem",
+            fontSize: utils.isMobileDevice ? "10rem" : "4rem",
             top: "50%",
             transform: "translateY(-50%)",
             zIndex: 10,
@@ -106,14 +110,17 @@ const CommonCarousel: React.FunctionComponent<ICommonCarouselProps> = (
         <RightCircleFilled
           ref={nextElRef}
           shape="circle"
-          className={isProduction && isVisible ? "bounce" : ""}
+          className={utils.uniteClass(
+            isVisible ? "bounce" : "",
+            CarouselScss.btn
+          )}
           size="large"
           onClick={() => swiper?.slideNext()}
           style={{
             color: "var(--primary-color)",
             position: "absolute",
             right: "12px",
-            fontSize: "10rem",
+            fontSize: utils.isMobileDevice ? "10rem" : "4rem",
             top: "50%",
             transform: "translateY(-50%)",
             zIndex: 10,

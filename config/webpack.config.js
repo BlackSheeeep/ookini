@@ -21,14 +21,12 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 const paths = require("./paths");
 const modules = require("./modules");
 const getClientEnvironment = require("./env");
-const PrerenderSPAPlugin = require("prerender-spa-plugin");
 const ModuleNotFoundPlugin = require("react-dev-utils/ModuleNotFoundPlugin");
 const ForkTsCheckerWebpackPlugin =
   process.env.TSC_COMPILE_ON_ERROR === "true"
     ? require("react-dev-utils/ForkTsCheckerWarningWebpackPlugin")
     : require("react-dev-utils/ForkTsCheckerWebpackPlugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
 const createEnvironmentHash = require("./webpack/persistentCache/createEnvironmentHash");
 const { cwd } = require("process");
 

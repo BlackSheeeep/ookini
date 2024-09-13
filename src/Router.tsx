@@ -6,6 +6,7 @@ import {
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
+  Navigate,
 } from "react-router-dom";
 // import Home from "views/Home";
 // import FeePlanDetail from "views/FeePlanDetail";
@@ -24,6 +25,7 @@ function Routers() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<CommonLayout />}>
+        <Route path="/" element={<Navigate to="/home" />} />,
         <Route path="/home" element={<Home />} />,
         <Route path="/feePlanDetail" element={<FeePlanDetail />} />,
         <Route path="/storeDetail" element={<StoreDetail />} />,

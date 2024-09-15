@@ -51,14 +51,9 @@ const CommonImage: React.FunctionComponent<ICommonImageProps> = (props) => {
   if (reg.test(realSrc)) {
     realSrc = _.replace(realSrc, reg, "https://address-ookini.com");
   }
-  const [isWaiting, onLoaded] = useQueue();
-  return isWaiting ? (
-    <Loading></Loading>
-  ) : (
+  return (
     <Image
       loading="lazy"
-      onError={() => onLoaded?.()}
-      onLoad={() => onLoaded?.()}
       placeholder={
         <Flex
           style={{

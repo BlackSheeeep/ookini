@@ -11,7 +11,7 @@ const Reservation: React.FunctionComponent<IReservationProps> = (props) => {
       <FloatButton
         type="primary"
         shape="circle"
-        onClick={() => reservationStore.updateState?.({ visible: false })}
+        onClick={() => reservationStore.updateState?.({ visible: true })}
         className={ModuleScss.container}
         icon={
           <Typography.Text type="warning" className={ModuleScss.icon}>

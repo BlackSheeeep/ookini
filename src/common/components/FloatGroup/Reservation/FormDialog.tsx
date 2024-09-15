@@ -53,7 +53,6 @@ function generateDisabledMinutes(selectedMinutes: any, interval: any) {
 // eslint-disable-next-line arrow-body-style
 const disabledTime = (current: any) => {
   const interval = 30; // 时间间隔（单位：分钟）
-  console.log("current", current);
   const minutes = dayjs(current)?.minute();
   return {
     disabledMinutes: () => range(0, 60).filter((item) => item % 30 !== 0),

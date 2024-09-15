@@ -16,7 +16,7 @@ import {
   newsUrl,
   storeInfoUrl,
 } from "./constants";
-const wpJsonBase = "https://address-ookini.com/wp-json";
+const wpJsonBase = "https://api.address-ookini.com/wp-json";
 
 export default async function request(
   method: "get" | "post" | "delete",

@@ -19,7 +19,7 @@ const steps = [
     description: "",
     detail: "お電話かご予約フォームよりご予約下さい。",
     image:
-      "https://address-ookini.com/wp-content/uploads/2024/01/1692263807445373.png",
+      "https://api.address-ookini.com/wp-content/uploads/2024/01/1692263807445373.png",
   },
   {
     title: "ご来店",
@@ -27,7 +27,7 @@ const steps = [
     detail:
       "ご予約頂いた日時にご来店下さい。店舗の詳しい場所はアクセスをご覧下さい。プランの当日変更も可能ですので、実際にご覧いただいてお選びください。",
     image:
-      "https://address-ookini.com/wp-content/uploads/2024/01/1685004207678178.png",
+      "https://api.address-ookini.com/wp-content/uploads/2024/01/1685004207678178.png",
   },
   {
     title: "着物選び",
@@ -35,7 +35,7 @@ const steps = [
       "様々な種類の着物をご用意しております。かわいい系、かっこいい系、モダン系、アンティーク系など、上質な着物を取り揃えております。また、帯や小物の種類も豊富で、様々なコーディネートを楽しめます。",
     description: "",
     image:
-      "https://address-ookini.com/wp-content/uploads/2024/01/1685073704127642.png",
+      "https://api.address-ookini.com/wp-content/uploads/2024/01/1685073704127642.png",
   },
   {
     title: "着付け",
@@ -43,7 +43,7 @@ const steps = [
     detail:
       "プロの着付け師がお客様の着物を丁寧に着せてくれるため、着くずれの心配もありません。着物の着付けは、繊細で複雑な作業であり、正確な技術と経験が必要です。私たちの着付け師は、豊富な経験と専門知識を持っており、お客様の身体に合わせた適切な着付けを行います。",
     image:
-      "https://address-ookini.com/wp-content/uploads/2024/01/1685073494164568.jpeg",
+      "https://api.address-ookini.com/wp-content/uploads/2024/01/1685073494164568.jpeg",
   },
   {
     title: "オプション",
@@ -51,7 +51,7 @@ const steps = [
       "私たちの美容師は豊富な経験を持ち、髪の長さやスタイルに合わせた最適なセットを提供します。また、髪にボリュームやウェーブを与え、より華やかな雰囲気を演出します。さらに、髪飾りも多種多様に取り揃えています。髪飾りは、着物のアクセントとなり、より一層の美しさを引き立てます。",
     description: "",
     image:
-      "https://address-ookini.com/wp-content/uploads/2024/01/1685072772777058.png",
+      "https://api.address-ookini.com/wp-content/uploads/2024/01/1685072772777058.png",
   },
   {
     title: "完成・着物で散策",
@@ -59,7 +59,7 @@ const steps = [
       "あっという間に完成\n清水寺・祇園・高台寺・八坂神社・伏見稲荷へ徒歩で散策していただけます。少し足を延ばせば嵐山へも散策可能です！",
     description: "",
     image:
-      "https://address-ookini.com/wp-content/uploads/2024/01/1685072877887903.png",
+      "https://api.address-ookini.com/wp-content/uploads/2024/01/1685072877887903.png",
   },
   {
     title: "着物返却",
@@ -67,7 +67,7 @@ const steps = [
       "最終返却時間までに着物のご返却をお願いします。翌日返却を利用する時は事前にご連絡してください。",
     description: "",
     image:
-      "https://address-ookini.com/wp-content/uploads/2024/01/1685073001146958.png",
+      "https://api.address-ookini.com/wp-content/uploads/2024/01/1685073001146958.png",
   },
 ];
 const RentSteps: React.FunctionComponent<IRentStepsProps> = (props) => {
@@ -91,7 +91,9 @@ const RentSteps: React.FunctionComponent<IRentStepsProps> = (props) => {
       id={stepsId}
       align="center"
       vertical
-      className={`${RentStepScss.container} ${utils.isMobileDevice ? RentStepScss.mobileContainer : ''}`}
+      className={`${RentStepScss.container} ${
+        utils.isMobileDevice ? RentStepScss.mobileContainer : ""
+      }`}
     >
       <CommonTitle
         level={4}
@@ -156,7 +158,11 @@ const RentSteps: React.FunctionComponent<IRentStepsProps> = (props) => {
           )}
         />
       )}
-      <Flex className={RentStepScss.card} vertical={utils.isMobileDevice ? true : false} align="start">
+      <Flex
+        className={RentStepScss.card}
+        vertical={utils.isMobileDevice ? true : false}
+        align="start"
+      >
         {utils.isMobileDevice ? null : (
           <Flex vertical className={RentStepScss.detailContainer}>
             <Flex

@@ -20,7 +20,7 @@ const HeaderContent: React.FC<HeaderContentProps> = () => {
       {/* @ts-ignore */}
       <img
         src={
-          "https://address-ookini.com/wp-content/uploads/2024/02/1692264294222029-3.png"
+          "https://api.address-ookini.com/wp-content/uploads/2024/02/1692264294222029-3.png"
         }
         className={LayoutScss.logo}
       />

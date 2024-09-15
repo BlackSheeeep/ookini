@@ -49,7 +49,7 @@ const CommonImage: React.FunctionComponent<ICommonImageProps> = (props) => {
   let realSrc: string = src;
 
   if (reg.test(realSrc)) {
-    realSrc = _.replace(realSrc, reg, "https://address-ookini.com");
+    realSrc = _.replace(realSrc, reg, "https://api.address-ookini.com");
   }
   return (
     <Image

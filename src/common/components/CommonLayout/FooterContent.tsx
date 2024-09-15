@@ -16,14 +16,14 @@ const FooterContent: React.FunctionComponent<IFooterContentProps> = (props) => {
       </Typography.Text>
       <Space split={<div style={{ color: "white" }}>|</div>}>
         <Link
-          to="https://address-ookini.com/index.php/%e3%82%b5%e3%83%bc%e3%83%93%e3%82%b9%e5%88%a9%e7%94%a8%e8%a6%8f%e7%b4%84/"
+          to="https://wp.address-ookini.com/index.php/%e3%82%b5%e3%83%bc%e3%83%93%e3%82%b9%e5%88%a9%e7%94%a8%e8%a6%8f%e7%b4%84/"
           type="text"
           style={{ color: "white", padding: "0", fontSize: "14px" }}
         >
           利用規則
         </Link>
         <Link
-          to="https://address-ookini.com/index.php/privacy-policy/"
+          to="https://wp.address-ookini.com/index.php/privacy-policy/"
           type="text"
           style={{ color: "white", padding: "0", fontSize: "14px" }}
         >

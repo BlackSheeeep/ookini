@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/a11y";
-import utils from "common/utils";
+import utils from "~/common/utils";
 import { LeftCircleFilled, RightCircleFilled } from "@ant-design/icons";
 import { runtime } from "webpack";
 

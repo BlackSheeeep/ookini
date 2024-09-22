@@ -1,0 +1,16 @@
+.imgWrapper {
+  width: 100%;
+  img {
+    width: $full-screen-width !important;
+  }
+}
+.container {
+  width: $full-screen-width;
+  :global {
+    .swiper-button-prev,
+    .swiper-button-next,
+    .swiper-pagination {
+      display: none;
+    }
+  }
+}

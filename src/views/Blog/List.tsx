@@ -1,11 +1,11 @@
 import { Flex, List } from "antd";
 import * as React from "react";
 import ModuleScss from "./Blogs.module.scss";
-import Loading from "common/components/Loading";
-import { HOME_KEYS } from "common/constants/config";
-import CommonTitle from "common/components/CommonTitle";
+import Loading from "~/common/components/Loading";
+import { HOME_KEYS } from "~/common/constants/config";
+import CommonTitle from "~/common/components/CommonTitle";
 import Link from "antd/es/typography/Link";
-import homeStore from "views/Home/store";
+import homeStore from "~/views/Home/store";
 import { useRecoilValue } from "recoil";
 
 interface IBlogsProps {}

@@ -2,13 +2,13 @@ import { Card, Collapse, Divider, Flex, Steps } from "antd";
 import * as React from "react";
 import { Typography } from "antd";
 import RentStepScss from "./RentStep.module.scss";
-import homeStore from "views/Home/store";
+import homeStore from "~/views/Home/store";
 import { useRecoilValue } from "recoil";
-import { HOME_KEYS } from "common/constants/config";
-import Loading from "common/components/Loading";
-import CommonTitle from "common/components/CommonTitle";
-import utils from "common/utils";
-import CommonImage from "common/components/Image";
+import { HOME_KEYS } from "~/common/constants/config";
+import Loading from "~/common/components/Loading";
+import CommonTitle from "~/common/components/CommonTitle";
+import utils from "~/common/utils";
+import CommonImage from "~/common/components/Image";
 import { CaretRightOutlined } from "@ant-design/icons";
 
 interface IRentStepsProps {}

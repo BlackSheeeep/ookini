@@ -1,0 +1,13 @@
+export const storeInfoUrl = "/wp/v2/storeinfo/metadata";
+export const feePlanUrl = "/wp/v2/feeplans/metadata";
+export const reservationUrl = "/wp/v2/reservation/metadata";
+export const mediaUrl = "/wp/v2/media";
+export const postsUrl = "/wp/v2/posts";
+export const pagesUrl = "/wp/v2/pages";
+export const categoriesUrl = "/wp/v2/categories";
+export const imagesUrl = "/wp/v2/pureimages/metadata";
+export const recommendUrl = "/wp/v2/recommend/metadata";
+export const faqsUrl = "/wp/v2/faqs/metadata";
+export const galleryUrl = "/wp/v2/gallery/metadata";
+export const newsUrl = "/wp/v2/news/metadata";
+export const advantageUrl = "/wp/v2/advantage/metadata";

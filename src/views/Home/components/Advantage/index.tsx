@@ -1,20 +1,20 @@
 import { Button, Card, Flex, Image, List, Tabs, Typography } from "antd";
-import { HOME_KEYS } from "common/constants/config";
+import { HOME_KEYS } from "~/common/constants/config";
 import * as React from "react";
 import AdvantageScss from "./Advantage.module.scss";
-import homeStore from "views/Home/store";
+import homeStore from "~/views/Home/store";
 import { useRecoilValue } from "recoil";
-import CommonTitle from "common/components/CommonTitle";
+import CommonTitle from "~/common/components/CommonTitle";
 import { SwapRightOutlined } from "@ant-design/icons";
-import utils from "common/utils";
-import { GALLERY_TYPE } from "common/constants";
-import CommonImage from "common/components/Image";
-import { advantageDialogStore } from "common/components/CommonAdvantageDialog/store";
+import utils from "~/common/utils";
+import { GALLERY_TYPE } from "~/common/constants";
+import CommonImage from "~/common/components/Image";
+import { advantageDialogStore } from "~/common/components/CommonAdvantageDialog/store";
 import type {
   Advantage as AdvantageType,
   PureImage,
-} from "views/types/Advantage";
-import Loading from "common/components/Loading";
+} from "~/views/types/Advantage";
+import Loading from "~/common/components/Loading";
 
 interface IAdvantageProps {}
 const resonId = HOME_KEYS.reasonsForChoosing;

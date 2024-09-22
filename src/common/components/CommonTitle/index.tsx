@@ -1,7 +1,7 @@
 import { Typography } from "antd";
 import * as React from "react";
 import ModuleScss from "./CommonTitle.module.scss";
-import utils from "common/utils";
+import utils from "~/common/utils";
 
 interface ICommonTitleProps {
   level?: number;

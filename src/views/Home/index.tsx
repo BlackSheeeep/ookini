@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import homeStore from "views/Home/store";
+import homeStore from "~/views/Home/store";
 import Carousel from "./components/Carousel";
 import MenuAnchor from "./components/MenuAnchor";
 import FeePlan from "./components/FeePlan";

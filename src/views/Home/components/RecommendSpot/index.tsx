@@ -1,12 +1,12 @@
 import * as React from "react";
 import ModuleScss from "./RecommendSpot.module.scss";
-import homeStore from "views/Home/store";
+import homeStore from "~/views/Home/store";
 import { Card, Flex } from "antd";
 import { useRecoilValue } from "recoil";
-import Loading from "common/components/Loading";
-import CommonTitle from "common/components/CommonTitle";
-import utils from "common/utils";
-import CommonImage from "common/components/Image";
+import Loading from "~/common/components/Loading";
+import CommonTitle from "~/common/components/CommonTitle";
+import utils from "~/common/utils";
+import CommonImage from "~/common/components/Image";
 
 interface IRecommendSpotProps {}
 

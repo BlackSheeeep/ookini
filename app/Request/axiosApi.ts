@@ -17,6 +17,7 @@ import {
   storeInfoUrl,
 } from "./constants";
 const wpJsonBase = "https://api.address-ookini.com/wp-json";
+import _ from "lodash";
 
 export default async function request(
   method: "get" | "post" | "delete",

@@ -1,5 +1,5 @@
 import { Form } from "antd";
-import FormItem, { FormItemProps } from "antd/es/form/FormItem";
+import FormItem, { FormItemProps } from "antd/lib/form/FormItem";
 import * as React from "react";
 
 interface IFormItemProps extends FormItemProps {

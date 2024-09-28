@@ -3,6 +3,7 @@ import { BaseStore } from "~/common/baseStore";
 import utils from "~/common/utils";
 import { atom } from "recoil";
 import type { NewsData } from "~/views/types/News";
+import _ from "lodash";
 
 class NewsRoom extends BaseStore {
   news = atom({

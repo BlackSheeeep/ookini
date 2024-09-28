@@ -6,6 +6,7 @@ import CommonImage from "~/common/components/Image";
 import FormDialog from "~/common/components/FloatGroup/Reservation/FormDialog";
 import { reservationStore } from "~/common/components/FloatGroup/Reservation/store";
 import { Link } from "react-router-dom";
+import _ from "lodash";
 const { Title, Paragraph } = Typography;
 interface IFeePlanCardProps {
   data: {

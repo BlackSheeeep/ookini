@@ -1,5 +1,4 @@
 //@ts-ignore
-import { tabletojson } from "tabletojson";
 const filterMap = new Set([
   "_links",
   "date",

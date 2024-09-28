@@ -8,6 +8,7 @@ import ModuleScss from "./FeePlan.module.scss";
 import utils from "~/common/utils";
 import { IssuesCloseOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import CommonImage from "~/common/components/Image";
+import _ from "lodash";
 
 interface IFeeplanDetailProps {}
 

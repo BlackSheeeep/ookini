@@ -10,19 +10,15 @@ import CustomerImages from "./components/CustomerImages";
 import FQA from "./components/FAQ";
 import RecommendSpot from "./components/RecommendSpot";
 import Blogs from "../Blog/List";
-import { Divider } from "antd";
-import { useLoaderData } from "@remix-run/react";
-import { json, redirect } from "@remix-run/node";
-export async function loader() {
-  return json(homeStore.init());
-}
-const Home = () => {
-  homeStore.useInit();
-  useLoaderData();
+import { DatePicker, Divider } from "antd";
+import { RecoilRoot } from "recoil";
+
+export const Home = () => {
+  //   homeStore.useInit();
   //@ts-ignore
   return (
     //@ts-ignore
-    <React.Fragment>
+    <>
       <Carousel />
       <MenuAnchor />
       <FeePlan />
@@ -40,7 +36,7 @@ const Home = () => {
       <RecommendSpot />
       <Divider />
       <Blogs />
-    </React.Fragment>
+    </>
   );
 };
 export default React.memo(Home);

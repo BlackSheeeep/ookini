@@ -1,9 +1,10 @@
-import type { Store } from "antd/es/form/interface";
+import type { Store } from "antd/lib/form/interface";
 import { BaseStore } from "~/common/baseStore";
 import utils from "~/common/utils";
 import { atom } from "recoil";
 import { wordpressApi } from "~/Request";
 import type { FeePlan } from "~/views/types/FeePlan";
+import _ from "lodash";
 
 class HomeStore extends BaseStore {
   assets = {
@@ -79,7 +80,8 @@ class HomeStore extends BaseStore {
     const carouselImgs = (
       _.get(res, utils.isMobileDevice ? "data.[0].images" : "data.images") || []
     ).map((item: any) => item.guid);
-    this.updateState?.({ ["assets.carouselImgs"]: carouselImgs });
+    this.assets.carouselImgs = carouselImgs;
+    // this.updateState?.({ ["assets.carouselImgs"]: carouselImgs });
   };
   public getFeeplans = async () => {
     const [err, res] = await utils.resolvePromise(wordpressApi.getFeePlans());
@@ -88,6 +90,7 @@ class HomeStore extends BaseStore {
       ...plan,
       images: plan?.images?.map?.((item: any) => item.guid),
     }));
+    this.feePlans = feePlans;
     this.updateState?.({ feePlans: feePlans });
   };
   public getHairGallery = async () => {

@@ -1,6 +1,7 @@
 import { Form } from "antd";
-import FormItem, { FormItemProps } from "antd/es/form/FormItem";
+import FormItem, { FormItemProps } from "antd/lib/form/FormItem";
 import * as React from "react";
+import _ from "lodash";
 
 interface IFormItemProps extends FormItemProps {
   children?: React.ReactNode;

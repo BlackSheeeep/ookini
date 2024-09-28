@@ -1,46 +1,33 @@
-import "./App.css";
-import { ConfigProvider } from "antd";
-import React from "react";
-import themeConfig from "~/common/styles/theme.js";
-import { RecoilRoot } from "recoil";
-import Router from "./Router";
-import { createCache, extractStyle, StyleProvider } from "@ant-design/cssinjs";
-import { Outlet } from "react-router-dom";
-import { renderToString } from "react-dom/server";
-import type Entity from "@ant-design/cssinjs/es/Cache";
-import Home from "./views/Home";
 import _ from "lodash";
-import "./antd.min.css";
-
+import React from "react";
+import { Outlet } from "react-router-dom";
+import { Links, Meta, Scripts } from "@remix-run/react";
+import { RecoilRoot } from "recoil";
+import CommonLayout from "./common/components/CommonLayout";
 function App() {
   // SSR Render
-  const cache = React.useMemo<Entity>(() => createCache(), []);
-
   return (
-    <html>
+    <html id="root">
       <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* <link rel="stylesheet" href="./antd.min.css" /> */}
+        <Meta />
         {/* <meta charset="utf-8" /> */}
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="public/antd.min.css"
-        ></link>
-        <link rel="icon" href="public/favicon.ico" />
+        {/* <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
         <meta lang="ja" content="translate" />
-        <meta
-          name="description"
-          content="Web site created using create-react-app"
-        />
-        <link rel="apple-touch-icon" href="public/logo192.png" />
-        <link rel="manifest" href="public/manifest.json" />
-
+        <link rel="apple-touch-icon" href="/logo192.png" />
+        <link rel="manifest" href="/manifest.json" />
+       */}
+        <Links />
+        <Scripts />
         <title>ookini</title>
       </head>
       <body>
-        <div id="root"></div>
-        <Outlet></Outlet>
+        <CommonLayout></CommonLayout>
+        {/* <Outlet></Outlet> */}
         <div id="google_translate_element"></div>
         {/* 
         <script>

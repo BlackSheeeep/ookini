@@ -9,12 +9,13 @@ import { Flex, Typography } from "antd";
 import utils from "~/common/utils";
 import Loading from "~/common/components/Loading";
 import { reservationStore } from "~/common/components/FloatGroup/Reservation/store";
+import { useLoaderData } from "@remix-run/react";
 const { Title } = Typography;
 interface IFeePlanProps {}
 
 const FeePlan: React.FunctionComponent<IFeePlanProps> = (props) => {
   const feePlan = HOME_KEYS.feePlans;
-  const feePlans: any[] = useRecoilValue(reservationStore.feeplans);
+  const { feePlans }: any[] = useLoaderData();
   return (
     <div id={feePlan} className={FeePlansScss.carousel}>
       <Flex>

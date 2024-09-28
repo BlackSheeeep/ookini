@@ -1,19 +1,16 @@
 import * as React from "react";
-import { useRecoilValue } from "recoil";
-import homeStore from "../../store";
 import CarouselScss from "./Carousel.module.scss";
 import CommonCarousel from "~/common/components/CommonCarousel";
 import CommonImage from "~/common/components/Image";
 import Loading from "~/common/components/Loading";
 import { Flex } from "antd";
+import { useLoaderData } from "@remix-run/react";
 interface ICarouselProps {}
 
 const Carousel: React.FunctionComponent<ICarouselProps> = (props) => {
   const {} = props;
-  const {
-    assets: { carouselImgs },
-  } = homeStore;
-  const imgs = useRecoilValue(carouselImgs);
+  const { assets } = (useLoaderData() as Record<string, any>) || {};
+  const imgs = assets?.carouselImgs || [];
   if (imgs.length <= 0) {
     return (
       <Flex

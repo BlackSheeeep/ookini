@@ -9,14 +9,14 @@ import {
   Select,
   message,
 } from "antd";
-import { useForm } from "antd/es/form/Form";
 import FormItem from "~/common/components/FormItem";
 import ModuleScss from "./Reservation.module.scss";
 import dayjs from "dayjs";
+import _ from "lodash";
 import * as React from "react";
 import { reservationStore } from "./store";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { RangePickerProps } from "antd/es/date-picker";
+import { RangePickerProps } from "antd/lib/date-picker";
 import { send } from "@emailjs/browser";
 import utils from "~/common/utils";
 import utc from "dayjs/plugin/utc";
@@ -27,7 +27,7 @@ interface IFormDialogProps {
   visible?: boolean;
   onCancel?: () => void;
 }
-
+const useForm = Form.useForm;
 // eslint-disable-next-line arrow-body-style
 const disabledDate: RangePickerProps["disabledDate"] = (current) => {
   // Can not select days before today and today

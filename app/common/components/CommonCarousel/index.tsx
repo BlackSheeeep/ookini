@@ -34,7 +34,7 @@ const CommonCarousel: React.FunctionComponent<ICommonCarouselProps> = (
   const nextElRef = React.useRef();
   const observer = React.useRef();
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     observer.current = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -48,7 +48,7 @@ const CommonCarousel: React.FunctionComponent<ICommonCarouselProps> = (
       });
     });
   }, []);
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (prevElRef.current) {
       observer.current.observe(prevElRef.current);
     } else if (nextElRef.current) {

@@ -1,4 +1,4 @@
-import type { Store } from "antd/es/form/interface";
+import type { Store } from "antd/lib/form/interface";
 import { BaseStore } from "~/common/baseStore";
 import utils from "~/common/utils";
 import { atom } from "recoil";

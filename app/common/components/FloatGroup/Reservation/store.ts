@@ -4,6 +4,7 @@ import utils from "~/common/utils";
 import { atom } from "recoil";
 import type { FeePlan } from "~/views/types/FeePlan";
 import { NewsData } from "~/views/types/News";
+import _ from "lodash";
 import type { Store } from "~/views/types/Store";
 
 class Reservation extends BaseStore {

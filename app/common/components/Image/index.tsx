@@ -3,6 +3,7 @@ import * as React from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import ModuleScss from "./Image.module.scss";
 import Loading from "../Loading";
+import _ from "lodash";
 
 const MAX_LOAD_NUM = 5;
 const queue: any[] = [];

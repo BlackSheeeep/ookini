@@ -1,36 +1,13 @@
-import "./App.css";
-import { ConfigProvider } from "antd";
 import React from "react";
-import themeConfig from "~/common/styles/theme.js";
-import { RecoilRoot } from "recoil";
-import Router from "./Router";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-
-import { RemixBrowser } from "@remix-run/react";
+import { Outlet, RemixBrowser, RemixServer } from "@remix-run/react";
 import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
-
-function App() {
-  // SSR Render
-  return (
-    <ConfigProvider theme={themeConfig}>
-      <RecoilRoot>
-        <Router />
-      </RecoilRoot>
-    </ConfigProvider>
-  );
-}
+import Home from "./views/Home";
 
 const rootEl = document.getElementById("root");
 
 startTransition(() => {
-  hydrateRoot(
-    rootEl,
-    <StrictMode>
-      <RemixBrowser />
-    </StrictMode>
-  );
+  document && hydrateRoot(document!, <RemixBrowser />);
 });
 
 // rootEl.style.overflowX = "hidden";

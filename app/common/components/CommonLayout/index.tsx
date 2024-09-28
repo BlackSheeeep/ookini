@@ -1,13 +1,15 @@
-import React, { Suspense, useEffect, useState } from "react";
-import { Layout, Flex, theme, Modal, Affix } from "antd";
+import React, { Suspense } from "react";
+import { Layout, Flex, theme, Affix, ConfigProvider } from "antd";
 import LayoutScss from "./Layout.module.scss";
 import utils from "~/common/utils";
 import HeaderContent from "./HeaderContent";
 import FooterContent from "./FooterContent";
 import FloatGroup from "../FloatGroup";
-import { Outlet, ScrollRestoration } from "react-router-dom";
+import { Outlet } from "@remix-run/react";
 import Loading from "../Loading";
 import CommonAdvantageDialog from "../CommonAdvantageDialog";
+import { RecoilRoot } from "recoil";
+import customTheme from "~/common/styles/theme";
 
 const { useToken } = theme;
 interface IProps {
@@ -25,26 +27,29 @@ const CommonLayout: React.FC<IProps> = (props: IProps) => {
   };
 
   return (
-    <Flex gap="middle" wrap="wrap" className={LayoutScss.container}>
-      <Layout>
-        <Affix offsetTop={0}>
-          <Header className={utils.uniteClass(LayoutScss.header, "hf-bg")}>
-            <HeaderContent />
-          </Header>
-        </Affix>
-        <Content className={LayoutScss.content} style={contentStyle}>
-          <Suspense fallback={<Loading></Loading>}>
-            <Outlet />
-          </Suspense>
-        </Content>
-        <Footer className={utils.uniteClass(LayoutScss.footer, "hf-bg")}>
-          <FooterContent />
-        </Footer>
-      </Layout>
-      <FloatGroup />
-      <ScrollRestoration />
-      <CommonAdvantageDialog />
-    </Flex>
+    <RecoilRoot>
+      <ConfigProvider theme={customTheme}>
+        <Flex gap="middle" wrap="wrap" className={LayoutScss.container}>
+          <Layout>
+            <Affix offsetTop={0}>
+              <Header className={utils.uniteClass(LayoutScss.header, "hf-bg")}>
+                <HeaderContent />
+              </Header>
+            </Affix>
+            <Content className={LayoutScss.content} style={contentStyle}>
+              <Suspense fallback={<Loading></Loading>}>
+                <Outlet></Outlet>
+              </Suspense>
+            </Content>
+            <Footer className={utils.uniteClass(LayoutScss.footer, "hf-bg")}>
+              <FooterContent />
+            </Footer>
+          </Layout>
+          <FloatGroup />
+          <CommonAdvantageDialog />
+        </Flex>
+      </ConfigProvider>
+    </RecoilRoot>
   );
 };
 

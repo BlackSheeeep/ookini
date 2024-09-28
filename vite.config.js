@@ -1,7 +1,6 @@
 import { vitePlugin as remix } from "@remix-run/dev";
 import path from "path";
 import { defineConfig } from "vite";
-import styleImport from "vite-plugin-style-import";
 
 export default defineConfig({
   plugins: [remix()],

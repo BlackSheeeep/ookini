@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Flex, Typography, Space } from "antd/lib";
+import { Flex, Typography, Space } from "antd";
 import LayoutScss from "./Layout.module.scss";
 import CommonImage from "../Image";
 import { Link } from "react-router-dom";

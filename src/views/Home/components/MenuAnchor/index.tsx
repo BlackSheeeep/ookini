@@ -2,7 +2,7 @@ import { MENU_ANCHOR_ITEMS } from "~/common/constants/config";
 import MenuAnchorScss from "./MenuAnchor.module.scss";
 import { Anchor } from "antd";
 import * as React from "react";
-import Title from "antd/es/typography/Title";
+import Title from "antd/lib/typography/Title";
 
 interface IMenuAnchorProps {}
 

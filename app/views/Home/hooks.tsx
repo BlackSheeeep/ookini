@@ -1,6 +1,7 @@
 import { createUseStoreData, useAwaitData } from "~/common/utils/hooks";
 import homeStore from "./store";
 import Loading from "~/common/components/Loading";
+import _ from "lodash";
 
 export const useHomeData = createUseStoreData(homeStore);
 

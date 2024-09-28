@@ -6,6 +6,7 @@ import Loading from "~/common/components/Loading";
 import * as React from "react";
 import { useRecoilValue } from "recoil";
 import galleryStore from "~/views/Gallery/store";
+import _ from "lodash";
 import ModuleScss from "./Gallery.module.scss";
 interface IGalleryProps {}
 

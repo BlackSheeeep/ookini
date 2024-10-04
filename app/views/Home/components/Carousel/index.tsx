@@ -5,11 +5,14 @@ import CommonImage from "~/common/components/Image";
 import Loading from "~/common/components/Loading";
 import { Flex } from "antd";
 import { useLoaderData } from "@remix-run/react";
+import { HomeLoader } from "~/routes/_index";
 interface ICarouselProps {}
 
 const Carousel: React.FunctionComponent<ICarouselProps> = (props) => {
   const {} = props;
-  const { assets } = (useLoaderData() as Record<string, any>) || {};
+  const {
+    homeStore: { assets },
+  } = useLoaderData<HomeLoader>() || {};
   const imgs = assets?.carouselImgs || [];
   if (imgs.length <= 0) {
     return (

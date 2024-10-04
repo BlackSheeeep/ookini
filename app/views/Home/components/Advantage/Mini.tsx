@@ -2,7 +2,6 @@ import { Flex, List } from "antd";
 import { HOME_KEYS } from "~/common/constants/config";
 import * as React from "react";
 import AdvantageScss from "./Advantage.module.scss";
-import { useRecoilValue } from "recoil";
 import CommonTitle from "~/common/components/CommonTitle";
 import utils from "~/common/utils";
 import CommonImage from "~/common/components/Image";
@@ -13,7 +12,7 @@ interface IAdvantageProps {}
 const resonId = HOME_KEYS.reasonsForChoosing;
 
 const MiniAdvantage: React.FunctionComponent<IAdvantageProps> = (props) => {
-  const advantageData = useRecoilValue(advantageDialogStore.advantage);
+  const advantageData = advantageDialogStore.advantage;
   const isLoading = Object.keys(advantageData).length === 0;
 
   return (

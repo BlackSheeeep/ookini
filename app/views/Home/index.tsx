@@ -10,8 +10,7 @@ import CustomerImages from "./components/CustomerImages";
 import FQA from "./components/FAQ";
 import RecommendSpot from "./components/RecommendSpot";
 import Blogs from "../Blog/List";
-import { DatePicker, Divider } from "antd";
-import { RecoilRoot } from "recoil";
+import { Divider } from "antd";
 
 export const Home = () => {
   //   homeStore.useInit();

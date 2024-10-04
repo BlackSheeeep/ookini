@@ -1,7 +1,9 @@
 .imgWrapper {
   width: 100%;
+  object-fit: contain;
   img {
     width: $full-screen-width !important;
+    height: 768px;
   }
 }
 .container {

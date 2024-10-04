@@ -2,20 +2,22 @@ import * as React from "react";
 import FeePlanCard from "./FeePlanCard";
 import _ from "lodash";
 import { HOME_KEYS } from "~/common/constants/config";
-import { useRecoilValue } from "recoil";
 import FeePlansScss from "./FeePlans.module.scss";
 import CommonCarousel from "~/common/components/CommonCarousel";
 import { Flex, Typography } from "antd";
 import utils from "~/common/utils";
 import Loading from "~/common/components/Loading";
-import { reservationStore } from "~/common/components/FloatGroup/Reservation/store";
 import { useLoaderData } from "@remix-run/react";
+import { HomeLoader } from "~/routes/_index";
+import { useRecoilValue } from "recoil";
 const { Title } = Typography;
 interface IFeePlanProps {}
 
 const FeePlan: React.FunctionComponent<IFeePlanProps> = (props) => {
   const feePlan = HOME_KEYS.feePlans;
-  const { feePlans }: any[] = useLoaderData();
+  const {
+    reservationStore: { feeplans },
+  } = useLoaderData<HomeLoader>();
   return (
     <div id={feePlan} className={FeePlansScss.carousel}>
       <Flex>
@@ -24,7 +26,7 @@ const FeePlan: React.FunctionComponent<IFeePlanProps> = (props) => {
         </Title>
       </Flex>
       {/**@ts-ignore */}
-      {_.isEmpty(feePlans) ? (
+      {_.isEmpty(feeplans) ? (
         <Loading></Loading>
       ) : (
         <CommonCarousel
@@ -32,7 +34,7 @@ const FeePlan: React.FunctionComponent<IFeePlanProps> = (props) => {
           showPrev={utils.isMobileDevice ? true : true}
           showPagination
         >
-          {feePlans.map((feePlan, index) => (
+          {feeplans.map((feePlan, index) => (
             <FeePlanCard
               data={{
                 imageUrl: _.get(feePlan, "images.0"),

@@ -24,7 +24,7 @@ const CommonAdvantageDialog: React.FunctionComponent<
     advantageDialogStore.getAdvantage();
     setDisplayAdvantageDialog(true);
   }, []);
-  return utils.isMobileDevice && isProduction ? (
+  return utils.isMobileDevice ? (
     <Modal
       onCancel={() => {
         setDisplayAdvantageDialog(false);

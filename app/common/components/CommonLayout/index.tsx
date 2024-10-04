@@ -45,8 +45,6 @@ const CommonLayout: React.FC<IProps> = (props: IProps) => {
               <FooterContent />
             </Footer>
           </Layout>
-          <FloatGroup />
-          <CommonAdvantageDialog />
         </Flex>
       </ConfigProvider>
     </RecoilRoot>

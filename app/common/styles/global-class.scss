@@ -4,11 +4,13 @@
 
 html,
 body {
+  margin: 0;
   scrollbar-width: 0;
   &::-webkit-scrollbar {
     display: none;
   }
 }
+
 .bounce {
   animation-name: bounce;
   animation-duration: 2s;

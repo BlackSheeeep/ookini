@@ -3,27 +3,17 @@ import { BaseStore } from "~/common/baseStore";
 import utils from "~/common/utils";
 import { atom } from "recoil";
 import type { FeePlan } from "~/views/types/FeePlan";
-import { NewsData } from "~/views/types/News";
 import _ from "lodash";
 import type { Store } from "~/views/types/Store";
 
 class Reservation extends BaseStore {
-  stores = atom({
-    default: [] as Store[],
-    key: "reservationStores",
-  });
-  feeplans = atom({
-    default: [] as FeePlan[],
-    key: "reservationFeeplans",
-  });
+  stores: Store[] = [];
+  feeplans: FeePlan[] = [];
   visible = atom({
     default: false,
     key: "reservationVisible",
   });
-  news = atom({
-    default: [],
-    key: "menuNews",
-  });
+  news = [];
   lan = atom({
     default: "ja",
     key: "lanasdasdasdasd",
@@ -42,9 +32,7 @@ class Reservation extends BaseStore {
       ...item,
       storeImage: item?.storeImage?.guid,
     }));
-    this.updateState?.({
-      stores,
-    });
+    this.stores = stores;
   }
   async getFeeplans() {
     const [err, res] = await utils.resolvePromise(wordpressApi.getFeePlans());
@@ -53,13 +41,11 @@ class Reservation extends BaseStore {
       ...plan,
       images: plan?.images?.map?.((item: any) => item.guid),
     }));
-    this.updateState?.({ feeplans: feePlans });
+    this.feeplans = feePlans;
   }
   async getNews() {
     const [err, res] = await utils.resolvePromise(wordpressApi.getNews());
-    this.updateState?.({
-      news: _.get(res, "data") || [],
-    });
+    this.news = _.get(res, "data") || [];
   }
   isCreating = false;
   async createReservation(data: Record<string, any>) {
@@ -73,4 +59,5 @@ class Reservation extends BaseStore {
     return res;
   }
 }
+export const IReservationStore = Reservation;
 export const reservationStore = new Reservation();

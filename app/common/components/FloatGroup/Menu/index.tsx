@@ -11,20 +11,20 @@ import { Badge, Flex, Menu, MenuProps, message } from "antd";
 import * as React from "react";
 import ModuleScss from "./Menu.module.scss";
 import { reservationStore } from "../Reservation/store";
-import { useRecoilValue } from "recoil";
-import { useMatch, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { GALLERY_TYPE } from "~/common/constants";
 // import translate from "translate";
 // import translateV2 from "translate";
 import utils from "~/common/utils";
 import CommonNews from "~/common/components/CommonNews";
+import { useMatches } from "@remix-run/react";
 interface IMenuBarProps {}
 //   const trans = document.getElementById(":0.container");
 //   if (trans) trans.style.display = "none";
 const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
-  const feePlans = useRecoilValue(reservationStore.feeplans);
-  const stores = useRecoilValue(reservationStore.stores);
-  const news = useRecoilValue(reservationStore.news);
+  const feePlans = reservationStore.feeplans;
+  const stores = reservationStore.stores;
+  const news = reservationStore.news;
   const [google, setGoogle] = React.useState<Element>();
   const [isPopKeybord, setIsPopKeybord] = React.useState(false);
   React.useEffect(() => {
@@ -55,8 +55,12 @@ const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
     loop();
   }, []);
 
-  const isStoreDetail = useMatch("/storeDetail") !== null;
-  const isPlanDetail = useMatch("/feePlanDetail") !== null;
+  const isStoreDetail = useMatches().find(
+    (item) => item.pathname === "/storeDetail"
+  );
+  const isPlanDetail = useMatches().find(
+    (item) => item.pathname === "/feePlanDetail"
+  );
   const items: MenuProps["items"] = [
     {
       label: "more",

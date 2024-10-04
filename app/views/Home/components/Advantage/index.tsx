@@ -2,33 +2,26 @@ import { Button, Card, Flex, Image, List, Tabs, Typography } from "antd";
 import { HOME_KEYS } from "~/common/constants/config";
 import * as React from "react";
 import AdvantageScss from "./Advantage.module.scss";
-import homeStore from "~/views/Home/store";
-import { useRecoilValue } from "recoil";
 import CommonTitle from "~/common/components/CommonTitle";
 import { SwapRightOutlined } from "@ant-design/icons";
 import utils from "~/common/utils";
 import { GALLERY_TYPE } from "~/common/constants";
 import CommonImage from "~/common/components/Image";
-import { advantageDialogStore } from "~/common/components/CommonAdvantageDialog/store";
-import type {
-  Advantage as AdvantageType,
-  PureImage,
-} from "~/views/types/Advantage";
+import type { Advantage as AdvantageType } from "~/views/types/Advantage";
 import Loading from "~/common/components/Loading";
 import _ from "lodash";
+import { useLoaderData } from "@remix-run/react";
+import { HomeLoader } from "~/routes/_index";
 
 interface IAdvantageProps {}
 const resonId = HOME_KEYS.reasonsForChoosing;
 const maxShowImages = 10;
 
 const Advantage: React.FunctionComponent<IAdvantageProps> = (props) => {
-  const gallery = useRecoilValue(homeStore.hairGallery) as PureImage;
-
-  React.useEffect(() => {
-    homeStore.getHairGallery();
-  }, []);
-
-  const advantageData = useRecoilValue(advantageDialogStore.advantage);
+  const {
+    homeStore: { hairGallery: gallery },
+    advantageDialogStore: { advantage: advantageData },
+  } = useLoaderData<HomeLoader>();
 
   const renderItem = (data: AdvantageType[] = []) => {
     return (

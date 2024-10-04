@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Button, Typography, notification } from "antd";
 import { reservationStore } from "../FloatGroup/Reservation/store";
-import { useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import ModuleScss from "./CommonNews.module.scss";
@@ -14,7 +13,7 @@ const HomeNotification: React.FunctionComponent<IHomeNotificationProps> = (
     top: 24,
     maxCount: 1,
   });
-  const news: any[] = useRecoilValue(reservationStore.news);
+  const news: any[] = reservationStore.news;
   React.useEffect(() => {
     if (news.length > 0)
       api.open({

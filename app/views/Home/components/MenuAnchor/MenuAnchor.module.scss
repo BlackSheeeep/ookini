@@ -20,6 +20,10 @@
         color: $color-primary !important;
       }
     }
+    .ant-anchor-link .ant-anchor-link-title .ant-typography {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
   }
 }
 @media screen and (max-width: $mobile-width) {

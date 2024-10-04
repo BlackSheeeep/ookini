@@ -8,18 +8,9 @@ import _ from "lodash";
 
 class HomeStore extends BaseStore {
   assets = {
-    logo: atom({
-      key: "logo",
-      default: "",
-    }),
-    pages: atom({
-      key: "pages",
-      default: [],
-    }),
-    carouselImgs: atom({
-      key: "carouselImgs",
-      default: [],
-    }),
+    logo: "",
+    pages: [],
+    carouselImgs: [],
   };
   feePlans = atom({
     key: "feePlans",
@@ -29,10 +20,7 @@ class HomeStore extends BaseStore {
     key: "stores",
     default: [] as Store[],
   });
-  hairGallery = atom({
-    key: "homeHairGallery",
-    default: {},
-  });
+  hairGallery = {};
   rentSteps = atom({
     key: "rentSteps",
     default: {},
@@ -81,7 +69,6 @@ class HomeStore extends BaseStore {
       _.get(res, utils.isMobileDevice ? "data.[0].images" : "data.images") || []
     ).map((item: any) => item.guid);
     this.assets.carouselImgs = carouselImgs;
-    // this.updateState?.({ ["assets.carouselImgs"]: carouselImgs });
   };
   public getFeeplans = async () => {
     const [err, res] = await utils.resolvePromise(wordpressApi.getFeePlans());
@@ -103,8 +90,7 @@ class HomeStore extends BaseStore {
       images: _.get(gallery, "data.images")?.map?.((item: any) => item.guid),
     };
 
-    this.updateState?.({ hairGallery: mergedData });
-    return this.hairGallery;
+    this.hairGallery = mergedData;
   };
 
   public async getCustomerImages() {
@@ -142,5 +128,5 @@ class HomeStore extends BaseStore {
 }
 
 const homeStore = new HomeStore();
-
+export const THomeStore = HomeStore;
 export default homeStore;

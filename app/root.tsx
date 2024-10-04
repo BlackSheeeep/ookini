@@ -1,13 +1,11 @@
 import _ from "lodash";
 import React from "react";
-import { Outlet } from "react-router-dom";
 import { Links, Meta, Scripts } from "@remix-run/react";
-import { RecoilRoot } from "recoil";
 import CommonLayout from "./common/components/CommonLayout";
 function App() {
   // SSR Render
   return (
-    <html id="root">
+    <html>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,12 +20,13 @@ function App() {
         <Scripts />
         <title>ookini</title>
       </head>
-      <body>
+      <body id="root">
         <CommonLayout></CommonLayout>
         <div id="google_translate_element"></div>
-        {/* 
-        <script>
-          {(() => {
+      </body>
+      <script>
+        {(() => {
+          try {
             globalThis.runTime = {};
             globalThis.runTime.setRem = function setRem() {
               var screenWidth =
@@ -50,13 +49,8 @@ function App() {
               // 在窗口大小发生变化时重新设置rem
               globalThis.addEventListener("resize", globalThis.runTime.setRem);
             });
-            return "";
-          })()}
-        </script>
-        <script type="text/javascript">
-          {(() => {
-            function googleTranslateElementInit() {
-              var google = globalThis.google;
+            globalThis.googleTranslateElementInit = function () {
+              var google = window.google;
               if (!google) return "";
               new google.translate.TranslateElement(
                 {
@@ -66,16 +60,11 @@ function App() {
                 },
                 "google_translate_element"
               );
-            }
+            };
             return "";
-          })()}
-        </script>
-        <script
-          type="text/javascript"
-          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          defer
-        ></script> */}
-      </body>
+          } catch (error) {}
+        })()}
+      </script>
     </html>
   );
 }

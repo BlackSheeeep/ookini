@@ -3,12 +3,19 @@ import { Outlet, RemixBrowser, RemixServer } from "@remix-run/react";
 import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import Home from "./views/Home";
+import CommonLayout from "./common/components/CommonLayout";
 
-const rootEl = document.getElementById("root");
-
-startTransition(() => {
-  document && hydrateRoot(document!, <RemixBrowser />);
-});
+(async () => {
+  await new Promise((res) => {
+    setInterval(() => {
+      if (document) res(true);
+    });
+  });
+  startTransition(() => {
+    const rootEl = document.getElementById("root");
+    document && hydrateRoot(document!, <CommonLayout />);
+  });
+})();
 
 // rootEl.style.overflowX = "hidden";
 // rootEl.style.width = "100rem";

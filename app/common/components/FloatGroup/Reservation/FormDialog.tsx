@@ -15,12 +15,13 @@ import dayjs from "dayjs";
 import _ from "lodash";
 import * as React from "react";
 import { reservationStore } from "./store";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { RangePickerProps } from "antd/lib/date-picker";
 import { send } from "@emailjs/browser";
 import utils from "~/common/utils";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { useLoaderData } from "@remix-run/react";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 interface IFormDialogProps {
@@ -64,13 +65,7 @@ const disabledTime = (current: any) => {
 };
 
 const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
-  const {
-    stores: originStores,
-    feeplans: originFeeplans,
-    visible: originVisible,
-  } = reservationStore;
-  const stores = useRecoilValue(originStores);
-  const feeplans = useRecoilValue(originFeeplans);
+  const { stores, feeplans, visible: originVisible } = reservationStore;
   const visible = useRecoilValue(originVisible);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const [form] = useForm();

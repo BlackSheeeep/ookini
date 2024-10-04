@@ -15,11 +15,15 @@ const filterMap = new Set([
   "template",
 ]);
 export default {
+  __uesr_agent: "",
+  setUserAgent(agent: string) {
+    this.__uesr_agent = agent;
+  },
   get isMobileDevice() {
     try {
       return document.body.clientWidth <= 600;
     } catch (error) {
-      return false;
+      return /mobile/i.test(this.__uesr_agent); // 简单的正则判断
     }
   },
   uniteClass(...params: string[]) {

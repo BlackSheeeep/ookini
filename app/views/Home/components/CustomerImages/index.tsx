@@ -20,7 +20,8 @@ const CustomerImages: React.FunctionComponent<ICustomerImagesProps> = (
 ) => {
   const { customers } = homeStore;
   const customerImages = useRecoilValue(customers);
-  React.useEffect(() => {
+
+  React.useLayoutEffect(() => {
     homeStore.getCustomerImages();
   }, []);
   const images: string[] = _.flatten(

@@ -10,20 +10,23 @@ import {
 import _ from "lodash";
 import { HOME_KEYS } from "~/common/constants/config";
 import * as React from "react";
-import { useRecoilValue } from "recoil";
 import StoresScss from "./Stores.module.scss";
 import utils from "~/common/utils";
 import CommonTitle from "~/common/components/CommonTitle";
 import CommonImage from "~/common/components/Image";
 import Loading from "~/common/components/Loading";
-import { reservationStore } from "~/common/components/FloatGroup/Reservation/store";
+import { useLoaderData } from "@remix-run/react";
+import { HomeLoader } from "~/routes/_index";
 const { Title, Text } = Typography;
 
 interface IStoresProps {}
 
 const Stores: React.FunctionComponent<IStoresProps> = (props) => {
   const storesId = HOME_KEYS.storeList;
-  const internalStores: any[] = useRecoilValue(reservationStore.stores);
+  const {
+    reservationStore: { stores },
+  } = useLoaderData<HomeLoader>();
+  const internalStores = stores;
   const gotoDetail = (id: number) => {
     utils.goto(`/storeDetail?id=${id}`);
   };
@@ -48,75 +51,77 @@ const Stores: React.FunctionComponent<IStoresProps> = (props) => {
           vertical={utils.isMobileDevice ? true : false}
           className={StoresScss.storeContainer}
         >
-          {internalStores.map((storeInfo: Record<string, any>, id: number) => {
-            if (!storeInfo) return null;
+          {internalStores.map?.(
+            (storeInfo: Record<string, any>, id: number) => {
+              if (!storeInfo) return null;
 
-            const items = [
-              {
-                key: "1",
-                label: storeInfo?.access?.title,
-                children: (
-                  <Popover>
-                    <Text>{storeInfo?.access?.content}</Text>
-                  </Popover>
-                ),
-              },
-              {
-                key: "2",
-                label: storeInfo?.details?.title,
-                children: <Text>{storeInfo?.details?.content}</Text>,
-              },
-            ];
-            return (
-              <Card
-                key={"store_" + id}
-                hoverable
-                className={StoresScss.storeCard}
-              >
-                <Flex justify="space-between">
-                  <CommonImage
-                    className={StoresScss.image}
-                    src={storeInfo.storeImage}
-                  />
-                  <Flex
-                    flex={1}
-                    justify="space-between"
-                    vertical
-                    className={StoresScss.titleContent}
-                  >
-                    <Title
-                      className={StoresScss.title}
-                      ellipsis={{
-                        rows: 1,
-                        expandable: false,
-                        tooltip: storeInfo.storeName,
-                      }}
-                      level={5}
-                      content={storeInfo.storeName}
+              const items = [
+                {
+                  key: "1",
+                  label: storeInfo?.access?.title,
+                  children: (
+                    <Popover>
+                      <Text>{storeInfo?.access?.content}</Text>
+                    </Popover>
+                  ),
+                },
+                {
+                  key: "2",
+                  label: storeInfo?.details?.title,
+                  children: <Text>{storeInfo?.details?.content}</Text>,
+                },
+              ];
+              return (
+                <Card
+                  key={"store_" + id}
+                  hoverable
+                  className={StoresScss.storeCard}
+                >
+                  <Flex justify="space-between">
+                    <CommonImage
+                      className={StoresScss.image}
+                      src={storeInfo.storeImage}
+                    />
+                    <Flex
+                      flex={1}
+                      justify="space-between"
+                      vertical
+                      className={StoresScss.titleContent}
                     >
-                      {storeInfo.storeName}
-                    </Title>
-                    <Text type="secondary" className={StoresScss.storePath}>
-                      {storeInfo.storePath}
-                    </Text>
-                    <Button
-                      size="middle"
-                      type="primary"
-                      onClick={() => gotoDetail(storeInfo.id)}
-                    >
-                      詳しく
-                    </Button>
+                      <Title
+                        className={StoresScss.title}
+                        ellipsis={{
+                          rows: 1,
+                          expandable: false,
+                          tooltip: storeInfo.storeName,
+                        }}
+                        level={5}
+                        content={storeInfo.storeName}
+                      >
+                        {storeInfo.storeName}
+                      </Title>
+                      <Text type="secondary" className={StoresScss.storePath}>
+                        {storeInfo.storePath}
+                      </Text>
+                      <Button
+                        size="middle"
+                        type="primary"
+                        onClick={() => gotoDetail(storeInfo.id)}
+                      >
+                        詳しく
+                      </Button>
+                    </Flex>
                   </Flex>
-                </Flex>
-                <Divider></Divider>
-                <Collapse
-                  size="small"
-                  className={StoresScss.collapse}
-                  items={items}
-                />
-              </Card>
-            );
-          })}
+                  <Divider></Divider>
+                  <Collapse
+                    size="small"
+                    className={StoresScss.collapse}
+                    items={items}
+                  />
+                </Card>
+              );
+            }
+          )}
         </Flex>
       )}
     </Flex>

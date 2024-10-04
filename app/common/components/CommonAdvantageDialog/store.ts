@@ -10,17 +10,12 @@ class AdvantageDialog extends BaseStore {
     default: false,
     key: "advantageDialogVisible",
   });
-  advantage = atom({
-    default: {} as Record<string, Advantage[]>,
-    key: "advantageDialogAdvantage",
-  });
+  advantage: Record<string, Advantage[]> = {};
   init() {}
 
   async getAdvantage() {
     const [err, res] = await utils.resolvePromise(wordpressApi.getAdvantage());
-    this.updateState?.({
-      advantage: _.groupBy(res.data, "advantageType"),
-    });
+    this.advantage = _.groupBy(res.data, "advantageType");
   }
 }
 

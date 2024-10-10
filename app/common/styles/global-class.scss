@@ -5,7 +5,7 @@
 html,
 body {
   margin: 0;
-  scrollbar-width: 0;
+  overflow-x: hidden;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -98,5 +98,13 @@ h3.ant-typography {
 @media screen and (max-width: $mobile-width) {
   .common-img {
     border-radius: $mobile-border-radius;
+  }
+  html,
+  body {
+    overflow-x: hidden;
+    scrollbar-width: 0;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }

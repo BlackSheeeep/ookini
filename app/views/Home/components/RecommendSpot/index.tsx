@@ -12,10 +12,12 @@ import _ from "lodash";
 interface IRecommendSpotProps {}
 
 const RecommendSpot: React.FunctionComponent<IRecommendSpotProps> = (props) => {
-  const { spot } = homeStore;
-  const sightView: any[] = useRecoilValue(spot);
-  React.useEffect(() => {
-    homeStore.getRecommendSpot();
+  const [sightView, setSightView] = React.useState([]);
+  React.useLayoutEffect(() => {
+    (async function fetch() {
+      const res = await homeStore.getRecommendSpot();
+      setSightView(res);
+    })();
   }, []);
   return (
     <Flex align="center" vertical className={ModuleScss.container}>

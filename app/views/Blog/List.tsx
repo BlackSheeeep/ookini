@@ -13,10 +13,12 @@ interface IBlogsProps {}
 const blogsId = HOME_KEYS.blog;
 
 const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
-  const { blogs } = homeStore;
-  const data: Record<string, any>[] = useRecoilValue(blogs);
+  const [data, setData] = React.useState([]);
   React.useEffect(() => {
-    homeStore.getBlogs();
+    (async function () {
+      const res = await homeStore.getBlogs();
+      setData(res);
+    })();
   }, []);
   return (
     <Flex align="center" vertical className={ModuleScss.container}>

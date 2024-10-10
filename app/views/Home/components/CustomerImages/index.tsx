@@ -18,11 +18,14 @@ const galleryId = HOME_KEYS.gallery;
 const CustomerImages: React.FunctionComponent<ICustomerImagesProps> = (
   props
 ) => {
-  const { customers } = homeStore;
-  const customerImages = useRecoilValue(customers);
+  const [customerImages, setCustomerImages] = React.useState([]);
 
   React.useLayoutEffect(() => {
-    homeStore.getCustomerImages();
+    async function fetch() {
+      const res = await homeStore.getCustomerImages();
+      setCustomerImages(res);
+    }
+    fetch();
   }, []);
   const images: string[] = _.flatten(
     customerImages?.map?.((item: any) => item?.showImages) || []

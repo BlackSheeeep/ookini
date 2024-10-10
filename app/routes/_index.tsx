@@ -3,15 +3,14 @@ import Home from "../views/Home";
 import homeStore from "~/views/Home/store";
 
 import { reservationStore } from "~/common/components/FloatGroup/Reservation/store";
-import FloatGroup from "~/common/components/FloatGroup";
-import CommonAdvantageDialog from "~/common/components/CommonAdvantageDialog";
 import { advantageDialogStore } from "~/common/components/CommonAdvantageDialog/store";
 import utils from "~/common/utils";
+import CommonLayout from "~/common/components/CommonLayout";
 
 export async function loader({ request }) {
   const userAgent = request.headers.get("User-Agent");
   utils.setUserAgent(userAgent);
-  console.error("user-agent", userAgent);
+  console.log(utils.isMobileDevice);
   await Promise.all([
     homeStore.init(),
     advantageDialogStore.getAdvantage(),
@@ -23,17 +22,17 @@ export async function loader({ request }) {
 }
 export type HomeLoader = typeof loader;
 
-// existing imports
-
 interface IHomeEntryProps {}
 
 const HomeEntry: React.FunctionComponent<IHomeEntryProps> = (props) => {
+  const [, update] = React.useState({});
+  React.useLayoutEffect(() => {
+    utils.isMobileDevice && update({});
+  }, []);
   return (
-    <>
+    <CommonLayout>
       <Home></Home>
-      <FloatGroup />
-      <CommonAdvantageDialog />
-    </>
+    </CommonLayout>
   );
 };
 

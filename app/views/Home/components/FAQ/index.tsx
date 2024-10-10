@@ -4,18 +4,20 @@ import { Collapse, Flex, Typography } from "antd";
 import { HOME_KEYS } from "~/common/constants/config";
 import homeStore from "~/views/Home/store";
 import Loading from "~/common/components/Loading";
-import { useRecoilValue } from "recoil";
 import CommonTitle from "~/common/components/CommonTitle";
 import _ from "lodash";
 
 interface IFQAProps {}
 const FQAId = HOME_KEYS.AskAndQuestion;
 const FAQ: React.FunctionComponent<IFQAProps> = (props) => {
-  const { faq } = homeStore;
-  React.useEffect(() => {
-    homeStore.getFAQ();
+  const [faqs, setFaqs] = React.useState([]);
+  React.useLayoutEffect(() => {
+    async function fetch() {
+      const res = await homeStore.getFAQ();
+      setFaqs(res);
+    }
+    fetch();
   }, []);
-  const faqs = useRecoilValue(faq);
   return (
     <Flex id={FQAId} vertical align="center" className={ModuleScss.container}>
       <CommonTitle

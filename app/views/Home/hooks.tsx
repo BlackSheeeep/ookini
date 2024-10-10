@@ -7,8 +7,7 @@ export const useHomeData = createUseStoreData(homeStore);
 
 export const awaitCompt = (
   Compt: React.FC<{ [key: string]: any; data: any }>,
-  path: string[],
-  initApi?: () => void
+  path: string[]
 ) => {
   return (props: any) => {
     const [data] = useHomeData(path);

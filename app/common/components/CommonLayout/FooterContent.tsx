@@ -3,11 +3,16 @@ import { Flex, Typography, Space } from "antd";
 import LayoutScss from "./Layout.module.scss";
 import CommonImage from "../Image";
 import { Link } from "react-router-dom";
+import utils from "~/common/utils";
 interface IFooterContentProps {}
 
 const FooterContent: React.FunctionComponent<IFooterContentProps> = (props) => {
   return (
-    <Flex align="center" justify="space-between">
+    <Flex
+      dir={utils.isMobileDevice ? "column" : "horizontal"}
+      align="center"
+      justify="center"
+    >
       <Flex>
         <CommonImage />
       </Flex>

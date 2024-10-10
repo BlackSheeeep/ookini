@@ -12,7 +12,13 @@ interface IAdvantageProps {}
 const resonId = HOME_KEYS.reasonsForChoosing;
 
 const MiniAdvantage: React.FunctionComponent<IAdvantageProps> = (props) => {
-  const advantageData = advantageDialogStore.advantage;
+  const [advantageData, setData] = React.useState({});
+  React.useLayoutEffect(() => {
+    (async function () {
+      const res = await advantageDialogStore.getAdvantage();
+      setData(res);
+    })();
+  }, []);
   const isLoading = Object.keys(advantageData).length === 0;
 
   return (

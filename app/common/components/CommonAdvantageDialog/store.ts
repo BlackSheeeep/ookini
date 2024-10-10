@@ -15,7 +15,8 @@ class AdvantageDialog extends BaseStore {
 
   async getAdvantage() {
     const [err, res] = await utils.resolvePromise(wordpressApi.getAdvantage());
-    this.advantage = _.groupBy(res.data, "advantageType");
+    if (err) return;
+    return _.groupBy(res.data, "advantageType");
   }
 }
 

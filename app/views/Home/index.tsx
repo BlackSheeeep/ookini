@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import homeStore from "~/views/Home/store";
 import Carousel from "./components/Carousel";
 import MenuAnchor from "./components/MenuAnchor";
@@ -13,7 +13,7 @@ import Blogs from "../Blog/List";
 import { Divider } from "antd";
 
 export const Home = () => {
-  //   homeStore.useInit();
+  homeStore.useInit();
   //@ts-ignore
   return (
     //@ts-ignore
@@ -38,4 +38,4 @@ export const Home = () => {
     </>
   );
 };
-export default React.memo(Home);
+export default Home;

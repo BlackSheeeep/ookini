@@ -2,6 +2,7 @@
   "name": "ookini",
   "version": "0.1.0",
   "private": true,
+  "type": "commonjs",
   "dependencies": {
     "@ant-design/colors": "^7.0.0",
     "@ant-design/cssinjs": "^1.21.1",
@@ -78,7 +79,9 @@
   "scripts": {
     "dev": "npm run build && node server.js",
     "build": "npx remix vite:build",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "predev": "ts-node --project ./tsconfig.node.json ./scripts/genAntdCss.tsx",
+    "prebuild": "ts-node --project ./tsconfig.node.json ./scripts/genAntdCss.tsx"
   },
   "eslintConfig": {
     "extends": [

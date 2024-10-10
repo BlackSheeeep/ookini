@@ -16,12 +16,11 @@ const CommonAdvantageDialog: React.FunctionComponent<
   const KEY = "has_displayed_advantage";
   advantageDialogStore.useInit();
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const localData = localStorage.getItem(KEY);
     if (localData && Date.now() - Number(localData) < 30 * 60 * 1000) {
       return;
     }
-    advantageDialogStore.getAdvantage();
     setDisplayAdvantageDialog(true);
   }, []);
   return utils.isMobileDevice ? (

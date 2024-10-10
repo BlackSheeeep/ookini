@@ -1,4 +1,3 @@
-import type { Store } from "antd/lib/form/interface";
 import { BaseStore } from "~/common/baseStore";
 import utils from "~/common/utils";
 import { atom } from "recoil";
@@ -18,29 +17,9 @@ class HomeStore extends BaseStore {
   });
   stores = atom({
     key: "stores",
-    default: [] as Store[],
+    default: [] as any[],
   });
   hairGallery = {};
-  rentSteps = atom({
-    key: "rentSteps",
-    default: {},
-  });
-  customers = atom({
-    key: "customers",
-    default: [],
-  });
-  faq = atom({
-    key: "faq",
-    default: [],
-  });
-  spot = atom({
-    key: "spot",
-    default: [],
-  });
-  blogs = atom({
-    key: "blogs",
-    default: [],
-  });
 
   async init() {
     const [err, res] = await utils.resolvePromise(
@@ -97,33 +76,31 @@ class HomeStore extends BaseStore {
     const [, customerImages] = await utils.resolvePromise(
       wordpressApi.getCustomerImages()
     );
-    this.updateState?.({ customers: _.get(customerImages, "data") });
+    return _.get(customerImages, "data");
   }
   public getBlogs = async () => {
     const [err, res] = await utils.resolvePromise(
       wordpressApi.getBlogs(["title", "date", "link"])
     );
-    const blogs = res?.data?.map?.((blog: any) => ({
+    return res?.data?.map?.((blog: any) => ({
       title: _.get(blog, "title.rendered"),
       date: _.get(blog, "date"),
       link: _.get(blog, "link"),
     }));
-    this.updateState?.({ blogs: blogs });
   };
   public async getFAQ() {
-    const faq = await wordpressApi.getFQA();
-    this.updateState?.({ faq: _.get(faq, "data") });
+    const [, faq] = await utils.resolvePromise(wordpressApi.getFQA());
+    return _.get(faq, "data");
   }
   public async getRecommendSpot() {
     const [err, res] = await utils.resolvePromise(
       wordpressApi.getRecommendSpot()
     );
-    if (err) return Promise.reject(err);
-    const data = _.get(res, "data")?.map((item: any) => ({
+    if (err) return [];
+    return _.get(res, "data")?.map((item: any) => ({
       ...item,
       sightImage: _.get(item, "sightImage.guid"),
     }));
-    this.updateState?.({ spot: data });
   }
 }
 

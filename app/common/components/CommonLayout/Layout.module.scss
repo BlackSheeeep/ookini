@@ -3,7 +3,6 @@
   justify-content: center;
   flex-direction: row;
   display: flex;
-  width: $full-screen-width;
 }
 .content {
   min-height: 100vh;
@@ -28,7 +27,6 @@
 }
 .footer {
   background-color: #001529;
-  width: $full-screen-width;
   .footerContent {
     color: white;
     font-size: 14px;

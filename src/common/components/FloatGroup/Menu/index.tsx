@@ -13,11 +13,11 @@ import ModuleScss from "./Menu.module.scss";
 import { reservationStore } from "../Reservation/store";
 import { useRecoilValue } from "recoil";
 import { useMatch, Link } from "react-router-dom";
-import { GALLERY_TYPE } from "common/constants";
+import { GALLERY_TYPE } from "~/common/constants";
 // import translate from "translate";
 // import translateV2 from "translate";
-import utils from "common/utils";
-import CommonNews from "common/components/CommonNews";
+import utils from "~/common/utils";
+import CommonNews from "~/common/components/CommonNews";
 interface IMenuBarProps {}
 //   const trans = document.getElementById(":0.container");
 //   if (trans) trans.style.display = "none";

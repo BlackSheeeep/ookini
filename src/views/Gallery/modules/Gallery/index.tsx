@@ -1,11 +1,11 @@
 import { Card, Divider, Flex, Image, Typography } from "antd";
-import utils from "common/utils";
-import CommonTitle from "common/components/CommonTitle";
-import CommonImage from "common/components/Image";
-import Loading from "common/components/Loading";
+import utils from "~/common/utils";
+import CommonTitle from "~/common/components/CommonTitle";
+import CommonImage from "~/common/components/Image";
+import Loading from "~/common/components/Loading";
 import * as React from "react";
 import { useRecoilValue } from "recoil";
-import galleryStore from "views/Gallery/store";
+import galleryStore from "~/views/Gallery/store";
 import ModuleScss from "./Gallery.module.scss";
 interface IGalleryProps {}
 

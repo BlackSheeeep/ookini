@@ -1,13 +1,13 @@
 import { Card, Divider, Flex, Tag, Typography } from "antd";
-import CommonTitle from "common/components/CommonTitle";
-import Loading from "common/components/Loading";
+import CommonTitle from "~/common/components/CommonTitle";
+import Loading from "~/common/components/Loading";
 import * as React from "react";
 import { useRecoilValue } from "recoil";
-import feePlanStore from "views/FeePlanDetail/store";
+import feePlanStore from "~/views/FeePlanDetail/store";
 import ModuleScss from "./FeePlan.module.scss";
-import utils from "common/utils";
+import utils from "~/common/utils";
 import { IssuesCloseOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-import CommonImage from "common/components/Image";
+import CommonImage from "~/common/components/Image";
 
 interface IFeeplanDetailProps {}
 

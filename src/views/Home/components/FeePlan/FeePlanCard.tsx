@@ -1,10 +1,10 @@
 import { Card, Space, Typography, Button, Flex } from "antd";
 import * as React from "react";
 import FeePlansScss from "./FeePlans.module.scss";
-import utils from "common/utils";
-import CommonImage from "common/components/Image";
-import FormDialog from "common/components/FloatGroup/Reservation/FormDialog";
-import { reservationStore } from "common/components/FloatGroup/Reservation/store";
+import utils from "~/common/utils";
+import CommonImage from "~/common/components/Image";
+import FormDialog from "~/common/components/FloatGroup/Reservation/FormDialog";
+import { reservationStore } from "~/common/components/FloatGroup/Reservation/store";
 import { Link } from "react-router-dom";
 const { Title, Paragraph } = Typography;
 interface IFeePlanCardProps {

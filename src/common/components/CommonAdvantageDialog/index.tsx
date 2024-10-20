@@ -1,8 +1,8 @@
 import * as React from "react";
 import { advantageDialogStore } from "./store";
-import utils from "common/utils";
+import utils from "~/common/utils";
 import { Modal } from "antd";
-import MiniAdvantage from "views/Home/components/Advantage/Mini";
+import MiniAdvantage from "~/views/Home/components/Advantage/Mini";
 import ModuleScss from "./CommonAdvantageDialog.module.scss";
 
 interface ICommonAdvantageDialogProps {}

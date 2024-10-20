@@ -1,0 +1,40 @@
+.imgWrapper {
+    max-width: 20rem;
+    margin: 2rem;
+    border-radius: $border-radius !important;
+    overflow: hidden;
+}
+.mobileImgWrapper {
+    border-radius: $mobile-border-radius !important;
+}
+.container {
+    padding: 4rem 0;
+}
+.card {
+    width: 80rem;
+    &:not(:last-child) {
+        margin-bottom: 2rem;
+    }
+
+    :global {
+        .ant-card-body {
+            padding: 2rem;
+        }
+    }
+}
+.showInfo {
+    background: $color-primary;
+    border-radius: $border-radius;
+    padding: 2rem;
+}
+@media screen and (max-width: $mobile-width) {
+    .card {
+        width: 94rem;
+    }
+    .imgWrapper {
+        max-width: 100%;
+    }
+    .showInfo {
+        border-radius: $mobile-border-radius;
+    }
+}

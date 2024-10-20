@@ -1,0 +1,44 @@
+
+
+.title {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: 4rem 0 !important;
+}
+.carousel {
+    width: $full-screen-width;
+    :global {
+      .ant-card-head-title {
+        text-align: center;
+      }
+    }
+}
+.cardContainer {
+  width: 25rem;
+  flex-direction: column;
+  margin: 0 2rem 2rem;
+  display: flex;
+  .image {
+    border-radius: 10px;
+  }
+}
+.subTitle {
+  margin: 2rem 0;
+}
+@media screen and (max-width: $mobile-width) {
+    .cardContainer {
+        width: 90rem;
+        height: 100%;
+        margin: 0 5rem 4rem !important;
+        .image {
+    min-height: 70rem;
+
+        }
+        
+    }
+.title {
+  padding:0 3rem !important;
+}
+}

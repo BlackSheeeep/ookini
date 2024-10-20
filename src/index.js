@@ -1,7 +1,7 @@
-import "./global.d.ts";
+import "./global.js";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
+import App from "./App.jsx";
 import "common/styles/global-variables.scss";
 import "common/styles/global-class.scss";
 

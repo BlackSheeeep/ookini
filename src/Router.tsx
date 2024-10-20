@@ -12,15 +12,15 @@ import {
 // import FeePlanDetail from "views/FeePlanDetail";
 // import StoreDetail from "views/StoreDetail";
 // import Gallery from "views/Gallery";
-import utils from "common/utils";
-import NewsroomList from "views/Newsroom/List";
+import utils from "~/common/utils";
+import NewsroomList from "~/views/Newsroom/List";
 // import BlogDetail from "views/Blog/Page";
-import CommonLayout from "common/components/CommonLayout";
-const Home = React.lazy(() => import("views/Home"));
-const FeePlanDetail = React.lazy(() => import("views/FeePlanDetail"));
-const StoreDetail = React.lazy(() => import("views/StoreDetail"));
-const Gallery = React.lazy(() => import("views/Gallery"));
-const BlogDetail = React.lazy(() => import("views/Blog/Page"));
+import CommonLayout from "~/common/components/CommonLayout";
+const Home = React.lazy(() => import("~/views/Home"));
+const FeePlanDetail = React.lazy(() => import("~/views/FeePlanDetail"));
+const StoreDetail = React.lazy(() => import("~/views/StoreDetail"));
+const Gallery = React.lazy(() => import("~/views/Gallery"));
+const BlogDetail = React.lazy(() => import("~/views/Blog/Page"));
 function Routers() {
   const router = createBrowserRouter(
     createRoutesFromElements(

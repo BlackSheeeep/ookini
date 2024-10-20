@@ -1,9 +1,9 @@
-import type { Store } from "antd/es/form/interface";
-import { BaseStore } from "common/baseStore";
-import utils from "common/utils";
+import type { Store } from "antd/lib/form/interface";
+import { BaseStore } from "~/common/baseStore";
+import utils from "~/common/utils";
 import { atom } from "recoil";
-import { wordpressApi } from "Request";
-import type { FeePlan } from "views/types/FeePlan";
+import { wordpressApi } from "~/Request";
+import type { FeePlan } from "~/views/types/FeePlan";
 
 class HomeStore extends BaseStore {
   assets = {

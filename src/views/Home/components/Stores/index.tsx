@@ -7,15 +7,15 @@ import {
   Button,
   Popover,
 } from "antd";
-import { HOME_KEYS } from "common/constants/config";
+import { HOME_KEYS } from "~/common/constants/config";
 import * as React from "react";
 import { useRecoilValue } from "recoil";
 import StoresScss from "./Stores.module.scss";
-import utils from "common/utils";
-import CommonTitle from "common/components/CommonTitle";
-import CommonImage from "common/components/Image";
-import Loading from "common/components/Loading";
-import { reservationStore } from "common/components/FloatGroup/Reservation/store";
+import utils from "~/common/utils";
+import CommonTitle from "~/common/components/CommonTitle";
+import CommonImage from "~/common/components/Image";
+import Loading from "~/common/components/Loading";
+import { reservationStore } from "~/common/components/FloatGroup/Reservation/store";
 const { Title, Text } = Typography;
 
 interface IStoresProps {}

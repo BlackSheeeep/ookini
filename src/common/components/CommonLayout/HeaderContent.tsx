@@ -2,7 +2,7 @@ import * as React from "react";
 import LayoutScss from "./Layout.module.scss";
 import { Button, Flex } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
-import utils from "common/utils";
+import utils from "~/common/utils";
 import { useMatch } from "react-router-dom";
 
 interface HeaderContentProps {}

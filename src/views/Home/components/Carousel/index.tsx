@@ -2,9 +2,9 @@ import * as React from "react";
 import { useRecoilValue } from "recoil";
 import homeStore from "../../store";
 import CarouselScss from "./Carousel.module.scss";
-import CommonCarousel from "common/components/CommonCarousel";
-import CommonImage from "common/components/Image";
-import Loading from "common/components/Loading";
+import CommonCarousel from "~/common/components/CommonCarousel";
+import CommonImage from "~/common/components/Image";
+import Loading from "~/common/components/Loading";
 import { Flex } from "antd";
 interface ICarouselProps {}
 

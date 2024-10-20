@@ -1,0 +1,22 @@
+$full-screen-width: 100rem;
+$mobile-width: 600px;
+// $color-primary: #ab493d;
+$color-primary: #ffcd8f;
+$color-primary-2: #d5d7d2;
+$common-margin: 2rem;
+$font-color-text: #010101;
+$font-color-title: #010101;
+$font-color-desc: #d5d7d2;
+$border-radius: 20px;
+$mobile-border-radius: 10px;
+$z-index-1: 10000;
+$z-index-2: $z-index-1 - 10;
+$z-index-3: $z-index-2 - 10;
+
+:root {
+  --primary-color: #ffcd8f;
+}
+
+@media screen and (max-width: $mobile-width) {
+  $border-radius: 10px;
+}

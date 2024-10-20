@@ -1,0 +1,41 @@
+.container {
+  width: $full-screen-width;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: #f9f2e7;
+  :global {
+    .ant-anchor {
+      align-items: center;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      font-size: large;
+    }
+    .ant-anchor-link {
+      padding-inline: 0 2rem !important;
+    }
+    .ant-anchor-link-title-active {
+      .item {
+        color: $color-primary !important;
+      }
+    }
+    .ant-anchor-link .ant-anchor-link-title .ant-typography {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+  }
+}
+@media screen and (max-width: $mobile-width) {
+  .container {
+    padding: 0 1rem;
+    :global {
+      .ant-anchor {
+        justify-content: start;
+      }
+      .item {
+        margin: 1rem 2rem;
+      }
+    }
+  }
+}

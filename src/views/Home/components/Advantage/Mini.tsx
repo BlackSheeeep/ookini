@@ -1,13 +1,13 @@
 import { Flex, List } from "antd";
-import { HOME_KEYS } from "common/constants/config";
+import { HOME_KEYS } from "~/common/constants/config";
 import * as React from "react";
 import AdvantageScss from "./Advantage.module.scss";
 import { useRecoilValue } from "recoil";
-import CommonTitle from "common/components/CommonTitle";
-import utils from "common/utils";
-import CommonImage from "common/components/Image";
-import { advantageDialogStore } from "common/components/CommonAdvantageDialog/store";
-import type { Advantage as AdvantageType } from "views/types/Advantage";
+import CommonTitle from "~/common/components/CommonTitle";
+import utils from "~/common/utils";
+import CommonImage from "~/common/components/Image";
+import { advantageDialogStore } from "~/common/components/CommonAdvantageDialog/store";
+import type { Advantage as AdvantageType } from "~/views/types/Advantage";
 
 interface IAdvantageProps {}
 const resonId = HOME_KEYS.reasonsForChoosing;

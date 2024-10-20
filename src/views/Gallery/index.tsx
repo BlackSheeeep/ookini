@@ -1,8 +1,8 @@
 import * as React from "react";
 import galleryStore from "./store";
 import Gallery from "./modules/Gallery";
-import { useSearch } from "common/utils/hooks";
-import { GALLERY_TYPE } from "common/constants";
+import { useSearch } from "~/common/utils/hooks";
+import { GALLERY_TYPE } from "~/common/constants";
 
 interface IGalleryProps {}
 

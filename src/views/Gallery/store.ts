@@ -1,9 +1,9 @@
-import { BaseStore } from "common/baseStore";
-import { GALLERY_TYPE } from "common/constants";
-import utils from "common/utils";
-import { createUseStoreData } from "common/utils/hooks";
+import { BaseStore } from "~/common/baseStore";
+import { GALLERY_TYPE } from "~/common/constants";
+import utils from "~/common/utils";
+import { createUseStoreData } from "~/common/utils/hooks";
 import { atom } from "recoil";
-import { wordpressApi } from "Request";
+import { wordpressApi } from "~/Request";
 class GalleryStore extends BaseStore {
   gallery = atom({
     key: "galleries",

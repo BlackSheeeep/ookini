@@ -1,10 +1,10 @@
-import { wordpressApi } from "Request";
-import { BaseStore } from "common/baseStore";
-import utils from "common/utils";
+import { wordpressApi } from "~/Request";
+import { BaseStore } from "~/common/baseStore";
+import utils from "~/common/utils";
 import { atom } from "recoil";
-import type { FeePlan } from "views/types/FeePlan";
-import { NewsData } from "views/types/News";
-import type { Store } from "views/types/Store";
+import type { FeePlan } from "~/views/types/FeePlan";
+import { NewsData } from "~/views/types/News";
+import type { Store } from "~/views/types/Store";
 
 class Reservation extends BaseStore {
   stores = atom({

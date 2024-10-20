@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Layout, Flex, theme, Modal, Affix } from "antd";
 import LayoutScss from "./Layout.module.scss";
-import utils from "common/utils";
+import utils from "~/common/utils";
 import HeaderContent from "./HeaderContent";
 import FooterContent from "./FooterContent";
 import FloatGroup from "../FloatGroup";

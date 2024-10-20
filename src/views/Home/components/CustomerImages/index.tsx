@@ -1,16 +1,16 @@
 import * as React from "react";
 import CustomerScss from "./CustomerImages.module.scss";
-import CommonCarousel from "common/components/CommonCarousel";
-import homeStore from "views/Home/store";
-import Loading from "common/components/Loading";
+import CommonCarousel from "~/common/components/CommonCarousel";
+import homeStore from "~/views/Home/store";
+import Loading from "~/common/components/Loading";
 import { useRecoilValue } from "recoil";
 import { Button, Flex, Typography } from "antd";
-import { HOME_KEYS } from "common/constants/config";
-import CommonTitle from "common/components/CommonTitle";
+import { HOME_KEYS } from "~/common/constants/config";
+import CommonTitle from "~/common/components/CommonTitle";
 import { SwapRightOutlined } from "@ant-design/icons";
-import utils from "common/utils";
-import { GALLERY_TYPE } from "common/constants";
-import CommonImage from "common/components/Image";
+import utils from "~/common/utils";
+import { GALLERY_TYPE } from "~/common/constants";
+import CommonImage from "~/common/components/Image";
 
 interface ICustomerImagesProps {}
 const galleryId = HOME_KEYS.gallery;

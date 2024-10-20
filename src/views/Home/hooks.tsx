@@ -1,6 +1,6 @@
-import { createUseStoreData, useAwaitData } from "common/utils/hooks";
+import { createUseStoreData, useAwaitData } from "~/common/utils/hooks";
 import homeStore from "./store";
-import Loading from "common/components/Loading";
+import Loading from "~/common/components/Loading";
 
 export const useHomeData = createUseStoreData(homeStore);
 

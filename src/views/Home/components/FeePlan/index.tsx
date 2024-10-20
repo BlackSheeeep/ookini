@@ -1,13 +1,13 @@
 import * as React from "react";
 import FeePlanCard from "./FeePlanCard";
-import { HOME_KEYS } from "common/constants/config";
+import { HOME_KEYS } from "~/common/constants/config";
 import { useRecoilValue } from "recoil";
 import FeePlansScss from "./FeePlans.module.scss";
-import CommonCarousel from "common/components/CommonCarousel";
+import CommonCarousel from "~/common/components/CommonCarousel";
 import { Flex, Typography } from "antd";
-import utils from "common/utils";
-import Loading from "common/components/Loading";
-import { reservationStore } from "common/components/FloatGroup/Reservation/store";
+import utils from "~/common/utils";
+import Loading from "~/common/components/Loading";
+import { reservationStore } from "~/common/components/FloatGroup/Reservation/store";
 const { Title } = Typography;
 interface IFeePlanProps {}
 

@@ -1,11 +1,11 @@
 import * as React from "react";
 import ModuleScss from "./FAQ.module.scss";
 import { Collapse, Flex, Typography } from "antd";
-import { HOME_KEYS } from "common/constants/config";
-import homeStore from "views/Home/store";
-import Loading from "common/components/Loading";
+import { HOME_KEYS } from "~/common/constants/config";
+import homeStore from "~/views/Home/store";
+import Loading from "~/common/components/Loading";
 import { useRecoilValue } from "recoil";
-import CommonTitle from "common/components/CommonTitle";
+import CommonTitle from "~/common/components/CommonTitle";
 interface IFQAProps {}
 const FQAId = HOME_KEYS.AskAndQuestion;
 const FAQ: React.FunctionComponent<IFQAProps> = (props) => {

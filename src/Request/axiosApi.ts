@@ -1,6 +1,6 @@
 import axios from "axios";
 import { type AxiosRequestConfig } from "axios";
-import utils from "common/utils";
+import utils from "~/common/utils";
 import {
   advantageUrl,
   categoriesUrl,

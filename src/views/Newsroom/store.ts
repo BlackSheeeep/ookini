@@ -1,8 +1,8 @@
-import { wordpressApi } from "Request";
-import { BaseStore } from "common/baseStore";
-import utils from "common/utils";
+import { wordpressApi } from "~/Request";
+import { BaseStore } from "~/common/baseStore";
+import utils from "~/common/utils";
 import { atom } from "recoil";
-import type { NewsData } from "views/types/News";
+import type { NewsData } from "~/views/types/News";
 
 class NewsRoom extends BaseStore {
   news = atom({

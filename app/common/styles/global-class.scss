@@ -1,0 +1,110 @@
+.hf-bg {
+  background-color: #3a3a3c !important;
+}
+
+html,
+body {
+  margin: 0;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.bounce {
+  animation-name: bounce;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+#google_translate_element {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  //   top: 40%;
+  //   display: none;
+  //   left: 40%;
+  z-index: $z-index-1 + 10;
+  top: 0;
+  .goog-te-gadget,
+  div[id=":0.targetLanguage"],
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  left: 0;
+}
+
+.ookini-text {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 400;
+  font-family: sans-serif;
+  color: $font-color-text;
+}
+
+.ookini-title {
+  font-size: 24px;
+  line-height: 26px;
+  font-weight: 600;
+  font-family: sans-serif;
+  color: $font-color-title;
+}
+.ookini-title-2 {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 600;
+  font-family: sans-serif;
+  color: $font-color-title;
+}
+.ookini-title-3 {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  font-family: sans-serif;
+  color: $font-color-title;
+}
+.ookini-desc {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 400;
+  font-family: sans-serif;
+  color: $font-color-desc;
+}
+
+.ant-typography {
+  margin: 0.5rem 0;
+}
+h3.ant-typography {
+  margin: 2rem 0 1rem;
+}
+.common-img {
+  overflow: hidden;
+  border-radius: $border-radius;
+}
+
+@media screen and (max-width: $mobile-width) {
+  .common-img {
+    border-radius: $mobile-border-radius;
+  }
+  html,
+  body {
+    overflow-x: hidden;
+    scrollbar-width: 0;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

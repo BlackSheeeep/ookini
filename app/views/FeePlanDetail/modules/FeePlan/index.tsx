@@ -2,23 +2,22 @@ import { Card, Divider, Flex, Tag, Typography } from "antd";
 import CommonTitle from "~/common/components/CommonTitle";
 import Loading from "~/common/components/Loading";
 import * as React from "react";
-import { useRecoilValue } from "recoil";
-import feePlanStore from "~/views/FeePlanDetail/store";
 import ModuleScss from "./FeePlan.module.scss";
-import utils from "~/common/utils";
 import { IssuesCloseOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import CommonImage from "~/common/components/Image";
 import _ from "lodash";
+import { useLoaderData } from "@remix-run/react";
+import { IFeePlanDetailData } from "~/routes/feePlanDetail";
 
 interface IFeeplanDetailProps {}
 
 const FeeplanDetail: React.FunctionComponent<IFeeplanDetailProps> = (props) => {
-  const { currFeePlan } = feePlanStore;
-  const data: any = useRecoilValue(currFeePlan);
+  const { feePlanStore } = useLoaderData<IFeePlanDetailData>();
+  const { currFeePlan: data } = feePlanStore;
 
   if (!data) return <Loading />;
   const rentTags = _.get(data, "rent.rentTags");
-  const tags = rentTags.content.replace(/(\[|\]|\')/gi, "").split(",") || [];
+  const tags = rentTags?.content?.replace(/(\[|\]|\')/gi, "").split(",") || [];
   const images = _.get(data, "images")?.map(
     (item: Record<string, any>) => item.guid
   );

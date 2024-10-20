@@ -8,15 +8,6 @@ interface IStoreDetailProps {}
 
 const StoreDetail: React.FunctionComponent<IStoreDetailProps> = (props) => {
   storeDetail.useInit();
-  const [searchParams] = useSearchParams();
-  const storeId = searchParams.get("id");
-
-  React.useEffect(() => {
-    storeId &&
-      storeDetail
-        .getStoreInfo(storeId)
-        .catch((err) => message.error(err?.message || "出错了"));
-  }, [storeId]);
 
   return <StoreInfo />;
 };

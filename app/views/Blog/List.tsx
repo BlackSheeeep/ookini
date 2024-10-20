@@ -5,21 +5,16 @@ import Loading from "~/common/components/Loading";
 import { HOME_KEYS } from "~/common/constants/config";
 import CommonTitle from "~/common/components/CommonTitle";
 import { Typography } from "antd";
-import homeStore from "~/views/Home/store";
-import { useRecoilValue } from "recoil";
 import _ from "lodash";
+import { useLoaderData } from "@remix-run/react";
+import { BlogsDetailData } from "~/routes/blogs";
 const { Link } = Typography;
 interface IBlogsProps {}
 const blogsId = HOME_KEYS.blog;
 
 const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
-  const [data, setData] = React.useState([]);
-  React.useEffect(() => {
-    (async function () {
-      const res = await homeStore.getBlogs();
-      setData(res);
-    })();
-  }, []);
+  const { blogs: data } = useLoaderData<BlogsDetailData>();
+
   return (
     <Flex align="center" vertical className={ModuleScss.container}>
       <CommonTitle level={4} title="ブログ" subTitle="Blogs" />

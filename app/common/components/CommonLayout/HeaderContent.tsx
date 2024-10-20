@@ -8,7 +8,7 @@ import { useMatches } from "@remix-run/react";
 interface HeaderContentProps {}
 
 const HeaderContent: React.FC<HeaderContentProps> = () => {
-  const isHome = useMatches().find((item) => item.pathname === "/");
+  const isHome = useMatches().length === 0;
   const gotoHome = () => {
     !isHome && utils.goto("/");
   };

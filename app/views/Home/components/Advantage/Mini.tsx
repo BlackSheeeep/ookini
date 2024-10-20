@@ -7,18 +7,16 @@ import utils from "~/common/utils";
 import CommonImage from "~/common/components/Image";
 import { advantageDialogStore } from "~/common/components/CommonAdvantageDialog/store";
 import type { Advantage as AdvantageType } from "~/views/types/Advantage";
+import { useLoaderData } from "react-router-dom";
 
 interface IAdvantageProps {}
 const resonId = HOME_KEYS.reasonsForChoosing;
 
 const MiniAdvantage: React.FunctionComponent<IAdvantageProps> = (props) => {
-  const [advantageData, setData] = React.useState({});
-  React.useLayoutEffect(() => {
-    (async function () {
-      const res = await advantageDialogStore.getAdvantage();
-      setData(res);
-    })();
-  }, []);
+  const {
+    advantageDialogStore: { advantage: advantageData },
+  }: any = useLoaderData();
+
   const isLoading = Object.keys(advantageData).length === 0;
 
   return (

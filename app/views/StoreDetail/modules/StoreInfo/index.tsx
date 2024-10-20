@@ -13,12 +13,14 @@ import ProductCarousel from "../../components/ProductCarousel";
 import AllStores from "../../components/AllStores";
 import StoreFooter from "../../components/StoreFooter";
 import ModuleScss from "./StoreInfo.module.scss";
+import { useLoaderData } from "@remix-run/react";
+import { IStoreDetailData } from "~/routes/storeDetail";
 
 interface IStoreInfoProps {}
 
 const StoreInfo: React.FunctionComponent<IStoreInfoProps> = (props) => {
-  const { storeInfo } = storeDetail;
-  const data: any = useRecoilValue(storeInfo);
+  const { storeDetail } = useLoaderData<IStoreDetailData>();
+  const { storeInfo: data } = storeDetail;
   if (!data) return <Loading></Loading>;
   const { storeName } = data;
 

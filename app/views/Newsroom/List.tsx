@@ -3,15 +3,12 @@ import { useRecoilValue } from "recoil";
 import { useEffect } from "react";
 import NewsItem from "./Card";
 import { Flex } from "antd";
+import { useLoaderData } from "@remix-run/react";
+import { NewsroomData } from "~/routes/newsroom";
 
 const NewsroomList = () => {
-  newsroomStore.useInit();
-
-  useEffect(() => {
-    newsroomStore.init();
-  }, []);
-
-  const news = useRecoilValue(newsroomStore.news);
+  const { newsroomStore } = useLoaderData<NewsroomData>();
+  const news = newsroomStore.news;
 
   return (
     <Flex

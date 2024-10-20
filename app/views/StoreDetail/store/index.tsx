@@ -6,14 +6,11 @@ import { RecoilState, atom, useRecoilCallback } from "recoil";
 import _ from "lodash";
 import { wordpressApi } from "~/Request";
 class StoreDetail extends BaseStore {
-  storeInfo = atom({
-    key: "storeInfo",
-    default: null,
-  });
+  storeInfo = null;
   async getStoreInfo(id: number | string) {
     const [err, res] = await utils.resolvePromise(wordpressApi.getStores(id));
     if (err) return Promise.reject();
-    this.updateState?.({ storeInfo: _.get(res, "data") });
+    this.storeInfo = _.get(res, "data");
   }
 }
 

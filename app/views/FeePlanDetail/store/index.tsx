@@ -2,18 +2,14 @@ import { BaseStore } from "~/common/baseStore";
 import Loading from "~/common/components/Loading";
 import utils from "~/common/utils";
 import { createUseStoreData } from "~/common/utils/hooks";
-import { RecoilState, atom, useRecoilCallback } from "recoil";
 import _ from "lodash";
 import { wordpressApi } from "~/Request";
 class FeePlanStore extends BaseStore {
-  currFeePlan = atom({
-    key: "currFeePlan",
-    default: null,
-  });
+  currFeePlan = null;
   async getCurrFeePlan(id: number | string) {
     const [err, res] = await utils.resolvePromise(wordpressApi.getFeePlan(id));
     if (err) return Promise.reject();
-    this.updateState?.({ currFeePlan: _.get(res, "data") });
+    this.currFeePlan = _.get(res, "data");
   }
 }
 

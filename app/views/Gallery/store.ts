@@ -5,10 +5,7 @@ import { createUseStoreData } from "~/common/utils/hooks";
 import { atom } from "recoil";
 import { wordpressApi } from "~/Request";
 class GalleryStore extends BaseStore {
-  gallery = atom({
-    key: "galleries",
-    default: [],
-  });
+  gallery = [];
   isErrorType = atom({
     key: "isErrorType",
     default: false,
@@ -40,7 +37,7 @@ class GalleryStore extends BaseStore {
       return data;
     });
 
-    this.updateState?.({ gallery: datas });
+    this.gallery = datas;
   };
   async getCustomers() {
     const [err, res] = await utils.resolvePromise(
@@ -55,7 +52,7 @@ class GalleryStore extends BaseStore {
       return data;
     });
 
-    this.updateState?.({ gallery: datas });
+    this.gallery = datas;
   }
 }
 

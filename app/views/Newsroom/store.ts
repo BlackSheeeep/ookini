@@ -1,25 +1,20 @@
 import { wordpressApi } from "~/Request";
 import { BaseStore } from "~/common/baseStore";
 import utils from "~/common/utils";
-import { atom } from "recoil";
-import type { NewsData } from "~/views/types/News";
+import type { NewsData, NewsItem } from "~/views/types/News";
 import _ from "lodash";
 
 class NewsRoom extends BaseStore {
-  news = atom({
-    default: [] as NewsData,
-    key: "news",
-  });
+  news: NewsItem[] = [];
   init() {
     return Promise.all([this.getNews()]);
   }
   async getNews() {
     const [err, res] = await utils.resolvePromise(wordpressApi.getNews());
-    this.updateState?.({
-      news: (_.get(res, "originData") as unknown as NewsData).filter(
+    this.news =
+      (_.get(res, "originData") as unknown as NewsData).filter(
         (news) => news.status === "publish"
-      ),
-    });
+      ) || [];
   }
 }
 

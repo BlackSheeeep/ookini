@@ -4,16 +4,15 @@ import CommonTitle from "~/common/components/CommonTitle";
 import CommonImage from "~/common/components/Image";
 import Loading from "~/common/components/Loading";
 import * as React from "react";
-import { useRecoilValue } from "recoil";
-import galleryStore from "~/views/Gallery/store";
 import _ from "lodash";
 import ModuleScss from "./Gallery.module.scss";
+import { useLoaderData } from "@remix-run/react";
+import { GalleryData } from "~/routes/gallery";
 interface IGalleryProps {}
 
 const Gallery: React.FunctionComponent<IGalleryProps> = (props) => {
-  const { gallery } = galleryStore;
-  const galleries: any[] = useRecoilValue(gallery);
-  React.useEffect(() => {}, []);
+  const { galleryStore } = useLoaderData<GalleryData>();
+  const { gallery: galleries } = galleryStore;
   if (_.isEmpty(galleries)) return <Loading></Loading>;
   return (
     <Flex

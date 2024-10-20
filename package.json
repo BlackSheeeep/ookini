@@ -8,7 +8,6 @@
     "@ant-design/cssinjs": "^1.21.1",
     "@ant-design/icons": "^5.4.0",
     "@ant-design/static-style-extract": "^1.0.3",
-    "@babel/core": "^7.16.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@emailjs/browser": "^4.1.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
@@ -158,6 +157,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.25.7",
+    "@babel/core": "^7.25.8",
+    "@babel/preset-env": "^7.25.8",
+    "@babel/preset-react": "^7.25.7",
     "@remix-run/dev": "^2.13.1",
     "@types/jest": "^29.5.11",
     "@types/lodash": "^4.14.202",

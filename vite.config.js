@@ -3,11 +3,15 @@ import path from "path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [remix()],
+  plugins: [
+    remix({
+      serverModuleFormat: "cjs",
+    }),
+  ],
   build: {
     rollupOptions: {
       output: {
-        format: "cjs", // 指定输出格式为 CommonJS
+        format: "commonjs", // 指定输出格式为 CommonJS
       },
     },
   },

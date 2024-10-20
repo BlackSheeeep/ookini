@@ -1,8 +1,6 @@
 import _ from "lodash";
 import React from "react";
 import { Links, Meta, Outlet, Scripts } from "@remix-run/react";
-import CommonLayout from "./common/components/CommonLayout";
-import { RecoilRoot } from "recoil";
 import utils from "./common/utils";
 
 function App() {
@@ -25,8 +23,6 @@ function App() {
         <title>ookini</title>
         <Links></Links>
         <Scripts></Scripts>
-
-        {/* <link rel="stylesheet" href="/antd.min.css"></link> */}
       </head>
       <body>
         <div id="root">

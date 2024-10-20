@@ -5,7 +5,11 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [remix()],
   build: {
-    rollupOptions: {},
+    rollupOptions: {
+      output: {
+        format: "cjs", // 指定输出格式为 CommonJS
+      },
+    },
   },
   resolve: {
     alias: {

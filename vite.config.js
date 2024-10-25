@@ -5,7 +5,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [
     remix({
-      serverModuleFormat: "cjs",
+      //   serverModuleFormat: "cjs",
     }),
   ],
   build: {

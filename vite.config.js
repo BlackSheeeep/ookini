@@ -9,11 +9,11 @@ export default defineConfig({
     }),
   ],
   build: {
-    rollupOptions: {
-      output: {
-        format: "commonjs", // 指定输出格式为 CommonJS
-      },
-    },
+    // rollupOptions: {
+    //   output: {
+    //     format: "commonjs", // 指定输出格式为 CommonJS
+    //   },
+    // },
   },
   resolve: {
     alias: {

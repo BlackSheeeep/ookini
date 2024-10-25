@@ -76,7 +76,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "dev": "npm run build && node server.js",
+    "dev": "npm run build && node server.cjs",
     "build": "npx remix vite:build",
     "test": "node scripts/test.js"
   },

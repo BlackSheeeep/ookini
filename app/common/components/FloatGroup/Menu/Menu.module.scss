@@ -2,6 +2,7 @@
   position: fixed;
   bottom: 0;
   font-size: 5rem;
+  padding: 1rem 0;
   height: var(--menu-height);
   z-index: $z-index-1;
   padding: 0 1rem;
@@ -12,9 +13,9 @@
     .ant-menu {
     }
 
-    sup { 
-        // border: none;
-        box-shadow: unset !important;
+    sup {
+      // border: none;
+      box-shadow: unset !important;
     }
     .ant-menu-item,
     .ant-menu-submenu-title {
@@ -38,14 +39,14 @@
     }
   }
 }
-  .badge {
-      sup { 
-        // border: none;
-        box-shadow: unset !important;
-    }
-    color:  rgba(255, 255, 255, 0.65) !important;
-    padding-right: 3rem; 
-    }
+.badge {
+  sup {
+    // border: none;
+    box-shadow: unset !important;
+  }
+  color: rgba(255, 255, 255, 0.65) !important;
+  padding-right: 3rem;
+}
 .trans {
   position: absolute;
   top: -5rem;

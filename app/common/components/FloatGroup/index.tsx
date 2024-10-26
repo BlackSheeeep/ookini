@@ -10,7 +10,6 @@ interface IFloatGroupProps {}
 
 const FloatGroup: React.FunctionComponent<IFloatGroupProps> = (props) => {
   const [open, setOpen] = React.useState(true);
-
   reservationStore.useInit();
   return (
     <>

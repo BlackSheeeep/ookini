@@ -23,7 +23,7 @@ interface IMenuBarProps {}
 //   if (trans) trans.style.display = "none";
 const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
   const { reservationStore }: Record<string, any> = useLoaderData();
-  const { news, stores, feePlans } = reservationStore;
+  const { news, stores, feeplans: feePlans } = reservationStore;
   const [google, setGoogle] = React.useState<Element>();
   const [isPopKeybord, setIsPopKeybord] = React.useState(false);
   React.useEffect(() => {
@@ -125,6 +125,7 @@ const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
       icon: <CalendarOutlined />,
       key: "reservation",
       onClick: () => {
+        console.log(reservationStore.updateState);
         reservationStore.updateState?.({
           visible: true,
         });

@@ -21,6 +21,7 @@ const { Header, Footer, Content } = Layout;
 const CommonLayout: React.FC<IProps> = (props: IProps) => {
   const { children } = props;
   const [key, update] = useState(Date.now());
+
   const { token } = useToken();
   useLayoutEffect(() => {
     utils.isMobileDevice && update(Date.now());

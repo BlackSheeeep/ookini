@@ -5,14 +5,14 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [
     remix({
-      serverModuleFormat: "cjs",
+      //   serverModuleFormat: "cjs",
     }),
   ],
   build: {
     rollupOptions: {
-      output: {
-        format: "commonjs", // 指定输出格式为 CommonJS
-      },
+      //   output: {
+      //     format: "commonjs", // 指定输出格式为 CommonJS
+      //   },
     },
   },
   resolve: {

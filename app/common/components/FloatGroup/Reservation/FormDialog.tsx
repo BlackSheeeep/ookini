@@ -14,13 +14,14 @@ import ModuleScss from "./Reservation.module.scss";
 import dayjs from "dayjs";
 import _ from "lodash";
 import * as React from "react";
-import { reservationStore } from "./store";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { RangePickerProps } from "antd/lib/date-picker";
 import { send } from "@emailjs/browser";
 import utils from "~/common/utils";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { useLoaderData } from "@remix-run/react";
+import { recoilStates } from "..";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 interface IFormDialogProps {
@@ -64,17 +65,15 @@ const disabledTime = (current: any) => {
 };
 
 const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
-  const { stores, feeplans, visible: originVisible } = reservationStore;
-  const visible = useRecoilValue(originVisible);
+  const { reservationStore } = useLoaderData();
+  const { stores, feeplans } = reservationStore;
+  const [visible, setVisible] = useRecoilState(recoilStates.visible);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const [form] = useForm();
-  React.useEffect(() => {
-    reservationStore.init();
-  }, []);
 
   const onCancel = () => {
     if (_.isFunction(props.onCancel)) props.onCancel?.();
-    else reservationStore.updateState?.({ visible: false });
+    else setVisible(false);
   };
   const storeOptions =
     stores?.map?.((store: any) => ({

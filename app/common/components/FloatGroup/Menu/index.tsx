@@ -18,12 +18,15 @@ import { GALLERY_TYPE } from "~/common/constants";
 import utils from "~/common/utils";
 import CommonNews from "~/common/components/CommonNews";
 import { useLoaderData, useMatches } from "@remix-run/react";
+import { useRecoilState } from "recoil";
+import { recoilStates } from "..";
 interface IMenuBarProps {}
 //   const trans = document.getElementById(":0.container");
 //   if (trans) trans.style.display = "none";
 const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
   const { reservationStore }: Record<string, any> = useLoaderData();
   const { news, stores, feeplans: feePlans } = reservationStore;
+  const [, setVisible] = useRecoilState(recoilStates.visible);
   const [google, setGoogle] = React.useState<Element>();
   const [isPopKeybord, setIsPopKeybord] = React.useState(false);
   React.useEffect(() => {
@@ -125,10 +128,7 @@ const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
       icon: <CalendarOutlined />,
       key: "reservation",
       onClick: () => {
-        console.log(reservationStore.updateState);
-        reservationStore.updateState?.({
-          visible: true,
-        });
+        setVisible(true);
       },
     },
     {

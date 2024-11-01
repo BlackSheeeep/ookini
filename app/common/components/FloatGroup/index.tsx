@@ -6,18 +6,23 @@ import utils from "~/common/utils";
 import FormDialog from "./Reservation/FormDialog";
 import { reservationStore } from "./Reservation/store";
 import MenuBar from "./Menu";
+import { atom, useRecoilState } from "recoil";
 interface IFloatGroupProps {}
 
+export const recoilStates = {
+  visible: atom({
+    default: false,
+    key: "awoofoiawef",
+  }),
+};
 const FloatGroup: React.FunctionComponent<IFloatGroupProps> = (props) => {
   const [open, setOpen] = React.useState(true);
-  reservationStore.useInit();
+  const [, setVisible] = useRecoilState(recoilStates.visible);
   return (
     <>
       <FormDialog
         onCancel={() => {
-          reservationStore.updateState?.({
-            visible: false,
-          });
+          setVisible(false);
         }}
       />
       {utils.isMobileDevice ? (

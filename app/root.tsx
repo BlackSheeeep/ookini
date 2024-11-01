@@ -28,6 +28,8 @@ function App() {
         <div id="root">
           <Outlet></Outlet>
         </div>
+        <div id="google_translate_element"></div>
+        <div id="trans"></div>
       </body>
     </html>
   );

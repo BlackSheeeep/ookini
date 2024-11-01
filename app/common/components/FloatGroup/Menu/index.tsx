@@ -29,7 +29,60 @@ const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
   const [, setVisible] = useRecoilState(recoilStates.visible);
   const [google, setGoogle] = React.useState<Element>();
   const [isPopKeybord, setIsPopKeybord] = React.useState(false);
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
+    const script = document.createElement("script");
+    script.innerHTML = `  (() => {
+            try {
+              window.runTime = {};
+              window.runTime.setRem = function setRem() {
+                var screenWidth =
+                  document.documentElement.clientWidth ||
+                  document.body.clientWidth;
+                screenWidth =
+                  screenWidth < 1200 && screenWidth > 600 ? 1200 : screenWidth;
+                var baseFontSize = 8; // 设置基准字体大小（单位是px）
+                var dpr = window.devicePixelRatio || 1; // 获取设备像素比
+                var rem = (screenWidth / 800) * baseFontSize; // 假设设计稿宽度为375 * 3px (3倍图)
+                document.body.style.overflowX = "none";
+                document.documentElement.style.fontSize = rem + "px";
+              };
+              window.runTime.setRem();
+
+              document.addEventListener("DOMContentLoaded", function () {
+                // 设置初始的rem
+                window.runTime.setRem();
+
+                // 在窗口大小发生变化时重新设置rem
+                window.addEventListener(
+                  "resize",
+                  window.runTime.setRem
+                );
+              });
+              window.googleTranslateElementInit = function () {
+                var google = window.google;
+                if (!google) return "";
+                new google.translate.TranslateElement(
+                  {
+                    pageLanguage: "ja",
+                    layout:
+                      google.translate.TranslateElement.InlineLayout.SIMPLE,
+                    includedLanguages: "zh-CN,zh-TW,ja,ko,ru",
+                  },
+                  "google_translate_element"
+                );
+              };
+              return "";
+            } catch (error) {}
+          })();
+             function googleTranslateElementInit() {
+        new google.translate.TranslateElement({ pageLanguage: 'ja', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, includedLanguages: 'zh-CN,zh-TW,ja,ko,ru' }, 'google_translate_element');
+    }`;
+    const gs = document.createElement("script");
+    gs.defer = true;
+    gs.src =
+      "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    document.body.append(gs);
+    document.body.append(script);
     function loop() {
       setTimeout(() => {
         const google =
@@ -77,7 +130,7 @@ const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
         {
           label: (
             <Flex align="center" justify="space-between">
-              <Link to="/home">
+              <Link to="/">
                 <HomeFilled />
                 ホームページ
               </Link>

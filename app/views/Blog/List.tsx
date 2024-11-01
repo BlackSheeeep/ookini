@@ -8,13 +8,22 @@ import { Typography } from "antd";
 import _ from "lodash";
 import { useLoaderData } from "@remix-run/react";
 import { BlogsDetailData } from "~/routes/blogs";
+import homeStore from "../Home/store";
 const { Link } = Typography;
 interface IBlogsProps {}
 const blogsId = HOME_KEYS.blog;
 
 const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
-  const { blogs: data } = useLoaderData<BlogsDetailData>();
-
+  const { blogs } = useLoaderData<BlogsDetailData>();
+  const [data, setData] = React.useState(blogs);
+  React.useLayoutEffect(() => {
+    if (!data) {
+      (async () => {
+        const res = await homeStore.getBlogs();
+        setData(res);
+      })();
+    }
+  });
   return (
     <Flex align="center" vertical className={ModuleScss.container}>
       <CommonTitle level={4} title="ブログ" subTitle="Blogs" />

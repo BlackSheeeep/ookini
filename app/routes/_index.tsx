@@ -5,7 +5,7 @@ import homeStore from "~/views/Home/store";
 import CommonLayout from "~/common/components/CommonLayout";
 import { loaderInit } from "~/common/utils/commonLoader";
 
-export async function loader({ request }) {
+export async function loader({ request }: any) {
   const { ret, promises } = loaderInit({ request });
   await Promise.all([
     homeStore.init(),

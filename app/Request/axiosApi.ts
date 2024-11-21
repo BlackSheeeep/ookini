@@ -16,10 +16,9 @@ import {
   newsUrl,
   storeInfoUrl,
 } from "./constants";
-// const wpJsonBase = "https://api.address-ookini.com/wp-json";
 const wpJsonBase = "https://cdn.address-ookini.com/wp-json";
-import _ from "lodash";
 
+import _ from "lodash";
 export default async function request(
   method: "get" | "post" | "delete",
   options: AxiosRequestConfig,
@@ -27,7 +26,7 @@ export default async function request(
   whiteList?: string[]
 ): Promise<any> {
   const [err, res] = await utils.resolvePromise(
-    axios[method]?.(url || wpJsonBase + options.url, {
+    axios[method]?.(url || (globalThis.baseURL || wpJsonBase) + options.url, {
       headers:
         method.toUpperCase() === "POST"
           ? {

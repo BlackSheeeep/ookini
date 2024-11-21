@@ -48,5 +48,6 @@ global._ = lodash;
 declare global {
   var _: typeof lodash;
   var setRem: typeof window.runTime.setRem;
+  var baseURL: string;
 }
 export {};

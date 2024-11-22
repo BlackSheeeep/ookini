@@ -1,5 +1,3 @@
-
-
 .title {
   width: 100%;
   display: flex;
@@ -7,13 +5,15 @@
   justify-content: center;
   margin: 4rem 0 !important;
 }
+.container {
+}
 .carousel {
-    width: $full-screen-width;
-    :global {
-      .ant-card-head-title {
-        text-align: center;
-      }
+  width: 100% !important;
+  :global {
+    .ant-card-head-title {
+      text-align: center;
     }
+  }
 }
 .cardContainer {
   width: 25rem;
@@ -28,17 +28,15 @@
   margin: 2rem 0;
 }
 @media screen and (max-width: $mobile-width) {
-    .cardContainer {
-        width: 90rem;
-        height: 100%;
-        margin: 0 5rem 4rem !important;
-        .image {
-    min-height: 70rem;
-
-        }
-        
+  .cardContainer {
+    width: 90rem;
+    height: 100%;
+    margin: 0 5rem 4rem !important;
+    .image {
+      min-height: 70rem;
     }
-.title {
-  padding:0 3rem !important;
-}
+  }
+  .title {
+    padding: 0 3rem !important;
+  }
 }

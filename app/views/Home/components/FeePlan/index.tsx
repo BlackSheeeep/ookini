@@ -9,7 +9,6 @@ import utils from "~/common/utils";
 import Loading from "~/common/components/Loading";
 import { useLoaderData } from "@remix-run/react";
 import { HomeLoader } from "~/routes/_index";
-import { useRecoilValue } from "recoil";
 const { Title } = Typography;
 interface IFeePlanProps {}
 

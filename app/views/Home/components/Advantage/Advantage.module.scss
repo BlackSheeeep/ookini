@@ -3,7 +3,7 @@
   justify-content: space-between;
 }
 .container {
-  width: min(100%, $full-screen-width);
+  width: 100%;
   :global {
     .title .ant-typography-secondary {
       margin-bottom: 0;
@@ -71,13 +71,12 @@
     }
   }
   .miniList {
-    width:100%;
+    width: 100%;
     // max-height: 120rem;
     // overflow: scroll;
   }
 
   .container {
     padding: 0 3rem;
-
   }
 }

@@ -1,6 +1,7 @@
 .container {
-  width: 100rem;
+  width: 100%;
   padding: 0 1rem;
+  display: flex;
   :global {
     .ant-typography-secondary {
       margin-bottom: 1rem;
@@ -9,7 +10,7 @@
 }
 .storeCard {
   margin: 0 1rem;
-  width: 30rem;
+  width: 33%;
   height: fit-content;
 }
 .titleContent {
@@ -21,6 +22,7 @@
 .storeContainer {
   width: 100%;
   display: flex;
+  gap: 40px;
 }
 .storePath {
   overflow: hidden;

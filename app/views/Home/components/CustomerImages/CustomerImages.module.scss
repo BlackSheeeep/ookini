@@ -1,23 +1,22 @@
 .container {
-    width: $full-screen-width;
+  width: 100%;
 }
 .gallery {
-    max-width: $full-screen-width;
-    width: 100%;
+  width: 100%;
 }
 .image {
-    width: 15rem;
+  width: 15rem;
 }
-.toDetail{ 
-    margin-top: 2rem;
+.toDetail {
+  margin-top: 2rem;
 }
 @media screen and (max-width: $mobile-width) {
-    .image {
-        width: 100% !important;
-        min-width:40rem;
-        min-height:40rem;
-    }
-    .toDetail{ 
+  .image {
+    width: 100% !important;
+    min-width: 40rem;
+    min-height: 40rem;
+  }
+  .toDetail {
     margin-top: 4rem;
-}
+  }
 }

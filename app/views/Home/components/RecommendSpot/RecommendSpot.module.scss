@@ -1,17 +1,17 @@
 .image {
-    width: 30rem !important;
+  width: 30rem !important;
 }
 .container {
-    padding: 0 2rem;
-    width: 100rem;
+  padding: 0 2rem;
+  width: 100%;
 }
 
 @media screen and (max-width: $mobile-width) {
-    .image {
-        width: 90rem !important;
-        min-height: 40rem;
-    }
-    .card {
-        margin: 2rem 0;
-    }
+  .image {
+    width: 90rem !important;
+    min-height: 40rem;
+  }
+  .card {
+    margin: 2rem 0;
+  }
 }

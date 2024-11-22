@@ -2,13 +2,15 @@
   width: 100%;
   object-fit: contain;
   img {
-    width: $full-screen-width !important;
     height: 768px;
   }
 }
 .container {
-  width: $full-screen-width;
+  width: 100% !important;
   :global {
+    .ant-image {
+      width: 100%;
+    }
     .swiper-button-prev,
     .swiper-button-next,
     .swiper-pagination {

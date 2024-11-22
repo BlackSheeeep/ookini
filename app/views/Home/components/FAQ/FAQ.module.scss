@@ -1,23 +1,23 @@
 .container {
-    flex: 1;
-    width: 100rem;
-    :global{
-        .ant-collapse{
-            width: 80rem;
-            min-width: 75rem !important;
-        }
+  flex: 1;
+  width: 100%;
+  :global {
+    .ant-collapse {
+      width: 80rem;
+      min-width: 75rem !important;
     }
+  }
 }
 
 @media screen and (max-width: $mobile-width) {
-    .container {
+  .container {
     flex: 1;
     width: 100rem;
-    :global{
-        .ant-collapse{
-            width: 90rem;
-            min-width: 75rem !important;
-        }
+    :global {
+      .ant-collapse {
+        width: 90rem;
+        min-width: 75rem !important;
+      }
     }
-}
+  }
 }

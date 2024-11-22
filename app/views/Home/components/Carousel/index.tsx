@@ -18,7 +18,7 @@ const Carousel: React.FunctionComponent<ICarouselProps> = (props) => {
     return (
       <Flex
         style={{
-          width: "100rem",
+          width: "100%",
         }}
       >
         <Loading></Loading>

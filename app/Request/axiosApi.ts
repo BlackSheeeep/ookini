@@ -16,7 +16,7 @@ import {
   newsUrl,
   storeInfoUrl,
 } from "./constants";
-const wpJsonBase = "https://cdn.address-ookini.com/wp-json";
+const wpJsonBase = "https://api.address-ookini.com/wp-json";
 
 import _ from "lodash";
 export default async function request(

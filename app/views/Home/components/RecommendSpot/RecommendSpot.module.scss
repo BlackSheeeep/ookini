@@ -1,9 +1,14 @@
 .image {
-  width: 30rem !important;
 }
 .container {
   padding: 0 2rem;
   width: 100%;
+  :global {
+    .ant-card {
+      min-width: 260px;
+      margin: 2rem;
+    }
+  }
 }
 
 @media screen and (max-width: $mobile-width) {

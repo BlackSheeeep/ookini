@@ -7,10 +7,6 @@ export function loaderInit({ request }) {
   utils.setUserAgent(userAgent);
   return {
     ret: { reservationStore, advantageDialogStore },
-    promises: [
-      advantageDialogStore.getAdvantage(),
-      reservationStore.getFeeplans(),
-      reservationStore.getStores(),
-    ],
+    promises: [reservationStore.getFeeplans(), reservationStore.getStores()],
   };
 }

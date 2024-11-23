@@ -10,18 +10,26 @@ import CommonImage from "~/common/components/Image";
 import type { Advantage as AdvantageType } from "~/views/types/Advantage";
 import Loading from "~/common/components/Loading";
 import _ from "lodash";
-import { useLoaderData } from "@remix-run/react";
-import { HomeLoader } from "~/routes/_index";
+import { advantageDialogStore } from "~/common/components/CommonAdvantageDialog/store";
+import homeStore from "../../store";
 
 interface IAdvantageProps {}
 const resonId = HOME_KEYS.reasonsForChoosing;
 const maxShowImages = 10;
 
 const Advantage: React.FunctionComponent<IAdvantageProps> = (props) => {
-  const {
-    homeStore: { hairGallery: gallery },
-    advantageDialogStore: { advantage: advantageData },
-  } = useLoaderData<HomeLoader>();
+  const [advantageData, setAdvantageData] = React.useState<Record<string, any>>(
+    {}
+  );
+  const [gallery, setGallery] = React.useState<Record<string, any>>({});
+  React.useLayoutEffect(() => {
+    (async function () {
+      const ret = await advantageDialogStore.getAdvantage();
+      setAdvantageData(ret);
+      const gal = await homeStore.getHairGallery();
+      setGallery(gal);
+    })();
+  }, []);
 
   const renderItem = (data: AdvantageType[] = []) => {
     return (

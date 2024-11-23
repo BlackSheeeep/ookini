@@ -2,7 +2,6 @@ import _ from "lodash";
 import React from "react";
 import { Links, Meta, Outlet, Scripts } from "@remix-run/react";
 import utils from "./common/utils";
-import { SpeedInsights } from "@vercel/speed-insights/remix";
 
 function App() {
   // SSR Render
@@ -31,7 +30,6 @@ function App() {
         </div>
         <div id="google_translate_element"></div>
         <div id="trans"></div>
-        <SpeedInsights />
       </body>
     </html>
   );

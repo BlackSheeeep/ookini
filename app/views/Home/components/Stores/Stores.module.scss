@@ -9,8 +9,8 @@
   }
 }
 .storeCard {
-  margin: 0 1rem;
-  width: 33%;
+  margin: 0 2rem;
+  min-width: 300px;
   height: fit-content;
 }
 .titleContent {
@@ -22,7 +22,6 @@
 .storeContainer {
   width: 100%;
   display: flex;
-  gap: 40px;
 }
 .storePath {
   overflow: hidden;

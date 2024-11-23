@@ -70,6 +70,7 @@ class HomeStore extends BaseStore {
     };
 
     this.hairGallery = mergedData;
+    return this.hairGallery;
   };
 
   public async getCustomerImages() {

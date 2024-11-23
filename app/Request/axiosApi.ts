@@ -26,7 +26,7 @@ export default async function request(
   whiteList?: string[]
 ): Promise<any> {
   const [err, res] = await utils.resolvePromise(
-    axios[method]?.(url || (globalThis.baseURL || wpJsonBase) + options.url, {
+    axios[method]?.(url || wpJsonBase + options.url, {
       headers:
         method.toUpperCase() === "POST"
           ? {

@@ -6,10 +6,8 @@ import CommonLayout from "~/common/components/CommonLayout";
 import { loaderInit } from "~/common/utils/commonLoader";
 
 export async function loader({ request }: any) {
-  globalThis.baseURL = `http://${
-    process.env.DIRECT_IP || "8.209.245.194"
-  }/wp-json`;
   const { ret, promises } = loaderInit({ request });
+  globalThis.baseURL = `http://8.209.245.194/`;
   await Promise.all([
     homeStore.init(),
     homeStore.getHairGallery(),

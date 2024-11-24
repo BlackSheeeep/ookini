@@ -59,6 +59,8 @@ const CommonLayout: React.FC<IProps> = (props: IProps) => {
 
   const { token } = useToken();
   useLayoutEffect(() => {
+    const root = document.getElementById("root");
+    root.style.display = "unset";
     utils.isMobileDevice && update(Date.now());
     let timer = setInterval(() => {
       const gs = document.querySelector(".skiptranslate iframe") || null;

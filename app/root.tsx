@@ -22,10 +22,14 @@ function App() {
         <Meta />
         <meta name="theme-color" content="#000000" />
         <title>ookini</title>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <style
-          type="text/css"
           dangerouslySetInnerHTML={{
-            __html: `body .skiptranslate:first-child {
+            __html: `
+            #root {
+              display: none;
+            }
+            body .skiptranslate:first-child {
   display: none;}
   #trans {
   position: relative;

@@ -7,15 +7,13 @@ import utils from "~/common/utils";
 import CommonImage from "~/common/components/Image";
 import { advantageDialogStore } from "~/common/components/CommonAdvantageDialog/store";
 import type { Advantage as AdvantageType } from "~/views/types/Advantage";
-import { useLoaderData } from "react-router-dom";
+import { useRecoilState } from "recoil";
 
 interface IAdvantageProps {}
 const resonId = HOME_KEYS.reasonsForChoosing;
 
 const MiniAdvantage: React.FunctionComponent<IAdvantageProps> = (props) => {
-  const {
-    advantageDialogStore: { advantage: advantageData },
-  }: any = useLoaderData();
+  const [advantageData] = useRecoilState(advantageDialogStore.advantage);
 
   const isLoading = Object.keys(advantageData).length === 0;
 

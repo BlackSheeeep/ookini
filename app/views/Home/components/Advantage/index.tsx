@@ -12,6 +12,7 @@ import Loading from "~/common/components/Loading";
 import _ from "lodash";
 import { advantageDialogStore } from "~/common/components/CommonAdvantageDialog/store";
 import homeStore from "../../store";
+import { useRecoilState } from "recoil";
 
 interface IAdvantageProps {}
 const resonId = HOME_KEYS.reasonsForChoosing;
@@ -22,10 +23,12 @@ const Advantage: React.FunctionComponent<IAdvantageProps> = (props) => {
     {}
   );
   const [gallery, setGallery] = React.useState<Record<string, any>>({});
+  const [, setAdvantage] = useRecoilState(advantageDialogStore.advantage);
   React.useLayoutEffect(() => {
     (async function () {
       const ret = await advantageDialogStore.getAdvantage();
       setAdvantageData(ret);
+      setAdvantage(ret);
       const gal = await homeStore.getHairGallery();
       setGallery(gal);
     })();

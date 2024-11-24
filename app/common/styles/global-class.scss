@@ -4,6 +4,7 @@
 
 html,
 body {
+  top: 0 !important;
   margin: 0;
   overflow-x: hidden;
   &::-webkit-scrollbar {

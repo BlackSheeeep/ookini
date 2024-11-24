@@ -8,7 +8,7 @@ export default {
     // colorBgBase: "#fff8c2",
     // colorBgBase: "#f9f2e7",
     borderRadius: 8,
-    fontSize: utils.isMobileDevice ? 14 : 14,
+    fontSize: utils.isMobileDevice ? 12 : 14,
     fontFamily: "sans-serif",
     Components: {
       Carousel: {

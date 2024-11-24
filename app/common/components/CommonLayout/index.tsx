@@ -55,10 +55,86 @@ const { Header, Footer, Content } = Layout;
 const CommonLayout: React.FC<IProps> = (props: IProps) => {
   const { children } = props;
   const [key, update] = useState(Date.now());
+  const [googleTrans, setHasGoogleTrans] = useState<HTMLElement | null>();
 
   const { token } = useToken();
   useLayoutEffect(() => {
     utils.isMobileDevice && update(Date.now());
+    let timer = setInterval(() => {
+      const gs = document.querySelector(".skiptranslate iframe") || null;
+      if (gs && !googleTrans) {
+        setHasGoogleTrans(gs);
+        clearInterval(timer);
+        tiemr = null;
+      }
+    }, 300);
+  }, []);
+  React.useLayoutEffect(() => {
+    function loop() {
+      setTimeout(() => {
+        const google =
+          document.getElementById("google_translate_element") || null;
+        //   const trans = document.getElementById("trans") || null;
+
+        if (google) {
+          // trans.appendChild(google);
+          const timer = setInterval(() => {
+            // const skips = document.querySelectorAll("iframe.skiptranslate");
+            // skips.forEach((item: HTMLElement) => {
+            //   item.style.display = "none";
+            // });
+          }, []);
+        } else {
+          loop();
+        }
+      }, 100);
+    }
+    try {
+      const script = document.createElement("script");
+      script.innerHTML = `  (() => {
+            try {
+              window.runTime = {};
+              window.runTime.setRem = function setRem() {
+                var screenWidth =
+                  document.documentElement?.clientWidth ||
+                  document.body?.clientWidth;
+                screenWidth =
+                  screenWidth < 1200 && screenWidth > 600 ? 1200 : screenWidth;
+                var baseFontSize = 8; // 设置基准字体大小（单位是px）
+                var dpr = window.devicePixelRatio || 1; // 获取设备像素比
+                var rem = (screenWidth /(375 * 2) ) * baseFontSize; 
+                document?.body?.style.overflowX = "none";
+                document?.documentElement?.style.fontSize = rem + "px";
+              };
+              window.runTime.setRem();
+
+              document.addEventListener("DOMContentLoaded", function () {
+                // 设置初始的rem
+                window.runTime.setRem();
+
+                // 在窗口大小发生变化时重新设置rem
+                window.addEventListener(
+                  "resize",
+                  window.runTime.setRem
+                );
+              });
+            
+              return "";
+            } catch (error) {}
+          })();
+           `;
+      setTimeout(() => {
+        const gs = document.createElement("script");
+        gs.defer = true;
+        gs.src =
+          "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+        document.body.append(script);
+        document.body.append(gs);
+        loop();
+      }, 500);
+    } catch (e) {
+      console.warn(e);
+    }
   }, []);
   const contentStyle: React.CSSProperties = {
     backgroundColor: token.colorBgLayout,

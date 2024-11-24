@@ -28,10 +28,20 @@
   margin: 2rem 0;
 }
 @media screen and (max-width: $mobile-width) {
+  .carousel {
+    :global {
+      .ant-space {
+        width: 100%;
+        align-items: center;
+      }
+    }
+  }
   .cardContainer {
     width: 90rem;
     height: 100%;
+    align-items: center;
     margin: 0 5rem 4rem !important;
+
     .image {
       min-height: 70rem;
     }

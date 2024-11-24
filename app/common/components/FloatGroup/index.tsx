@@ -4,7 +4,6 @@ import Reservation from "./Reservation";
 import { UnorderedListOutlined } from "@ant-design/icons";
 import utils from "~/common/utils";
 import FormDialog from "./Reservation/FormDialog";
-import { reservationStore } from "./Reservation/store";
 import MenuBar from "./Menu";
 import { atom, useRecoilState } from "recoil";
 interface IFloatGroupProps {}
@@ -21,6 +20,7 @@ const FloatGroup: React.FunctionComponent<IFloatGroupProps> = (props) => {
   return (
     <>
       <FormDialog
+        visible={open}
         onCancel={() => {
           setVisible(false);
         }}

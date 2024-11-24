@@ -13,7 +13,7 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@remix-run/express": "^2.12.1",
     "@remix-run/node": "^2.12.1",
-    "@remix-run/react": "^2.12.1",
+    "@remix-run/react": "^2.15.0",
     "@remix-run/serve": "^2.12.1",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.17.0",
@@ -79,7 +79,8 @@
   "scripts": {
     "dev": "npm run build && node server.cjs",
     "build": "npx remix vite:build",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "prod": "npm run build && node server.cjs --NODE_ENV=production"
   },
   "eslintConfig": {
     "extends": [

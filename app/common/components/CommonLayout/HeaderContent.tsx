@@ -3,12 +3,17 @@ import LayoutScss from "./Layout.module.scss";
 import { Button, Flex } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import utils from "~/common/utils";
-import { useMatches } from "@remix-run/react";
 
 interface HeaderContentProps {}
 
 const HeaderContent: React.FC<HeaderContentProps> = () => {
-  const isHome = useMatches()?.[0]?.pathname === "/";
+  let pathname;
+  try {
+    pathname = window.location.pathname;
+  } catch (e) {
+    console.warn(e);
+  }
+  const isHome = true;
   const gotoHome = () => {
     !isHome && utils.goto("/");
   };

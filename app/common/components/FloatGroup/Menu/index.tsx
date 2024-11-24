@@ -20,6 +20,7 @@ import CommonNews from "~/common/components/CommonNews";
 import { useLoaderData, useMatches } from "@remix-run/react";
 import { useRecoilState } from "recoil";
 import { recoilStates } from "..";
+import { languages } from "./languages";
 interface IMenuBarProps {}
 //   const trans = document.getElementById(":0.container");
 //   if (trans) trans.style.display = "none";
@@ -27,88 +28,24 @@ const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
   const { reservationStore }: Record<string, any> = useLoaderData();
   const { news, stores, feeplans: feePlans } = reservationStore;
   const [, setVisible] = useRecoilState(recoilStates.visible);
-  const [google, setGoogle] = React.useState<Element>();
+  const [gtc, setgtc] = React.useState<HTMLElement>();
+
   const [isPopKeybord, setIsPopKeybord] = React.useState(false);
   React.useLayoutEffect(() => {
-    const script = document.createElement("script");
-    script.innerHTML = `  (() => {
-            try {
-              window.runTime = {};
-              window.runTime.setRem = function setRem() {
-                var screenWidth =
-                  document.documentElement.clientWidth ||
-                  document.body.clientWidth;
-                screenWidth =
-                  screenWidth < 1200 && screenWidth > 600 ? 1200 : screenWidth;
-                var baseFontSize = 8; // 设置基准字体大小（单位是px）
-                var dpr = window.devicePixelRatio || 1; // 获取设备像素比
-                var rem = (screenWidth / 800) * baseFontSize; // 假设设计稿宽度为375 * 3px (3倍图)
-                document.body.style.overflowX = "none";
-                document.documentElement.style.fontSize = rem + "px";
-              };
-              window.runTime.setRem();
+    const timer = setInterval(() => {
+      const gtg = document.querySelector("#google_translate_element");
+      //   const gtg = document.querySelector(".goog-te-gadget");
+      if (!gtg) return;
+      setgtc(gtg);
 
-              document.addEventListener("DOMContentLoaded", function () {
-                // 设置初始的rem
-                window.runTime.setRem();
-
-                // 在窗口大小发生变化时重新设置rem
-                window.addEventListener(
-                  "resize",
-                  window.runTime.setRem
-                );
-              });
-              window.googleTranslateElementInit = function () {
-                var google = window.google;
-                if (!google) return "";
-                new google.translate.TranslateElement(
-                  {
-                    pageLanguage: "ja",
-                    layout:
-                      google.translate.TranslateElement.InlineLayout.SIMPLE,
-                    includedLanguages: "zh-CN,zh-TW,ja,ko,ru",
-                  },
-                  "google_translate_element"
-                );
-              };
-              return "";
-            } catch (error) {}
-          })();
-             function googleTranslateElementInit() {
-        new google.translate.TranslateElement({ pageLanguage: 'ja', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, includedLanguages: 'zh-CN,zh-TW,ja,ko,ru' }, 'google_translate_element');
-    }`;
-    const gs = document.createElement("script");
-    gs.defer = true;
-    gs.src =
-      "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-    document.body.append(gs);
-    document.body.append(script);
-    function loop() {
-      setTimeout(() => {
-        const google =
-          document.getElementById("google_translate_element") || null;
-        const trans = document.getElementById("trans") || null;
-        if (google && trans) {
-          const skiptranslate = google.querySelector(".skiptranslate");
-          // if (skiptranslate)
-          //   for (const node of skiptranslate?.childNodes) {
-          //     if (node.nodeType === Node.TEXT_NODE) {
-          //       node.textContent = "";
-          //     }
-          //   }
-          const span = google.querySelector("span");
-          if (span) {
-            // span.style.display = "none";
-          }
-          trans.appendChild(google);
-          setGoogle(google as any);
-        } else {
-          loop();
-        }
-      }, 100);
-    }
-    loop();
+      clearInterval(timer);
+    }, 500);
   }, []);
+  React.useEffect(() => {
+    if (!gtc) return;
+    const trans = document.querySelector("#trans");
+    trans?.append(gtc);
+  }, [gtc]);
 
   const isStoreDetail = useMatches().find(
     (item) => item.pathname === "/storeDetail"
@@ -118,13 +55,13 @@ const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
   );
   const items: MenuProps["items"] = [
     {
-      label: "more",
+      label: "MENU",
       icon: (
         <Badge dot count={news.length} size="default">
           <MenuOutlined className={ModuleScss.more} />
         </Badge>
       ),
-      key: "more",
+      key: "MENU",
       popupClassName: ModuleScss.subMenu,
       children: [
         {
@@ -185,7 +122,7 @@ const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
       },
     },
     {
-      label: "計画",
+      label: "プラン",
       key: "feePlanDetail",
       icon: <ScheduleOutlined />,
       popupClassName: ModuleScss.subMenu,
@@ -209,30 +146,36 @@ const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
         key: store.id,
       })),
     },
-    {
-      label: <div id="trans">翻訳</div>,
-      onClick: () => {
-        if (google) {
-          const img = google.querySelector("img");
-          img?.click();
-          // _.set(
-          //   google,
-          //   ["style", "display"],
-          //   _.get(google, "style.display") === "none" ? "unset" : "none"
-          // );
+
+    gtc
+      ? {
+          label: <div id="trans">翻訳</div>,
+          onClick: (val) => {
+            gtc?.querySelector(".goog-te-gadget-simple")?.click();
+          },
+          key: "translate",
+          //   children: languages.map((item: { label: string; value: string }) => ({
+          //     ...item,
+          //     onClick: () => {
+          //       if (gtc) {
+          //         console.log(gtc);
+          //         gtc.setAttribute("value", item.value);
+          //         const triggerEvent = (element, eventName) => {
+          //           const event = new Event(eventName);
+          //           element.dispatchEvent(event);
+          //         };
+          //         triggerEvent(gtc, "change");
+          //         // _.set(
+          //         //   google,
+          //         //   ["style", "display"],
+          //         //   _.get(google, "style.display") === "none" ? "unset" : "none"
+          //         // );
+          //       }
+          //     },
+          //   })) as any[],
+          icon: <TranslationOutlined />,
         }
-      },
-      key: "translate",
-      // children: languages.map((item: { label: string; value: string }) => ({
-      //   ...item,
-      //   onClick: () => {
-      //     reservationStore.updateState?.({
-      //       lan: item.value,
-      //     });
-      //   },
-      // })) as any[],
-      icon: <TranslationOutlined />,
-    },
+      : null,
   ];
   React.useEffect(() => {}, []);
   return (

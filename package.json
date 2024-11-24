@@ -80,7 +80,7 @@
     "dev": "npm run build && node server.cjs",
     "build": "npx remix vite:build",
     "test": "node scripts/test.js",
-    "prod": "npm run build && node server.cjs --mode=production"
+    "prod": "cross-env NODE_ENV=production && npm run build && node server.cjs"
   },
   "eslintConfig": {
     "extends": [

@@ -9,7 +9,7 @@ interface HeaderContentProps {}
 const HeaderContent: React.FC<HeaderContentProps> = () => {
   let pathname;
   try {
-    pathname = window.location.pathname;
+    pathname = globalThis.location?.pathname;
   } catch (e) {
     console.warn(e);
   }

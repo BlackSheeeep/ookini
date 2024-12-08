@@ -56,8 +56,8 @@ const CustomerImages: React.FunctionComponent<ICustomerImagesProps> = (
         <CommonCarousel
           className={CustomerScss.gallery}
           showNext={false}
-          slidesPerView={utils.isMobileDevice ? 2 : 4}
           autoplay
+          slidesPerView={utils.isMobileDevice ? 2 : 4}
           showPrev={false}
         >
           {images

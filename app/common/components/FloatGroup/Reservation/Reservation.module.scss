@@ -15,23 +15,40 @@
 .invisible {
   display: none;
 }
+.dialogFooter {
+  display: flex;
+  width: 100%;
+  button {
+    flex: 1;
+  }
+}
+:global {
+  .ant-picker-header-view {
+    display: none;
+  }
+}
 .dialog {
-  width: 100rem !important;
+  width: 40rem !important;
   padding: 0 3rem;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   z-index: $z-index-1;
+
   :global {
     .ant-modal-content {
       display: flex;
       flex-direction: column;
       width: 100%;
       margin: 0;
-      margin-top: 45%;
+      left: 55%;
     }
     .ant-form-item {
       flex: 1;
       margin: 2rem 0.5rem;
       box-sizing: border-box;
-      max-width: calc(50% - 0.5rem);
     }
   }
 }

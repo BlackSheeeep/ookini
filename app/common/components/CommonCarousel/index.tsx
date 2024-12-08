@@ -1,6 +1,12 @@
 // @ts-nocheck
 import * as React from "react";
-import { Swiper, SwiperClass, SwiperProps, SwiperSlide } from "swiper/react";
+import {
+  Swiper,
+  SwiperClass,
+  SwiperProps,
+  SwiperSlide,
+  useSwiper,
+} from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import CarouselScss from "./CarouselScss.module.scss";
 import "swiper/css";
@@ -33,7 +39,22 @@ const CommonCarousel: React.FunctionComponent<ICommonCarouselProps> = (
   const prevElRef = React.useRef();
   const nextElRef = React.useRef();
   const observer = React.useRef();
-
+  React.useLayoutEffect(() => {
+    let timer = null;
+    // autoplay失效了，模拟一下
+    if (swiper && !timer) {
+      timer =
+        restProps.autoplay &&
+        setInterval(() => {
+          swiper?.slideNext();
+          console.log(swiper);
+        }, 1800);
+    }
+    return () => {
+      clearInterval(timer);
+      timer = null;
+    };
+  }, [swiper]);
   React.useLayoutEffect(() => {
     observer.current = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
@@ -47,6 +68,7 @@ const CommonCarousel: React.FunctionComponent<ICommonCarouselProps> = (
         }
       });
     });
+    return () => {};
   }, []);
   React.useLayoutEffect(() => {
     if (prevElRef.current) {
@@ -69,6 +91,7 @@ const CommonCarousel: React.FunctionComponent<ICommonCarouselProps> = (
       )}
       centeredSlides
       loop
+      autoplay
       pagination={
         !showPagination
           ? false

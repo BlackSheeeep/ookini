@@ -10,6 +10,7 @@ import {
   message,
   Steps,
   Button,
+  Tag,
 } from "antd";
 import FormItem from "~/common/components/FormItem";
 import ModuleScss from "./Reservation.module.scss";
@@ -161,14 +162,16 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
       zIndex={100100}
       onCancel={onCancel}
       footer={
-        <>
+        <div className={ModuleScss.dialogFooter}>
           <Button
+            size="large"
             disabled={current === 0}
             onClick={() => setCurrent(current - 1)}
           >
             前のステップ
           </Button>
           <Button
+            size="large"
             type="primary"
             onClick={() =>
               current === MAX_STEP - 1
@@ -181,7 +184,7 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
           >
             {current === 2 ? "提出する" : "次のステップ"}
           </Button>
-        </>
+        </div>
       }
       cancelButtonProps={{
         style: {
@@ -229,6 +232,7 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
               dropdownStyle={{
                 zIndex: zIndex,
               }}
+              maxTagTextLength={10}
               onChange={(val, option: any) => {
                 forms[0]?.setFieldValue("store-name", option.label);
               }}
@@ -288,18 +292,26 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
             rules={[{ required: true }]}
           >
             <DatePicker
-              popupStyle={{
-                maxWidth: "100rem",
-                position: "fixed",
-                left: 0,
-                zIndex: 100110,
-                top: "20%",
-              }}
+              popupStyle={
+                utils.isMobileDevice
+                  ? {
+                      maxWidth: "100rem",
+                      position: "fixed",
+                      left: 0,
+                      zIndex: 100110,
+                      top: "20%",
+                    }
+                  : {
+                      zIndex: 100110,
+                    }
+              }
               popupClassName={ModuleScss.datePicker}
               showTime
               // @ts-ignore
               format={(val: string) => {
-                return dayjs(new Date(val)).format("YYYY-MM-DD HH:mm:00");
+                return dayjs(new Date(val))
+                  .format("YYYY-MM-DD HH:mm")
+                  .replace(/:[^:]$/gi, "");
               }}
               hideDisabledOptions
               showNow={false}

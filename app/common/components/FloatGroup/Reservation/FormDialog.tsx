@@ -105,7 +105,7 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
       to_name: _.get(value, "customer-name"),
       store_name: _.get(value, "store-name"),
       date: getDate(value),
-      feeplan: _.get(value, "feeplan-name")?.join(","),
+      feeplan: _.get(value, "feeplan-name").join(","),
       address: selectStore.storePath,
       tel: selectStore.tel,
       storeId: selectStore.id,
@@ -234,6 +234,53 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
               }}
             />
           </FormItem>
+
+          <FormItem name="store-name" className={ModuleScss.invisible} />
+        </Flex>
+        <Flex
+          vertical={utils.isMobileDevice ? true : false}
+          justify="space-between"
+        >
+          <FormItem
+            name="feeplan-id"
+            label="プラン"
+            rules={[{ required: true }]}
+          >
+            <Select
+              mode="multiple"
+              dropdownStyle={{
+                zIndex: zIndex,
+              }}
+              options={feeplanOptions}
+              onChange={(val, option: any) => {
+                forms[0]?.setFieldValue(
+                  "feeplan-name",
+                  option?.map?.(
+                    (item: { value: number; label: string }) => item.label
+                  )
+                );
+              }}
+            />
+          </FormItem>
+          <FormItem
+            name="feeplan-name"
+            initialValue={[]}
+            className={ModuleScss.invisible}
+          />
+        </Flex>
+      </Form>
+      <Form
+        className={current === 1 ? "" : ModuleScss.invisible}
+        layout="vertical"
+        form={forms[1]}
+      >
+        <Flex
+          vertical={utils.isMobileDevice ? true : false}
+          justify="space-between"
+        >
+          {/* <FormItem name="extra-purchase">
+            <Input></Input>
+          </FormItem> */}
           <FormItem
             name="reservation-date"
             label="予約日時選択"
@@ -263,47 +310,6 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
               placeholder="予約日時選択"
             />
           </FormItem>
-          <FormItem name="store-name" className={ModuleScss.invisible} />
-        </Flex>
-        <Flex
-          vertical={utils.isMobileDevice ? true : false}
-          justify="space-between"
-        >
-          <FormItem
-            name="feeplan-id"
-            label="プラン"
-            rules={[{ required: true }]}
-          >
-            <Select
-              mode="multiple"
-              dropdownStyle={{
-                zIndex: zIndex,
-              }}
-              options={feeplanOptions}
-              onChange={(val, option: any) => {
-                forms[0]?.setFieldValue(
-                  "feeplan-name",
-                  option?.map?.(
-                    (item: { value: number; label: string }) => item.label
-                  ) as string
-                );
-              }}
-            />
-          </FormItem>
-        </Flex>
-      </Form>
-      <Form
-        className={current === 1 ? "" : ModuleScss.invisible}
-        layout="vertical"
-        form={forms[1]}
-      >
-        <Flex
-          vertical={utils.isMobileDevice ? true : false}
-          justify="space-between"
-        >
-          {/* <FormItem name="extra-purchase">
-            <Input></Input>
-          </FormItem> */}
           <Flex
             vertical={utils.isMobileDevice ? true : false}
             justify="space-between"
@@ -322,11 +328,6 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
               <InputNumber className={ModuleScss.peopleNumber} />
             </FormItem>
           </Flex>
-          <FormItem
-            name="feeplan-name"
-            initialValue={[]}
-            className={ModuleScss.invisible}
-          />
         </Flex>
       </Form>
       <Form

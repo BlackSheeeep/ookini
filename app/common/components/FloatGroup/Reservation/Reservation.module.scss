@@ -12,15 +12,20 @@
     }
   }
 }
+.invisible {
+  display: none;
+}
 .dialog {
   width: 100rem !important;
   padding: 0 3rem;
   z-index: $z-index-1;
-  position: relative;
   :global {
     .ant-modal-content {
+      display: flex;
+      flex-direction: column;
       width: 100%;
       margin: 0;
+      margin-top: 45%;
     }
     .ant-form-item {
       flex: 1;
@@ -70,7 +75,17 @@
   }
 
   .datePicker {
+    max-width: unset !important;
+    width: 90%;
+    left: 5% !important;
     :global {
+      .ant-picker-panel {
+        width: 100%;
+      }
+      .ant-picker-date-panel {
+        // width: 60%;
+        overflow: scroll;
+      }
       .ant-picker-time-panel-column {
         &::after {
           height: unset !important;
@@ -79,14 +94,14 @@
           .ant-picker-time-panel-cell-inner {
             width: fit-content;
             &::after {
-              content: "じ";
+              content: " じ";
             }
           }
         }
         &:last-child {
           .ant-picker-time-panel-cell-inner {
             &::after {
-              content: "ふん";
+              content: " ふん ";
             }
           }
         }

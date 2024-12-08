@@ -65,7 +65,7 @@ background:red}
               {
                 pageLanguage: "ja",
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                includedLanguages: "en,zh-CN,ja,ko,ru,zh-TW",
+                includedLanguages: "en,ja,ko,ru,zh-TW,zh-CN,",
               },
               "google_translate_element"
             );

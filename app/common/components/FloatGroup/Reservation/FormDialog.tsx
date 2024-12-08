@@ -8,6 +8,8 @@ import {
   Divider,
   Select,
   message,
+  Steps,
+  Button,
 } from "antd";
 import FormItem from "~/common/components/FormItem";
 import ModuleScss from "./Reservation.module.scss";
@@ -22,8 +24,11 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { useLoaderData } from "@remix-run/react";
 import { recoilStates } from "..";
+import { lodash } from "~/global";
+import { wordpressApi } from "~/Request";
 dayjs.extend(utc);
 dayjs.extend(timezone);
+const MAX_STEP = 3;
 interface IFormDialogProps {
   visible?: boolean;
   onCancel?: () => void;
@@ -69,7 +74,8 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
   const { stores, feeplans } = reservationStore;
   const [visible, setVisible] = useRecoilState(recoilStates.visible);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const [form] = useForm();
+  const [current, setCurrent] = React.useState(0);
+  const forms = new Array(MAX_STEP).fill(true).map(() => useForm()[0]);
 
   const onCancel = () => {
     if (_.isFunction(props.onCancel)) props.onCancel?.();
@@ -106,48 +112,45 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
       to_email: _.get(value, "customer-email"),
     };
   };
-  const onSubmit = _.throttle(() => {
+  const onSubmit = _.throttle(async () => {
     setConfirmLoading(true);
-    form
-      .validateFields()
-      .then((value) => {
-        if (confirmLoading) {
-          message.warning("wait a moment ^ W ^ ~");
-          return;
-        }
-        reservationStore
-          .createReservation({
-            ...value,
-            "reservation-date": getDate(value),
-            title:
-              _.get(value, "customer-name") +
-              " " +
-              _.get(value, "customer-tel"),
-          })
-          .then(() => {
-            message.success("予約成功しました!");
-            if (_.get(value, "customer-email")) {
-              send(
-                isQQEmail(_.get(value, "customer-email"))
-                  ? "service_cxeivoc"
-                  : "service_qg3313l",
-                "template_pm2tn4l",
-                getSendData(value),
-                { publicKey: "QX1ISlC1HuOhDIser" }
-              );
-            }
-            props.onCancel?.();
-          })
-          .catch(() => {
-            message.error(
-              "予約が失敗しました。しばらくお待ちいただくか、ページをリフレッシュしてください"
-            );
-          });
+    const values = await Promise.all(
+      forms.map((form) => form.validateFields())
+    );
+    // if (confirmLoading) {
+    //   message.warning("wait a moment ^ W ^ ~");
+    //   return;
+    // }
+    const value = values.reduce((pre, item) => {
+      return Object.assign(pre, item);
+    }, {});
+    await wordpressApi
+      .createReservation({
+        ...value,
+        "reservation-date": getDate(value),
+        title:
+          _.get(value, "customer-name") + " " + _.get(value, "customer-tel"),
       })
-      .catch((err) => {})
-      .finally(() => {
-        setConfirmLoading(false);
+      .then(() => {
+        message.success("予約成功しました!");
+        if (_.get(value, "customer-email")) {
+          send(
+            isQQEmail(_.get(value, "customer-email"))
+              ? "service_cxeivoc"
+              : "service_qg3313l",
+            "template_pm2tn4l",
+            getSendData(value),
+            { publicKey: "QX1ISlC1HuOhDIser" }
+          );
+        }
+        props.onCancel?.();
+      })
+      .catch(() => {
+        message.error(
+          "予約が失敗しました。しばらくお待ちいただくか、ページをリフレッシュしてください"
+        );
       });
+    setConfirmLoading(false);
   }, 3000);
   const zIndex = 100110;
 
@@ -157,6 +160,29 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
       open={visible}
       zIndex={100100}
       onCancel={onCancel}
+      footer={
+        <>
+          <Button
+            disabled={current === 0}
+            onClick={() => setCurrent(current - 1)}
+          >
+            前のステップ
+          </Button>
+          <Button
+            type="primary"
+            onClick={() =>
+              current === MAX_STEP - 1
+                ? onSubmit()
+                : (async () => {
+                    const res = await forms[current].validateFields();
+                    res && setCurrent(current + 1);
+                  })()
+            }
+          >
+            {current === 2 ? "提出する" : "次のステップ"}
+          </Button>
+        </>
+      }
       cancelButtonProps={{
         style: {
           display: "none",
@@ -167,7 +193,32 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
       className={ModuleScss.dialog}
       confirmLoading={confirmLoading}
     >
-      <Form layout="vertical" form={form}>
+      <Steps
+        size="small"
+        direction="horizontal"
+        current={current}
+        // labelPlacement="vertical"
+        onChange={setCurrent}
+        items={[
+          {
+            title: "store info",
+            disabled: true,
+          },
+          {
+            disabled: true,
+            title: "reservation time",
+          },
+          {
+            disabled: true,
+            title: "user info",
+          },
+        ]}
+      />
+      <Form
+        className={current === 0 ? "" : ModuleScss.invisible}
+        layout="vertical"
+        form={forms[0]}
+      >
         <Flex
           vertical={utils.isMobileDevice ? true : false}
           justify="space-between"
@@ -179,7 +230,7 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
                 zIndex: zIndex,
               }}
               onChange={(val, option: any) => {
-                form?.setFieldValue("store-name", option.label);
+                forms[0]?.setFieldValue("store-name", option.label);
               }}
             />
           </FormItem>
@@ -225,13 +276,12 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
           >
             <Select
               mode="multiple"
-              defaultValue={[]}
               dropdownStyle={{
                 zIndex: zIndex,
               }}
               options={feeplanOptions}
               onChange={(val, option: any) => {
-                form?.setFieldValue(
+                forms[0]?.setFieldValue(
                   "feeplan-name",
                   option?.map?.(
                     (item: { value: number; label: string }) => item.label
@@ -241,6 +291,12 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
             />
           </FormItem>
         </Flex>
+      </Form>
+      <Form
+        className={current === 1 ? "" : ModuleScss.invisible}
+        layout="vertical"
+        form={forms[1]}
+      >
         <Flex
           vertical={utils.isMobileDevice ? true : false}
           justify="space-between"
@@ -272,6 +328,12 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
             className={ModuleScss.invisible}
           />
         </Flex>
+      </Form>
+      <Form
+        className={current === 2 ? "" : ModuleScss.invisible}
+        layout="vertical"
+        form={forms[2]}
+      >
         <Flex
           vertical={utils.isMobileDevice ? true : false}
           justify="space-between"

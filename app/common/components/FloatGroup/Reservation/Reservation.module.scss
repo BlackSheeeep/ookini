@@ -27,6 +27,11 @@
     display: none;
   }
 }
+.wrappper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .dialog {
   width: 40rem !important;
   padding: 0 3rem;
@@ -42,8 +47,6 @@
       display: flex;
       flex-direction: column;
       width: 100%;
-      margin: 0;
-      left: 55%;
     }
     .ant-form-item {
       flex: 1;
@@ -52,8 +55,20 @@
     }
   }
 }
+.addon {
+  cursor: pointer;
+  padding: 0 10px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
 .people {
   width: 120px;
+  :global {
+    .ant-input-number-group-addon {
+      padding: 0;
+    }
+  }
 }
 .date {
   flex: 1;
@@ -84,9 +99,17 @@
   .dialog {
     top: 0;
     padding-bottom: 20rem;
+    display: flex;
+    align-items: center;
+    width: 100vw !important;
+    height: 100%;
+    justify-content: center;
     :global {
       .ant-form-item {
         max-width: unset !important;
+      }
+      .ant-modal-content {
+        width: 80rem !important;
       }
     }
   }

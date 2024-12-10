@@ -161,6 +161,7 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
       open={visible}
       zIndex={100100}
       onCancel={onCancel}
+      wrapClassName={ModuleScss.wrappper}
       footer={
         <div className={ModuleScss.dialogFooter}>
           <Button
@@ -257,6 +258,10 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
               }}
               options={feeplanOptions}
               onChange={(val, option: any) => {
+                forms[1]?.setFieldValue(
+                  "reservation-people",
+                  option?.length || 0
+                );
                 forms[0]?.setFieldValue(
                   "feeplan-name",
                   option?.map?.(
@@ -280,7 +285,7 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
       >
         <Flex
           vertical={utils.isMobileDevice ? true : false}
-          justify="space-between"
+          justify="flex-start"
         >
           {/* <FormItem name="extra-purchase">
             <Input></Input>
@@ -337,7 +342,42 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
                 // { type: "number", message: "请输入数字" },
               ]}
             >
-              <InputNumber className={ModuleScss.peopleNumber} />
+              <InputNumber
+                readOnly
+                addonBefore={
+                  <div
+                    className={ModuleScss.addon}
+                    onClick={() => {
+                      forms[1].setFieldValue(
+                        "reservation-people",
+                        Math.max(
+                          forms[1].getFieldValue("reservation-people") - 1,
+                          0
+                        )
+                      );
+                    }}
+                  >
+                    -
+                  </div>
+                }
+                addonAfter={
+                  <div
+                    className={ModuleScss.addon}
+                    onClick={() => {
+                      forms[1].setFieldValue(
+                        "reservation-people",
+                        Math.min(
+                          forms[1].getFieldValue("reservation-people") + 1,
+                          30
+                        )
+                      );
+                    }}
+                  >
+                    +
+                  </div>
+                }
+                className={ModuleScss.peopleNumber}
+              />
             </FormItem>
           </Flex>
         </Flex>

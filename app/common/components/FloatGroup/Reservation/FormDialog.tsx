@@ -352,7 +352,7 @@ const FormDialog: React.FunctionComponent<IFormDialogProps> = (props) => {
                         "reservation-people",
                         Math.max(
                           forms[1].getFieldValue("reservation-people") - 1,
-                          0
+                          1
                         )
                       );
                     }}

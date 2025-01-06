@@ -1,24 +1,53 @@
 .menu {
   position: fixed;
-  bottom: 0;
-  font-size: 5rem;
-  height: var(--menu-height);
+  bottom: -1px;
+  background: white;
+  height: 15rem;
   z-index: $z-index-1;
-  padding: 0 1rem;
-  padding-right: 5rem;
+  padding: 0 2rem;
+  gap: 4px;
   align-items: center;
+  color: black;
   width: 100%;
   justify-content: space-between;
   :global {
     sup {
-      // border: none;
       box-shadow: unset !important;
     }
+    // .ant-menu-item-active {
+    //   color: black;
+    // }
+    .ant-menu-overflow,
+    ul {
+      padding: 0 !important;
+    }
+    .ant-menu-item,
+    .ant-menu-overflow-item:not(:first-child) {
+      position: relative;
+      .ant-menu-submenu-title {
+        display: flex;
+        gap: 4px;
+      }
+      &::before {
+        content: "";
+        inset-inline: unset !important;
+        position: absolute !important;
+        height: 40% !important;
+        width: 0.5px !important;
+        padding: 1rem 0;
+        background-color: gray;
+        left: 0 !important;
+        top: 30% !important;
+      }
+    }
+    .ant-menu-overflow-item,
     .ant-menu-item,
     .ant-menu-submenu-title {
       height: 100%;
       display: flex;
       padding: 1rem;
+      flex: 1;
+      font-size: 12px;
       align-items: center;
       justify-content: center;
       flex-direction: column;
@@ -42,7 +71,7 @@
     // border: none;
     box-shadow: unset !important;
   }
-  color: rgba(255, 255, 255, 0.65) !important;
+  //   color: rgba(255, 255, 255, 0.65) !important;
   padding-right: 3rem;
 }
 .trans {
@@ -57,12 +86,36 @@
   align-items: center;
 }
 .subMenu {
+  background-color: white !important;
+  color: black;
   :global {
+    .ant-menu-sub {
+      background-color: transparent !important;
+    }
+
+    .ant-menu-title-content {
+      color: black;
+    }
+    .ant-menu-item:not(.ant-menu-item-selected):not(
+        .ant-menu-submenu-selected
+      ):hover {
+      color: black;
+    }
     .ant-menu-item,
     .ant-menu-submenu {
+      position: relative;
       &:not(:last-child) {
-        border-radius: 0;
-        border-bottom: 0.5px solid gray;
+        // border-radius: 0;
+        // border-bottom: 1 solid gray;
+        &::after {
+          content: "";
+          width: 100%;
+          height: 0.5px;
+          bottom: 0;
+          left: 0;
+          position: absolute;
+          background-color: black;
+        }
       }
     }
   }

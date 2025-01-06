@@ -2,7 +2,6 @@ import _ from "lodash";
 import React from "react";
 import { Links, Meta, Outlet, Scripts } from "@remix-run/react";
 import utils from "./common/utils";
-import { Script } from "vm";
 
 function App() {
   // SSR Render

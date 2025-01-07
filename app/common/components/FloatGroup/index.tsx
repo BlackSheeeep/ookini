@@ -16,15 +16,8 @@ export const recoilStates = {
 };
 const FloatGroup: React.FunctionComponent<IFloatGroupProps> = (props) => {
   const [open, setOpen] = React.useState(true);
-  const [, setVisible] = useRecoilState(recoilStates.visible);
   return (
     <>
-      <FormDialog
-        visible={open}
-        onCancel={() => {
-          setVisible(false);
-        }}
-      />
       {utils.isMobileDevice ? (
         <MenuBar />
       ) : (

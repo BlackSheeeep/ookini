@@ -11,6 +11,10 @@
   width: 100%;
   justify-content: space-between;
   :global {
+    .ant-menu-item.ant-menu-item-active:hover {
+      color: black;
+    }
+
     sup {
       box-shadow: unset !important;
     }
@@ -24,6 +28,7 @@
     .ant-menu-item,
     .ant-menu-overflow-item:not(:first-child) {
       position: relative;
+      color: black !important;
       .ant-menu-submenu-title {
         display: flex;
         gap: 4px;

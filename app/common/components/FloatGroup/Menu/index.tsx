@@ -11,24 +11,21 @@ import { Badge, Flex, Menu, MenuProps, message } from "antd";
 import * as React from "react";
 import ModuleScss from "./Menu.module.scss";
 import { reservationStore } from "../Reservation/store";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GALLERY_TYPE } from "~/common/constants";
 // import translate from "translate";
 // import translateV2 from "translate";
 import utils from "~/common/utils";
 import CommonNews from "~/common/components/CommonNews";
 import { useLoaderData, useMatches } from "@remix-run/react";
-import { useRecoilState } from "recoil";
-import { recoilStates } from "..";
-import { languages } from "./languages";
 interface IMenuBarProps {}
 //   const trans = document.getElementById(":0.container");
 //   if (trans) trans.style.display = "none";
 const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
   const { reservationStore }: Record<string, any> = useLoaderData();
   const { news, stores, feeplans: feePlans } = reservationStore;
-  const [, setVisible] = useRecoilState(recoilStates.visible);
   const [gtc, setgtc] = React.useState<HTMLElement>();
+  const navigate = useNavigate();
 
   const [isPopKeybord, setIsPopKeybord] = React.useState(false);
   React.useLayoutEffect(() => {
@@ -118,7 +115,7 @@ const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
       icon: <CalendarOutlined />,
       key: "reservation",
       onClick: () => {
-        setVisible(true);
+        navigate("/reservation");
       },
     },
     {

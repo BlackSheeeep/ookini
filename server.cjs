@@ -1,5 +1,6 @@
 const { createRequestHandler } = require("@remix-run/express");
 const express = require("express");
+const reservationRoutes = require("./routes/reservation.cjs");
 
 (async function () {
   const viteDevServer =
@@ -12,6 +13,7 @@ const express = require("express");
         );
 
   const app = express();
+  app.use("/api/res", reservationRoutes);
   app.use(
     viteDevServer ? viteDevServer.middlewares : express.static("build/client")
   );

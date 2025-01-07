@@ -53,14 +53,26 @@ const CommonImage: React.FunctionComponent<ICommonImageProps> = (props) => {
   if (reg.test(realSrc)) {
     realSrc = _.replace(realSrc, reg, "http://cdn.address-ookini.com");
   }
+  if (!src) {
+    return (
+      <div
+        style={{
+          height: props.height,
+          width: props.width,
+        }}
+      >
+        暂无图片
+      </div>
+    );
+  }
   return (
     <Image
       loading="lazy"
       placeholder={
         <Flex
           style={{
-            height: "100%",
-            width: "100%",
+            height: props.height || "100%",
+            width: props.width || "100%",
           }}
           className={ModuleScss.image}
           justify="center"

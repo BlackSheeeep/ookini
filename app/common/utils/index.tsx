@@ -26,6 +26,8 @@ export default {
       return /mobile/i.test(this.__uesr_agent); // 简单的正则判断
     }
   },
+  remixServerUrl: import.meta?.env?.VITE_API_URL,
+  isProduction: import.meta?.env?.VITE_ENV === "production",
   uniteClass(...params: string[]) {
     const arr = _.map(params, (item: string) => _.trim(item));
     return _.join(arr, " ");

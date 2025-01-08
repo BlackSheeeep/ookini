@@ -15,6 +15,7 @@ export const useAwaitData = (
   }, []);
   return [internalData, setInternalData];
 };
+export const isProduction = process?.NODE_ENV === "production";
 
 export const useSearch = () => {
   const { search } = useLocation();

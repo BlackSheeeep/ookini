@@ -7,6 +7,27 @@
   &__form--hidden {
     display: none;
   }
+  &__time-button,
+  &__left-num {
+    font-size: 16px;
+    width: 160px;
+    padding: 24px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__time-picker {
+    margin-top: 20px;
+  }
+  &__time-button {
+    pointer-events: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &__left-num {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
   .ant-steps-item-title {
     font-size: 18px !important;
   }
@@ -43,6 +64,7 @@
   &__footer {
     width: 100%;
     display: flex;
+    margin-bottom: 24px;
     justify-content: space-between;
   }
 }

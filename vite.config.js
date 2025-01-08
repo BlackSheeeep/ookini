@@ -8,6 +8,10 @@ export default defineConfig({
       //   serverModuleFormat: "cjs",
     }),
   ],
+  define: {
+    "process.env": process.env,
+    // "process.env.API_URL": JSON.stringify(process.env.VITE_API_URL),
+  },
   build: {
     rollupOptions: {
       //   output: {

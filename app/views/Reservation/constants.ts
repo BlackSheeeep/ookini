@@ -1,0 +1,5 @@
+export enum RESERVATION_STEPS {
+  RESERVATION_INFO,
+  ENSURE,
+  SUCCESS,
+}

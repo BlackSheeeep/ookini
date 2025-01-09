@@ -7,7 +7,7 @@ import Reservation from "~/views/Reservation";
 
 export async function loader({ request }: any) {
   const { ret, promises } = loaderInit({ request });
-  globalThis.baseURL = `http://8.209.245.194/wp-json`;
+  // globalThis.baseURL = `http://8.209.245.194/wp-json`;
 
   await Promise.all([...promises]);
   return { ...ret };

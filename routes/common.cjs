@@ -10,7 +10,7 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
 });
-
+module.exports.connection = pool;
 module.exports.baseUrl = "https://wp.address-ookini.com/wp-json/wp/v2/";
 
 module.exports.request = (method, path, params = {}) => {

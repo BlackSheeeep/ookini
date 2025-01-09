@@ -12,6 +12,8 @@ import {
   newsReq,
   advantageReq,
 } from "./axiosApi";
+import request from "./request";
+import wordpressRequest from "./wordpressRequest";
 export default {
   async getPosts() {
     return await postsReq("get");
@@ -84,7 +86,7 @@ export default {
     });
   },
   async createReservation(data: Record<string, any>) {
-    return await reservationReq("post", undefined, { ...data });
+    return wordpressRequest("post", ["reservation/create"], { ...data });
   },
   async getMobileHomeImg() {
     return await imagesReq("get", undefined, {

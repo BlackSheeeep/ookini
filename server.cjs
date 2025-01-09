@@ -1,7 +1,7 @@
 const { createRequestHandler } = require("@remix-run/express");
 const express = require("express");
 const reservationRoutes = require("./routes/reservation.cjs");
-
+const axios = require("axios");
 (async function () {
   const viteDevServer =
     process.env.NODE_ENV === "production"
@@ -14,6 +14,15 @@ const reservationRoutes = require("./routes/reservation.cjs");
 
   const app = express();
   app.use("/api/res", reservationRoutes);
+  // app.use("/wp-json/wp/v2", async (req, res) => {
+  //   const method = req.method.toLowerCase();
+  //   console.log(req.baseUrl);
+  //   const result = await axios[method](
+  //     `https://wp.address-ookini.com/${req.baseUrl}`
+  //   );
+  //   console.log("result", JSON.stringify(result.data));
+  //   res.send(JSON.stringify(result));
+  // });
   app.use(
     viteDevServer ? viteDevServer.middlewares : express.static("build/client")
   );

@@ -11,6 +11,8 @@ import {
   Button,
   Checkbox,
   Calendar,
+  Card,
+  Divider,
 } from "antd";
 import FormItem from "~/common/components/FormItem";
 import dayjs from "dayjs";
@@ -27,12 +29,14 @@ import CommonImage from "~/common/components/Image";
 import axios from "axios";
 import Loading from "~/common/components/Loading";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
+
+import Ensure from "./Ensure";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 const MAX_STEP = 4;
 interface IFormDialogProps {
   visible?: boolean;
-  onCancel?: () => void;
+  onSuccess?: () => void;
 }
 const useForm = Form.useForm;
 // eslint-disable-next-line arrow-body-style
@@ -77,6 +81,11 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
   const [fetchTimeLoading, setFetchLoading] = React.useState(false);
 
   const [current, setCurrent] = React.useState(0);
+  const [selectedDetail, setSelectedDetail] = React.useState<{
+    max_reservation: number;
+    reservation_time: number;
+    reserved_num: number;
+  }>();
   const [reservationDetail, setDetail] = React.useState<
     {
       max_reservation: number;
@@ -86,11 +95,6 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
   >();
   const forms = new Array(MAX_STEP).fill(true).map(() => useForm()[0]);
 
-  const storeOptions =
-    stores?.map?.((store: any) => ({
-      value: store.id,
-      label: store.storeName,
-    })) || [];
   const feeplanOptions = feeplans?.map?.((feeplan: any) => ({
     value: _.get(feeplan, "id"),
     label: feeplan?.pagetitle + _.get(feeplan, "fee.content"),
@@ -100,19 +104,24 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
     return emails.includes(str.split("@")?.[1]);
   };
   const getDate = (value: any) =>
-    dayjs(new Date(_.get(value, "reservation_date"))).format(
-      "YYYY-MM-DD HH:mm:00"
-    );
-
+    dayjs(
+      new Date(
+        _.get(value, "reservation_date") +
+          " " +
+          forms[2]?.getFieldValue("reservation_time")
+      )
+    ).format("YYYY-MM-DD HH:mm");
+  const preDate = React.useRef("");
   React.useEffect(() => {
     (async () => {
-      if (current === 2) {
-        const date = forms[1].getFieldValue("reservation_date");
+      const date = forms[1].getFieldValue("reservation_date");
+      if (current === 2 && date !== preDate.current) {
+        preDate.current = date;
         const storeId = forms[0].getFieldValue("store_id");
         setFetchLoading(true);
         const [err, { data: reservation }] = await utils.resolvePromise(
           axios.get(
-            `${process.env.VITE_API_URL}/api/res/detail?date=${date}&store_id=${storeId[0]}`
+            `${process.env.VITE_API_URL}/api/res/detail?date=${date}&store_id=${storeId}`
           )
         );
         setFetchLoading(false);
@@ -131,27 +140,37 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
       to_name: _.get(value, "customer_name"),
       store_name: _.get(value, "store_name"),
       date: getDate(value),
-      feeplan: _.get(value, "fee_planning_name").join(","),
+      feeplan: _.get(value, "fee_planning_name"),
       address: selectStore.storePath,
       tel: selectStore.tel,
       storeId: selectStore.id,
       to_email: _.get(value, "customer_email"),
     };
   };
+  const allForm = forms
+    .map((form) => form.getFieldsValue(true))
+    .reduce((pre, item) => {
+      item = _.omit(item, "reservation_time") || {};
+      return Object.assign(pre, item);
+    }, {});
   const onSubmit = _.throttle(async () => {
     setConfirmLoading(true);
+    if (confirmLoading) return;
     const values = await Promise.all(
       forms.map((form) => form.validateFields())
     );
-    if (!values.every((item) => item === true)) {
+    if (!values.every((item) => item)) {
+      setConfirmLoading(false);
       message.warning("未入力の情報があります");
       return;
     }
+
     // if (confirmLoading) {
     //   message.warning("wait a moment ^ W ^ ~");
     //   return;
     // }
     const value = values.reduce((pre, item) => {
+      item = _.omit(item, "reservation_time") || {};
       return Object.assign(pre, item);
     }, {});
     await wordpressApi
@@ -161,10 +180,10 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
         title:
           _.get(value, "customer_name") + " " + _.get(value, "customer_tel"),
       })
-      .then(() => {
+      .then(async () => {
         message.success("予約成功しました!");
         if (_.get(value, "customer_email")) {
-          send(
+          await send(
             isQQEmail(_.get(value, "customer_email"))
               ? "service_cxeivoc"
               : "service_qg3313l",
@@ -173,9 +192,9 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
             { publicKey: "QX1ISlC1HuOhDIser" }
           );
         }
-        props.onCancel?.();
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e);
         message.error(
           "予約が失敗しました。しばらくお待ちいただくか、ページをリフレッシュしてください"
         );
@@ -205,13 +224,12 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
           type="primary"
           loading={confirmLoading}
           onClick={() =>
-            current === forms.length - 1
+            current === forms.length
               ? onSubmit()
               : (async () => {
                   const [err, res] = await utils.resolvePromise(
                     forms[current].validateFields()
                   );
-                  console.log(err, res);
                   if (!res) {
                     message.error("请选择！");
                   }
@@ -255,12 +273,17 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
         layout="vertical"
         form={forms[0]}
       >
-        <Flex
-          vertical={utils.isMobileDevice ? true : false}
-          justify="space-between"
-        >
-          <FormItem name="store_id" label="店铺" rules={[{ required: true }]}>
-            {/* <Select
+        <Card>
+          <Flex
+            vertical={utils.isMobileDevice ? true : false}
+            justify="space-between"
+          >
+            <FormItem
+              name="store_id"
+              label="店铺选择"
+              rules={[{ required: true }]}
+            >
+              {/* <Select
               options={storeOptions}
               dropdownStyle={{
                 zIndex: zIndex,
@@ -270,10 +293,16 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
                 forms[0]?.setFieldValue("store_name", option.label);
               }}
             /> */}
-            <Checkbox.Group>
+            </FormItem>
+            <Checkbox.Group
+              onChange={(checkedValue) => {
+                forms[0]?.setFieldValue("store_id", checkedValue[0]);
+              }}
+            >
               {stores.map((store) => {
                 return (
                   <Checkbox
+                    key={store.id}
                     value={store.id}
                     onClick={() => {
                       forms[0]?.setFieldValue("store_name", store.storeName);
@@ -311,114 +340,136 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
                 );
               })}
             </Checkbox.Group>
-          </FormItem>
-
-          <FormItem name="store_name" className={"reservation__form--hidden"} />
-        </Flex>
+            <FormItem
+              name="store_name"
+              className={"reservation__form--hidden"}
+            />
+          </Flex>
+        </Card>
       </Form>
       <Form
         className={current === 1 ? "" : "reservation__form--hidden"}
         form={forms[1]}
       >
-        <h2>{forms[0].getFieldValue("store_name")}の预约</h2>
-        <Flex vertical justify="flex-start">
-          <FormItem
-            name="reservation_date"
-            label="予約日時選択"
-            tooltip="注意：選択した時間は東京時間基準です！"
-            rules={[{ required: true }]}
-          >
-            <div>
-              <Calendar
-                onSelect={(date, { source }) => {
-                  if (source !== "date") return;
-                  forms[1].setFieldValue(
-                    "reservation_date",
-                    date.format("YYYY-MM-DD")
-                  );
-                  setCurrent(current + 1);
-                }}
-              />
-            </div>
-          </FormItem>
-        </Flex>
+        <Card title={<h2>{forms[0].getFieldValue("store_name")}の预约</h2>}>
+          <Flex vertical justify="flex-start">
+            <FormItem
+              name="reservation_date"
+              label="予約日時選択"
+              tooltip="注意：選択した時間は東京時間基準です！"
+              rules={[{ required: true }]}
+            >
+              <div>
+                <Calendar
+                  onSelect={(date, { source }) => {
+                    if (source !== "date") return;
+                    forms[1].setFieldValue(
+                      "reservation_date",
+                      date.format("YYYY-MM-DD")
+                    );
+                    setCurrent(current + 1);
+                  }}
+                />
+              </div>
+            </FormItem>
+          </Flex>
+        </Card>
       </Form>
       <Form
         layout="vertical"
         className={current === 2 ? "" : "reservation__form--hidden"}
         form={forms[2]}
       >
-        <Flex vertical justify="center" align="center">
-          <h2>{forms[0]?.getFieldValue?.("store_name")}の预约&nbsp;</h2>
-          <h3 style={{ margin: 0 }}>
-            {forms[1]?.getFieldValue?.("reservation_date")}
-          </h3>
-        </Flex>
-        <FormItem
-          className="reservation__form--hidden"
-          rules={[
-            {
-              required: true,
-              message: "请选择！",
-            },
-          ]}
-          name="reservation_time"
-        />
-        <Flex
-          vertical
-          gap={8}
-          align="center"
-          className="reservation__time-picker"
-          justify="center"
+        <Card
+          title={
+            <Flex vertical justify="center" align="center">
+              <h2>{forms[0]?.getFieldValue?.("store_name")}の预约&nbsp;</h2>
+              <h3 style={{ margin: 0 }}>
+                {forms[1]?.getFieldValue?.("reservation_date")}
+              </h3>
+            </Flex>
+          }
         >
-          {reservationDetail && !fetchTimeLoading ? (
-            reservationDetail.map((item) => {
-              console.log(
-                "item.max_reservation - item.reserved_num",
-                item.max_reservation - item.reserved_num,
-                item
-              );
-              return (
-                <Flex vertical={false} align="center" justify="center">
-                  <Button className="reservation__time-button">
-                    {item.reservation_time}
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      forms[2].setFieldValue(
-                        "reservation_time",
-                        item.reservation_time
-                      );
-                      setCurrent(current + 1);
-                    }}
-                    disabled={item.max_reservation - item.reserved_num <= 0}
-                    className="reservation__left-num"
+          <FormItem
+            className="reservation__form--hidden"
+            rules={[
+              {
+                required: true,
+                message: "请选择！",
+              },
+            ]}
+            name="reservation_time"
+          />
+          <Flex
+            vertical
+            gap={8}
+            align="center"
+            className="reservation__time-picker"
+            justify="center"
+          >
+            {reservationDetail && !fetchTimeLoading ? (
+              reservationDetail.map((item) => {
+                return (
+                  <Flex
+                    key={item.reservation_time}
+                    vertical={false}
+                    align="center"
+                    justify="center"
                   >
-                    {item.max_reservation - item.reserved_num
-                      ? `剩余${item.max_reservation - item.reserved_num}人`
-                      : ``}
-                  </Button>
-                </Flex>
-              );
-            })
-          ) : (
-            <Loading></Loading>
-          )}
-        </Flex>
+                    <Button className="reservation__time-button">
+                      {item.reservation_time}
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        forms[2].setFieldValue(
+                          "reservation_time",
+                          item.reservation_time
+                        );
+                        setTimeout(() => {
+                          setSelectedDetail(item);
+                          setCurrent(current + 1);
+                        }, 300);
+                      }}
+                      disabled={item.max_reservation - item.reserved_num <= 0}
+                      className="reservation__left-num"
+                    >
+                      {item.max_reservation - item.reserved_num
+                        ? `剩余${item.max_reservation - item.reserved_num}人`
+                        : ``}
+                    </Button>
+                  </Flex>
+                );
+              })
+            ) : (
+              <Loading></Loading>
+            )}
+          </Flex>
+        </Card>
       </Form>
       <Form
         className={current === 3 ? "" : "reservation__form--hidden"}
         layout="vertical"
         form={forms[3]}
       >
-        <Flex
-          vertical={utils.isMobileDevice ? true : false}
-          justify="space-between"
-        >
+        <Card title={<h2>预约信息</h2>}>
+          <FormItem label="预约日期" required>
+            <span
+              style={{
+                fontSize: 18,
+              }}
+            >
+              {forms[1].getFieldValue("reservation_date")}&nbsp;
+              {selectedDetail?.reservation_time
+                .toString()
+                ?.replace(/:00$/, "") || ""}
+            </span>
+          </FormItem>
+          <Divider></Divider>
           <FormItem
             name="reservation_people"
             label="予約人数"
             className={"reservation__people"}
+            initialValue={1}
             rules={[
               {
                 required: true,
@@ -431,10 +482,10 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
                 <div
                   className={"reservation__addon"}
                   onClick={() => {
-                    forms[1].setFieldValue(
+                    forms[3].setFieldValue(
                       "reservation_people",
                       Math.max(
-                        forms[1].getFieldValue("reservation_people") - 1,
+                        forms[3].getFieldValue("reservation_people") - 1,
                         1
                       )
                     );
@@ -447,12 +498,9 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
                 <div
                   className={"reservation__addon"}
                   onClick={() => {
-                    forms[1].setFieldValue(
+                    forms[3].setFieldValue(
                       "reservation_people",
-                      Math.min(
-                        forms[1].getFieldValue("reservation_people") + 1,
-                        30
-                      )
+                      Math.min(forms[3].getFieldValue("reservation_people") + 1)
                     );
                   }}
                 >
@@ -462,83 +510,80 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
               className={"reservation__peopleNumber"}
             />
           </FormItem>
-        </Flex>
-        <Flex
-          vertical={utils.isMobileDevice ? true : false}
-          justify="space-between"
-        >
-          <FormItem
-            name="fee_planning_id"
-            label="プラン"
-            rules={[{ required: true }]}
+        </Card>
+        <Divider></Divider>
+        <Card title={<h2>用户信息</h2>}>
+          <Flex
+            vertical={utils.isMobileDevice ? true : false}
+            justify="space-between"
           >
-            <Select
-              mode="multiple"
-              dropdownStyle={{
-                zIndex: zIndex,
-              }}
-              options={feeplanOptions}
-              onChange={(val, option: any) => {
-                forms[1]?.setFieldValue(
-                  "reservation_people",
-                  option?.length || 0
-                );
-                forms[0]?.setFieldValue(
-                  "fee_planning_name",
-                  option?.map?.(
-                    (item: { value: number; label: string }) => item.label
-                  )
-                );
-              }}
+            <FormItem
+              name="customer_name"
+              label="お客様の名前"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </FormItem>
+            <FormItem
+              name="customer_tel"
+              label="電話番号"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </FormItem>
+            <FormItem
+              name="customer_email"
+              label="E-mail"
+              rules={[
+                {
+                  type: "email",
+                  message: "メールの形式が正しくありません",
+                },
+                { required: true },
+              ]}
+            >
+              <Input type="email" />
+            </FormItem>
+          </Flex>
+        </Card>
+        <Divider></Divider>
+        <Card title={<h2>预约内容</h2>}>
+          <Flex
+            vertical={utils.isMobileDevice ? true : false}
+            justify="space-between"
+          >
+            <FormItem
+              name="fee_planning_name"
+              initialValue={[]}
+              className={"reservation__form--hidden"}
             />
-          </FormItem>
-          <FormItem
-            name="fee_planning_name"
-            initialValue={[]}
-            className={"reservation__form--hidden"}
-          />
-        </Flex>
-        <Flex
-          vertical={utils.isMobileDevice ? true : false}
-          justify="space-between"
-        >
-          <FormItem
-            name="customer_name"
-            label="お客様の名前"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </FormItem>
-          <FormItem
-            name="customer_tel"
-            label="電話番号"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </FormItem>
-        </Flex>
-        <Flex
-          vertical={utils.isMobileDevice ? true : false}
-          justify="space-between"
-        >
-          <FormItem
-            name="customer_email"
-            label="E-mail"
-            rules={[
-              {
-                type: "email",
-                message: "メールの形式が正しくありません",
-              },
-              { required: true },
-            ]}
-          >
-            <Input type="email" />
-          </FormItem>
-          <FormItem name="extra_info" label="ご注意事項をお知らせください">
-            <Input />
-          </FormItem>
-        </Flex>
+            <FormItem
+              name="fee_planning_id"
+              label="プラン"
+              rules={[{ required: true }]}
+            >
+              <Select
+                dropdownStyle={{
+                  zIndex: zIndex,
+                }}
+                options={feeplanOptions}
+                //@ts-ignore-next-line
+                onChange={(val, option: { value: number; label: string }) => {
+                  forms[3]?.setFieldValue(
+                    "fee_planning_name",
+                    option.label || ""
+                  );
+                }}
+              />
+            </FormItem>
+
+            <FormItem name="extra_info" label="ご注意事項をお知らせください">
+              <Input />
+            </FormItem>
+          </Flex>
+        </Card>
       </Form>
+      {current === forms?.length ? <Ensure {...allForm}></Ensure> : null}
     </div>
   );
 };

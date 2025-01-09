@@ -2,7 +2,7 @@ import React from "react";
 import { RemixBrowser } from "@remix-run/react";
 import { startTransition } from "react";
 import { hydrateRoot } from "react-dom/client";
-globalThis.baseURL = "https://api.address-ookini.com/wp-json";
+globalThis.baseURL = "https://wp.address-ookini.com/wp-json";
 startTransition(() => {
   document && hydrateRoot(document!, <RemixBrowser />);
 });

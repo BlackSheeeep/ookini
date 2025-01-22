@@ -13,6 +13,7 @@ import customTheme from "~/common/styles/theme";
 const { useToken } = theme;
 interface IProps {
   children?: React.ReactNode;
+  customContentStyle?: any;
 }
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -53,7 +54,7 @@ class ErrorBoundary extends React.Component {
 const { Header, Footer, Content } = Layout;
 
 const CommonLayout: React.FC<IProps> = (props: IProps) => {
-  const { children } = props;
+  const { children, customContentStyle = {} } = props;
   const [key, update] = useState(Date.now());
   const [googleTrans, setHasGoogleTrans] = useState<HTMLElement | null>();
 
@@ -142,6 +143,7 @@ const CommonLayout: React.FC<IProps> = (props: IProps) => {
     backgroundColor: token.colorBgLayout,
     display: "flex",
     flexDirection: "column",
+    ...customContentStyle,
   };
 
   return (

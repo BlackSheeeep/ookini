@@ -6,7 +6,7 @@ import { HOME_KEYS } from "~/common/constants/config";
 import CommonTitle from "~/common/components/CommonTitle";
 import { Typography } from "antd";
 import _ from "lodash";
-import { useLoaderData } from "@remix-run/react";
+import { NavLink, useLoaderData } from "@remix-run/react";
 import { BlogsDetailData } from "~/routes/blogs";
 import homeStore from "../Home/store";
 const { Link } = Typography;
@@ -37,14 +37,19 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
           renderItem={(item: any, index) => {
             return (
               <List.Item style={{ width: "100%" }}>
-                <Link href={item.link}>
+                <NavLink
+                  to={`/blog?link=${encodeURIComponent(
+                    item.link.split(".com/")[1]
+                  )}`}
+                >
                   <List.Item.Meta
                     title={item.date}
                     description={item.title}
                     className={ModuleScss.listItem}
                     key={index}
                   />
-                </Link>
+                </NavLink>
+                {/* <Link href={navigate(item.link)}></Link> */}
               </List.Item>
             );
           }}

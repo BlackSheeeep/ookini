@@ -14,7 +14,9 @@ i18n
       escapeValue: false, // React 已经默认转义，不需要额外处理
     },
     backend: {
-      loadPath: "/public/locales/{{lng}}/{{ns}}.json", // 语言文件路径
+      loadPath:
+        (process.env.NODE_ENV === "production" ? "" : "/public") +
+        "/locales/{{lng}}/{{ns}}.json", // 语言文件路径
     },
   });
 

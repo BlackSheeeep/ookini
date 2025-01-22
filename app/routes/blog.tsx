@@ -31,7 +31,7 @@ const BolgsEntry: React.FunctionComponent = (props) => {
           height: "100vh",
           border: "none",
         }}
-        src={`/wp-blog/${link}`}
+        src={`https://wp.address-ookini.com/${link}`}
       ></iframe>
     </CommonLayout>
   );

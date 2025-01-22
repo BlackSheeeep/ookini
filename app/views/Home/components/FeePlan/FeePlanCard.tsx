@@ -1,11 +1,8 @@
 import { Card, Space, Typography, Button, Flex } from "antd";
 import * as React from "react";
 import FeePlansScss from "./FeePlans.module.scss";
-import utils from "~/common/utils";
 import CommonImage from "~/common/components/Image";
-import FormDialog from "~/common/components/FloatGroup/Reservation/FormDialog";
-import { reservationStore } from "~/common/components/FloatGroup/Reservation/store";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import _ from "lodash";
 import { useRecoilState } from "recoil";
 import { recoilStates } from "~/common/components/FloatGroup";
@@ -23,8 +20,7 @@ interface IFeePlanCardProps {
 const FeePlanCard: React.FunctionComponent<IFeePlanCardProps> = (props) => {
   const { data } = props;
   const [isLoading, setIsLoading] = React.useState(true);
-  const [, setVisible] = useRecoilState(recoilStates.visible);
-
+  const navigate = useNavigate();
   React.useEffect(() => {
     if (!_.isEmpty(data) && isLoading) setIsLoading(false);
   }, [data]);
@@ -63,7 +59,11 @@ const FeePlanCard: React.FunctionComponent<IFeePlanCardProps> = (props) => {
             flexWrap: "wrap",
           }}
         >
-          <Button type="primary" size="large" onClick={() => setVisible(true)}>
+          <Button
+            type="primary"
+            size="large"
+            onClick={() => navigate("/reservation")}
+          >
             予約する
           </Button>
           <Button type="dashed" size="large">

@@ -55,12 +55,14 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
     max_reservation: number;
     reservation_time: number;
     reserved_num: number;
+    disabled: boolean;
   }>();
   const [reservationDetail, setDetail] = React.useState<
     {
       max_reservation: number;
       reservation_time: number;
       reserved_num: number;
+      disabled: boolean;
     }[]
   >();
   const forms = new Array(MAX_STEP).fill(true).map(() => useForm()[0]);
@@ -82,6 +84,15 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
       )
     ).format("YYYY-MM-DD HH:mm");
   const preDate = React.useRef("");
+  const [disabled_date, setDisabled] = React.useState([]);
+  React.useEffect(() => {
+    (async () => {
+      const [err, res] = await utils.resolvePromise(
+        axios.get("api/res/disabled_date")
+      );
+      setDisabled(res.data);
+    })();
+  }, []);
   React.useEffect(() => {
     (async () => {
       const date = forms[1].getFieldValue("reservation_date");
@@ -177,6 +188,8 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
 
   // 禁用今天之前的日期
   const disabledDate = (current) => {
+    const date = current.format("YYYY-MM-DD") || "";
+    if (disabled_date.includes(date as string)) return true;
     // 如果 current 是今天或之前的日期，则禁用
     return current && current < today;
   };
@@ -408,7 +421,10 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
                           setCurrent(current + 1);
                         }, 300);
                       }}
-                      disabled={item.max_reservation - item.reserved_num <= 0}
+                      disabled={
+                        item.disabled ||
+                        item.max_reservation - item.reserved_num <= 0
+                      }
                       className="reservation__left-num"
                     >
                       {item.max_reservation - item.reserved_num

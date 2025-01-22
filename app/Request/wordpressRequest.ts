@@ -41,7 +41,6 @@ export default function (
   //           .join("&")}`
   //       : ""
   //   }
-  console.log(instance);
   const config =
     method === "post"
       ? {
@@ -51,7 +50,6 @@ export default function (
           },
         }
       : {};
-  console.log("wwww");
   return axios[method](
     `https://wp.address-ookini.com/wp-json/wp/v2/${path.join("/")}`,
     reqConfig,

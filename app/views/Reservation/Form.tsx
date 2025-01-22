@@ -13,6 +13,7 @@ import {
   Calendar,
   Card,
   Divider,
+  Badge,
 } from "antd";
 import FormItem from "~/common/components/FormItem";
 import dayjs from "dayjs";
@@ -31,6 +32,7 @@ import Loading from "~/common/components/Loading";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 
 import Ensure from "./Ensure";
+import { useTranslation } from "react-i18next";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 const MAX_STEP = 4;
@@ -39,40 +41,6 @@ interface IFormDialogProps {
   onSuccess?: () => void;
 }
 const useForm = Form.useForm;
-// eslint-disable-next-line arrow-body-style
-const disabledDate: RangePickerProps["disabledDate"] = (current) => {
-  // Can not select days before today and today
-  return current && current < dayjs().subtract(1, "days");
-};
-const range = (start: number, end: number) => {
-  const result = [];
-  for (let i = start; i < end; i++) {
-    result.push(i);
-  }
-  return result;
-};
-
-function generateDisabledMinutes(selectedMinutes: any, interval: any) {
-  const disabledMinutes = [];
-  for (let i = 0; i < 60; i += interval) {
-    if (i !== selectedMinutes) {
-      disabledMinutes.push(i);
-    }
-  }
-  return disabledMinutes;
-}
-// eslint-disable-next-line arrow-body-style
-const disabledTime = (current: any) => {
-  const interval = 30; // 时间间隔（单位：分钟）
-  const minutes = dayjs(current)?.minute();
-  return {
-    disabledMinutes: () => range(0, 60).filter((item) => item % 30 !== 0),
-    disabledHours: () =>
-      range(0, 24).filter(
-        (item) => (item < 8 || item > 17) && (item < 11 || item > 12)
-      ),
-  };
-};
 
 const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
   const { reservationStore } = useLoaderData();
@@ -81,6 +49,8 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
   const [fetchTimeLoading, setFetchLoading] = React.useState(false);
 
   const [current, setCurrent] = React.useState(0);
+
+  const { t } = useTranslation("reservation");
   const [selectedDetail, setSelectedDetail] = React.useState<{
     max_reservation: number;
     reservation_time: number;
@@ -202,7 +172,14 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
     setConfirmLoading(false);
   }, 3000);
   const zIndex = 100110;
+  // 获取当前日期
+  const today = dayjs().startOf("day");
 
+  // 禁用今天之前的日期
+  const disabledDate = (current) => {
+    // 如果 current 是今天或之前的日期，则禁用
+    return current && current < today;
+  };
   return (
     <div
       className="reservation"
@@ -361,6 +338,7 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
             >
               <div>
                 <Calendar
+                  disabledDate={disabledDate}
                   onSelect={(date, { source }) => {
                     if (source !== "date") return;
                     forms[1].setFieldValue(
@@ -451,7 +429,7 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
         layout="vertical"
         form={forms[3]}
       >
-        <Card title={<h2>预约信息</h2>}>
+        <Card title={<h2>{t("reservationInfo")}</h2>}>
           <FormItem label="预约日期" required>
             <span
               style={{
@@ -467,7 +445,7 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
           <Divider></Divider>
           <FormItem
             name="reservation_people"
-            label="予約人数"
+            label={t("customerNumber")}
             className={"reservation__people"}
             initialValue={1}
             rules={[
@@ -512,14 +490,14 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
           </FormItem>
         </Card>
         <Divider></Divider>
-        <Card title={<h2>用户信息</h2>}>
+        <Card title={<h2>{t("customerInfo")}</h2>}>
           <Flex
             vertical={utils.isMobileDevice ? true : false}
             justify="space-between"
           >
             <FormItem
               name="customer_name"
-              label="お客様の名前"
+              label={t("customerName")}
               rules={[{ required: true }]}
             >
               <Input />
@@ -547,7 +525,10 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
           </Flex>
         </Card>
         <Divider></Divider>
-        <Card title={<h2>预约内容</h2>}>
+        <Card title={<h2>{t("planDetail")}</h2>}>
+          <Flex vertical className="">
+            <span dangerouslySetInnerHTML={{ __html: t("planTips") }}></span>
+          </Flex>
           <Flex
             vertical={utils.isMobileDevice ? true : false}
             justify="space-between"

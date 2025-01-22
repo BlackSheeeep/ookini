@@ -1,0 +1,9 @@
+{
+  "reservationInfo": "預約資訊",
+  "reservationDate": "預定日期",
+  "customerInfo": "聯絡資訊",
+  "customerNumber": "人数",
+  "customerName": "お客様の名前",
+  "planDetail": "方案細節",
+  "planTips": "請選擇您的方案.\n前一天免費取消.\n選項可以當天添加，所以不需要寫下來."
+}

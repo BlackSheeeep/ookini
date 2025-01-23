@@ -5,12 +5,15 @@ import { createUseStoreData } from "~/common/utils/hooks";
 import { RecoilState, atom, useRecoilCallback } from "recoil";
 import _ from "lodash";
 import { wordpressApi } from "~/Request";
+import wordpressRequest from "~/Request/wordpressRequest";
 class StoreDetail extends BaseStore {
   storeInfo = null;
   async getStoreInfo(id: number | string) {
-    const [err, res] = await utils.resolvePromise(wordpressApi.getStores(id));
+    const [err, res] = await utils.resolvePromise(
+      wordpressRequest("get", ["stores", "list", `${id.toString()}`])
+    );
     if (err) return Promise.reject();
-    this.storeInfo = _.get(res, "data");
+    this.storeInfo = { ..._.get(res, "data") };
   }
 }
 

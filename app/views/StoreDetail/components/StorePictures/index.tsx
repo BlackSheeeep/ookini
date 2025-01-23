@@ -8,13 +8,12 @@ interface IStorePicturesProps {
 
 const StorePictures: React.FunctionComponent<IStorePicturesProps> = (props) => {
   const { storeDetail } = props;
-  if (!storeDetail?.store?.images?.length) {
+  if (!storeDetail?.details_images?.length) {
     return null;
   }
-
   return (
     <Flex vertical={utils.isMobileDevice}>
-      {storeDetail?.store?.images?.map((image: any, index: any) => (
+      {storeDetail?.details_images?.map((image: any, index: any) => (
         <Flex key={index}>
           <CommonImage src={image?.guid} width="100%" />
         </Flex>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useRecoilValue } from "recoil";
-import { Card, Flex, Typography } from "antd";
+import { Card, Divider, Flex, Typography } from "antd";
 import utils from "~/common/utils";
 import CommonLayout from "~/common/components/CommonLayout";
 import CommonTitle from "~/common/components/CommonTitle";
@@ -22,7 +22,6 @@ const StoreInfo: React.FunctionComponent<IStoreInfoProps> = (props) => {
   const { storeDetail } = useLoaderData<IStoreDetailData>();
   const { storeInfo: data } = storeDetail;
   if (!data) return <Loading></Loading>;
-  const { storeName } = data;
 
   return (
     <Flex
@@ -30,12 +29,14 @@ const StoreInfo: React.FunctionComponent<IStoreInfoProps> = (props) => {
         utils.isMobileDevice ? ModuleScss.mobileContainer : ""
       }`}
     >
-      <Typography.Title level={4} className="storeName">
-        {storeName}
-      </Typography.Title>
+      <CommonTitle subTitle="Store Info" title={data.store_name}></CommonTitle>
       <StorePictures storeDetail={data} />
       <DetailDescriptions storeDetail={data} />
       <StoreNavigation storeDetail={data} />
+      <Divider></Divider>
+      <CommonTitle subTitle="Details" title={data.details_title}></CommonTitle>
+      <Card>{data.details_content}</Card>
+      <br></br>
       {/* <Card title={"人气商品组件"} className={ModuleScss.gallery}> */}
       {/* <ProductCarousel /> */}
       {/* </Card> */}

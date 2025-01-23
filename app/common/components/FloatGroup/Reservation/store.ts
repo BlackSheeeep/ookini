@@ -5,6 +5,8 @@ import { atom } from "recoil";
 import type { FeePlan } from "~/views/types/FeePlan";
 import _ from "lodash";
 import type { Store } from "~/views/types/Store";
+import request from "~/Request/request";
+import wordpressRequest from "~/Request/wordpressRequest";
 
 class Reservation extends BaseStore {
   stores: Store[] = [];
@@ -26,11 +28,13 @@ class Reservation extends BaseStore {
   //   console.log("res", res);
   // }
   async getStores() {
-    const [err, res] = await utils.resolvePromise(wordpressApi.getStores());
+    const [err, res] = await utils.resolvePromise(
+      wordpressRequest("get", ["stores", "list"], {})
+    );
     if (err) return Promise.reject(err);
     const stores = (_.get(res, "data") || []).map((item: any) => ({
       ...item,
-      storeImage: item?.storeImage?.guid,
+      storeImage: item?.store_image?.guid,
     }));
     this.stores = stores;
   }

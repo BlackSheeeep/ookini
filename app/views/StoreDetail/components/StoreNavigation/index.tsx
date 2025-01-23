@@ -37,7 +37,7 @@ const StoreNavigation: React.FunctionComponent<IStoreNavigationProps> = (
     </Flex>
   );
 
-  const stepsItems = storeNavigations.map((nav: any) => ({
+  const stepsItems = f.map((nav: any) => ({
     status: "process",
     // title: nav.title,
     description: getStepDetail(nav),

@@ -7,8 +7,6 @@ import { useSearchParams } from "react-router-dom";
 interface IStoreDetailProps {}
 
 const StoreDetail: React.FunctionComponent<IStoreDetailProps> = (props) => {
-  storeDetail.useInit();
-
   return <StoreInfo />;
 };
 

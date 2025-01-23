@@ -8,7 +8,7 @@ const instance = axios.create({
 });
 instance.interceptors.request.use((config) => {
   // 添加自定义请求头
-  config.headers["Editor view"] = "";
+  // config.headers["Editor view"] = "";
   return config;
 });
 instance.interceptors.response.use(
@@ -23,8 +23,7 @@ instance.interceptors.response.use(
 export default function (
   method: "post" | "get" | "delete",
   path: string[],
-
-  reqConfig: AxiosRequestConfig
+  reqConfig?: AxiosRequestConfig
 ) {
   // const config = lodash.merge(
   //   {
@@ -50,7 +49,7 @@ export default function (
           },
         }
       : {};
-  return axios[method](
+  return instance[method](
     `https://wp.address-ookini.com/wp-json/wp/v2/${path.join("/")}`,
     reqConfig,
     config

@@ -58,17 +58,17 @@ const Stores: React.FunctionComponent<IStoresProps> = (props) => {
               const items = [
                 {
                   key: "1",
-                  label: storeInfo?.access?.title,
+                  label: storeInfo?.store_intro_title,
                   children: (
                     <Popover>
-                      <Text>{storeInfo?.access?.content}</Text>
+                      <Text>{storeInfo?.store_intro_content}</Text>
                     </Popover>
                   ),
                 },
                 {
                   key: "2",
-                  label: storeInfo?.details?.title,
-                  children: <Text>{storeInfo?.details?.content}</Text>,
+                  label: storeInfo?.details_title,
+                  children: <Text>{storeInfo?.details_content}</Text>,
                 },
               ];
               return (
@@ -93,15 +93,15 @@ const Stores: React.FunctionComponent<IStoresProps> = (props) => {
                         ellipsis={{
                           rows: 1,
                           expandable: false,
-                          tooltip: storeInfo.storeName,
+                          tooltip: storeInfo.store_name,
                         }}
                         level={5}
-                        content={storeInfo.storeName}
+                        content={storeInfo.store_name}
                       >
-                        {storeInfo.storeName}
+                        {storeInfo.store_name}
                       </Title>
                       <Text type="secondary" className={StoresScss.storePath}>
-                        {storeInfo.storePath}
+                        {storeInfo.store_address}
                       </Text>
                       <Button
                         size="middle"

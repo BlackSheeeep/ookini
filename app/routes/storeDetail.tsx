@@ -9,7 +9,11 @@ export async function loader({ request }) {
   const url = new URL(request.url);
   const storeId = Number(url.searchParams.get("id"));
   const { ret, promises } = loaderInit({ request });
-  await Promise.all([storeDetail.getStoreInfo(storeId), ...promises]);
+  await Promise.all([
+    storeDetail.getStoreInfo(storeId),
+    storeDetail.getRecommendSights(storeId),
+    ...promises,
+  ]);
   return { storeDetail, ...ret };
 }
 export type IStoreDetailData = typeof loader;

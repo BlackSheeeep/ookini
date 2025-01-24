@@ -29,8 +29,8 @@ const FeePlan: React.FunctionComponent<IFeePlanProps> = (props) => {
         <Loading></Loading>
       ) : (
         <CommonCarousel
-          showNext={utils.isMobileDevice ? true : true}
-          showPrev={utils.isMobileDevice ? true : true}
+          showNext={utils.isMobileDevice ? true : false}
+          showPrev={utils.isMobileDevice ? true : false}
           showPagination
         >
           {feeplans.map((feePlan, index) => (

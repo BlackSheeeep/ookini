@@ -25,7 +25,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     // 对响应数据做些什么
-    return response.data; // 直接返回响应数据
+    return response; // 直接返回响应数据
   },
   (error) => {
     // 对响应错误做些什么
@@ -68,5 +68,7 @@ export default function (
   return instance[method](
     `${process.env.VITE_API_URL}/api/${path.join("/")}`,
     config
-  );
+  )
+    .then((res) => [null, res])
+    .catch((err) => [err, null]);
 }

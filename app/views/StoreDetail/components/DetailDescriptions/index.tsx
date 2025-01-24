@@ -56,12 +56,18 @@ const DetailDescriptions: React.FunctionComponent<IDetailDescriptionsProps> = (
 
   return (
     <div
-      style={{ borderTopLeftRadius: 0, marginTop: 0, borderTopRightRadius: 0 }}
+      style={{
+        borderTopLeftRadius: 0,
+        marginTop: 0,
+        padding: 20,
+        borderTopRightRadius: 0,
+      }}
       className="detailDescriptions"
     >
       <Descriptions
         size="middle"
         column={1}
+        layout="vertical"
         items={descriptionsItems}
         style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
       />

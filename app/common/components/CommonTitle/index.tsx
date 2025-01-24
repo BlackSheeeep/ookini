@@ -3,6 +3,7 @@ import * as React from "react";
 import _ from "lodash";
 import ModuleScss from "./CommonTitle.module.scss";
 import utils from "~/common/utils";
+import useToken from "antd/lib/theme/useToken";
 
 interface ICommonTitleProps {
   level?: number;
@@ -13,6 +14,7 @@ interface ICommonTitleProps {
 }
 
 const CommonTitle: React.FunctionComponent<ICommonTitleProps> = (props) => {
+  const [, token] = useToken();
   return (
     <Typography.Title
       // @ts-ignore
@@ -21,7 +23,7 @@ const CommonTitle: React.FunctionComponent<ICommonTitleProps> = (props) => {
       className={utils.uniteClass(ModuleScss.container, props.className || "")}
     >
       {props.title}
-      <Typography.Paragraph type="secondary">
+      <Typography.Paragraph style={{ color: "#ffbbc0" }} type="secondary">
         {props.subTitle}
       </Typography.Paragraph>
     </Typography.Title>

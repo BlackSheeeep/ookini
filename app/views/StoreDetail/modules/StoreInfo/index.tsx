@@ -50,7 +50,7 @@ const StoreInfo: React.FunctionComponent<IStoreInfoProps> = (props) => {
       >
         {recommendSights?.map((item) => {
           return (
-            <div style={{ width: "100%", padding: "0 20px" }}>
+            <div style={{ width: "100%", padding: "0 10px" }}>
               <Card
                 hoverable
                 cover={

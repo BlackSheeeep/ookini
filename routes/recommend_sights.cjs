@@ -5,7 +5,13 @@ const lodash = require("lodash");
 const router = express.Router();
 router.get("/:id", async (req, res) => {
   const storeId = req.params.id;
-  const { data = [{}] } = await request("get", ["recommend_sights", "list"]);
+  const [err, result] = await request("get", ["recommend_sights", "list"]);
+  if (err) {
+    res.sendStatus(500);
+    res.send(JSON.stringify(err));
+    return;
+  }
+  const { data = [{}] } = result;
   const ret = data
     .filter((item) => item.nearby_stores?.some((store) => store.id == storeId))
     .map((item) => {

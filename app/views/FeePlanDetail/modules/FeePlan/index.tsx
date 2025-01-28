@@ -1,4 +1,4 @@
-import { Card, Divider, Flex, Tag, Typography } from "antd";
+import { Avatar, Card, Collapse, Divider, Flex, Tag, Typography } from "antd";
 import CommonTitle from "~/common/components/CommonTitle";
 import Loading from "~/common/components/Loading";
 import * as React from "react";
@@ -6,22 +6,30 @@ import ModuleScss from "./FeePlan.module.scss";
 import { IssuesCloseOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import CommonImage from "~/common/components/Image";
 import _ from "lodash";
+import { cn } from "@bem-react/classname";
 import { useLoaderData } from "@remix-run/react";
 import { IFeePlanDetailData } from "~/routes/feePlanDetail";
-
+import "./Feeplanning.scss";
+import CommonCarousel from "~/common/components/CommonCarousel";
+import {
+  FileSearchOutlined,
+  ExclamationCircleOutlined,
+  ClockCircleOutlined,
+  CalendarOutlined,
+  FieldTimeOutlined,
+} from "@ant-design/icons";
 interface IFeeplanDetailProps {}
-
+const block = cn("fee-detail");
 const FeeplanDetail: React.FunctionComponent<IFeeplanDetailProps> = (props) => {
   const { feePlanStore } = useLoaderData<IFeePlanDetailData>();
   const { currFeePlan: data } = feePlanStore;
 
   if (!data) return <Loading />;
-  const rentTags = _.get(data, "rent.rentTags");
-  const tags = rentTags?.content?.replace(/(\[|\]|\')/gi, "").split(",") || [];
+
   const images = _.get(data, "images")?.map(
     (item: Record<string, any>) => item.guid
   );
-  const faqs = _.get(data, "faq.faqContent");
+  console.log(data);
   const renderRentContent = ({ title, content }: Record<string, string>) => {
     return (
       <Flex
@@ -37,88 +45,110 @@ const FeeplanDetail: React.FunctionComponent<IFeeplanDetailProps> = (props) => {
     );
   };
   return (
-    <Flex align="center" className={ModuleScss.container}>
-      <Flex align="center" vertical>
-        {/* <List renderItem={} /> */}
-        <CommonTitle title={data.pagetitle}></CommonTitle>
-        <Card>
-          <Flex justify="space-between">
+    <Flex align="center" vertical className={block()}>
+      {/* <List renderItem={} /> */}
+      <CommonTitle title={data.page_title}></CommonTitle>
+      <Card className={block("detail-card")}>
+        <Flex justify="space-between">
+          <CommonCarousel showNext showPrev className={block("images")}>
             {(images as string[])
               .filter((a: any, index: number) => index < 3)
               .map((imgUrl: string) => (
-                <div className={ModuleScss.imgWrapper}>
-                  <CommonImage src={imgUrl} className={ModuleScss.image} />
+                <div className={block("img-wrapper")}>
+                  <CommonImage src={imgUrl} />
                 </div>
               ))}
-          </Flex>
+          </CommonCarousel>
+        </Flex>
+        <Flex vertical>
+          <Typography.Title level={4}>¥{data.after_tax_coast}</Typography.Title>
+          <Divider />
+          <div
+            dangerouslySetInnerHTML={{ __html: data.feeplanning_desc }}
+          ></div>
+        </Flex>
+        <Flex vertical className={block("rent-detail")}>
+          <Typography.Title level={4}>着物レンタルの内容</Typography.Title>
+          <Divider></Divider>
           <Flex vertical>
-            <Typography.Title level={5}>{data.fee.title}</Typography.Title>
-            <Divider />
-            <Typography.Title level={5}>{data.fee.content}</Typography.Title>
-            <Typography.Text type="success">{data.fee.desc}</Typography.Text>
-          </Flex>
-          <Flex vertical className={ModuleScss.rent}>
-            <Typography.Title level={5}>{data.rent.rentTitle}</Typography.Title>
-            <Divider />
+            <Typography.Title level={5}>
+              <FileSearchOutlined />
+              セット内容
+            </Typography.Title>
             <Flex>
-              <Flex vertical flex={1} className={ModuleScss.rentContent}>
-                <Typography.Text type="secondary">
-                  {rentTags?.title}
-                </Typography.Text>
-                <Flex justify="flex-start" wrap="wrap">
-                  {tags?.map((item: string) => (
-                    <Tag
-                      bordered={false}
-                      color="warning"
-                      className={ModuleScss.tag}
-                    >
-                      {item}
-                    </Tag>
-                  ))}
-                </Flex>
-              </Flex>
-              {renderRentContent(_.get(data, "rent.rentTime"))}
+              {data.contain_rental_items.map((item) => (
+                <Tag color="blue">{item.item_name}</Tag>
+              ))}
             </Flex>
-            <Flex>
-              {renderRentContent(_.get(data, "rent.rentReturn"))}
-              {renderRentContent(_.get(data, "rent.rentTips"))}
-            </Flex>
+            <div
+              dangerouslySetInnerHTML={{ __html: data.rent_materials_desc }}
+            ></div>
           </Flex>
           <Flex vertical>
             <Typography.Title level={5}>
-              {_.get(data, "faq.faqTitle")}
+              <ExclamationCircleOutlined /> 注意事項
             </Typography.Title>
-            <Divider></Divider>
-            <Flex>
-              {faqs?.map((item: { question: string; answer: string }) => (
-                <Flex vertical flex={1} className={ModuleScss.faq}>
-                  <Flex align="flex-start">
-                    <QuestionCircleOutlined className={ModuleScss.icon} />
-                    <Typography.Text type="danger">
-                      {item.question}
-                    </Typography.Text>
-                  </Flex>
-                  <Flex align="flex-start">
-                    <IssuesCloseOutlined className={ModuleScss.icon} />
-                    <Typography.Text type="success">
-                      {item.answer}
-                    </Typography.Text>
-                  </Flex>
-                </Flex>
-              ))}
-            </Flex>
+            <div dangerouslySetInnerHTML={{ __html: data.notification }}></div>
           </Flex>
-        </Card>
-        <Card title={"ギャラリー"} className={ModuleScss.gallery}>
-          <Flex wrap="wrap" justify="space-between">
-            {images?.map?.((imgUrl: string) => (
-              <div className={ModuleScss.imgWrapper}>
-                <CommonImage src={imgUrl} className={ModuleScss.galleryImage} />
-              </div>
+          <Flex vertical>
+            <Typography.Title level={5}>
+              <ClockCircleOutlined />
+              所要時間
+            </Typography.Title>
+            <div dangerouslySetInnerHTML={{ __html: data.duration_desc }}></div>
+          </Flex>
+          <Flex vertical>
+            <Typography.Title level={5}>
+              <CalendarOutlined />
+              予約受付期間
+            </Typography.Title>
+            <div
+              dangerouslySetInnerHTML={{ __html: data.reservation_time_desc }}
+            ></div>
+          </Flex>
+          <Flex vertical>
+            <Typography.Title level={5}>
+              <FieldTimeOutlined />
+              返却時間
+            </Typography.Title>
+            <div
+              dangerouslySetInnerHTML={{ __html: data.rent_return_desc }}
+            ></div>
+          </Flex>
+        </Flex>
+        <br></br>
+        <Flex vertical>
+          <Typography.Title level={5}>レンタル品一覧</Typography.Title>
+          <Divider />
+          <Flex gap={10}>
+            {data.contain_rental_items.map((item) => (
+              <Flex vertical gap={10} align="center" justify="center">
+                <Avatar
+                  size={60}
+                  icon={
+                    <CommonImage
+                      className={block("rent-item-img")}
+                      src={item.main_img}
+                    />
+                  }
+                ></Avatar>
+                <Typography.Text>{item.item_name}</Typography.Text>
+              </Flex>
             ))}
           </Flex>
-        </Card>
-      </Flex>
+        </Flex>
+      </Card>
+
+      <Card title="常见问题" className={block("faq-card")}>
+        <Collapse
+          items={data.fqa?.map((item) => ({
+            key: item.id,
+            label: item.question,
+            children: <div>{item.answer}</div>,
+          }))}
+          defaultActiveKey={["1"]}
+        />
+      </Card>
     </Flex>
   );
 };

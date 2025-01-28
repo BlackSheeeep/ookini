@@ -1,0 +1,32 @@
+@media screen and (max-width: $mobile-width) {
+  .fee-detail {
+    &-rent-detail {
+      gap: 20px;
+    }
+    &-images {
+      width: 80rem;
+      overflow: hidden !important;
+      margin: 0 20px;
+    }
+    &-img-wrapper {
+      width: 100%;
+      overflow: hidden;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    &-detail-card {
+      width: 90rem;
+      margin: 10px 20px;
+    }
+
+    .ant-avatar .ant-image,
+    .ant-image-img {
+      width: 100%;
+      height: 100%;
+    }
+    &-faq-card {
+      width: 90rem;
+      margin: 10px auto;
+    }
+  }
+}

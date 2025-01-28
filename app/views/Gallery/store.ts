@@ -27,7 +27,6 @@ class GalleryStore extends BaseStore {
       wordpressApi.getHairGallery()
     );
     if (err) return Promise.reject(err);
-    console.log("data", res);
     const datas = res?.data?.map((item: any) => {
       const data = {
         ...item,

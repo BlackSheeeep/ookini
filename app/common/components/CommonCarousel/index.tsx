@@ -47,7 +47,6 @@ const CommonCarousel: React.FunctionComponent<ICommonCarouselProps> = (
         restProps.autoplay &&
         setInterval(() => {
           swiper?.slideNext();
-          console.log(swiper);
         }, 1800);
     }
     return () => {

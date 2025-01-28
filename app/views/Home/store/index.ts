@@ -4,6 +4,8 @@ import { atom } from "recoil";
 import { wordpressApi } from "~/Request";
 import type { FeePlan } from "~/views/types/FeePlan";
 import _ from "lodash";
+import request from "~/Request/request";
+import wordpressRequest from "~/Request/wordpressRequest";
 
 class HomeStore extends BaseStore {
   assets = {
@@ -11,53 +13,83 @@ class HomeStore extends BaseStore {
     pages: [],
     carouselImgs: [],
   };
-  feePlans = atom({
-    key: "feePlans",
-    default: [] as FeePlan[],
-  });
-  stores = atom({
-    key: "stores",
-    default: [] as any[],
-  });
+  feeplannings = [];
+  stores = [];
   hairGallery = {};
-
-  async init() {
+  areas = [];
+  selectedArea = null;
+  hotFeeplannings = null;
+  async getAreas() {
+    if (this.areas.length > 0) return;
     const [err, res] = await utils.resolvePromise(
-      Promise.all([this.getCarouselImgs()])
+      wordpressRequest("get", ["area", "list"])
     );
-    if (err) return Promise.reject("初始化数据加载失败");
+    if (err) return Promise.reject("地区数据加载失败");
+    this.areas = res?.data;
   }
-  public getStores = async () => {
-    const [err, res] = await utils.resolvePromise(wordpressApi.getStores());
-    if (err) return Promise.reject("店铺信息数据加载失败");
+  async init() {
+    await Promise.all([
+      this.getAreas(),
+      this.getCarouselImgs(),
+      this.getStores(),
+      this.getHotFeeplannings(),
+      this.getHairGallery(),
+    ]);
+  }
+  public getHotFeeplannings = async () => {
+    const [err, res] = await utils.resolvePromise(
+      wordpressRequest("get", ["feeplannings", "hot"])
+    );
+    if (err) return Promise.reject("热门方案数据加载失败");
+    this.hotFeeplannings = res.data;
+  };
+  public getStores = async (area_id?: number) => {
+    if (area_id) {
+      const [err, res] = await request("get", [
+        "feeplannings",
+        "group_by_area",
+        area_id.toString(),
+      ]);
+      if (err) return Promise.reject("店铺信息数据加载失败");
 
-    const stores = (_.get(res, "data") || []).map((item: any) => ({
-      ...item,
-      storeImage: item?.storeImage?.guid,
-    }));
-
-    this.updateState?.({ stores: stores });
+      this.stores = res.data;
+    } else {
+      const [err, res] = await utils.resolvePromise(
+        wordpressRequest("get", ["stores", "list"])
+      );
+      if (err) return Promise.reject("店铺信息数据加载失败");
+      this.stores = res.data;
+    }
   };
   public getCarouselImgs = async () => {
     const func = utils.isMobileDevice
       ? wordpressApi.getMobileHomeImg
       : wordpressApi.getCarouselImgs;
     const [err, res] = await utils.resolvePromise(func());
-    if (err) return Promise.reject("滚动图片加载失败");
+    if (err) {
+      return Promise.reject("滚动图片加载失败");
+    }
     const carouselImgs = (
       _.get(res, utils.isMobileDevice ? "data.[0].images" : "data.images") || []
     ).map((item: any) => item.guid);
     this.assets.carouselImgs = carouselImgs;
   };
-  public getFeeplans = async () => {
-    const [err, res] = await utils.resolvePromise(wordpressApi.getFeePlans());
-    if (err) return Promise.reject(err);
-    const feePlans = (res?.data || []).map((plan: any, index: number) => ({
-      ...plan,
-      images: plan?.images?.map?.((item: any) => item.guid),
-    }));
-    this.feePlans = feePlans;
-    this.updateState?.({ feePlans: feePlans });
+  public getFeeplans = async (area_id?: number) => {
+    if (area_id) {
+      const [err, res] = await request("get", [
+        "feeplannings",
+        "group_by_area",
+        area_id.toString(),
+      ]);
+      if (err) return Promise.reject(err);
+      this.feeplannings = res.data;
+    } else {
+      const [err, res] = await utils.resolvePromise(
+        wordpressRequest("get", ["feeplannings", "list"])
+      );
+      if (err) return Promise.reject(err);
+      this.feeplannings = res.data;
+    }
   };
   public getHairGallery = async () => {
     const [err, res] = await utils.resolvePromise(wordpressApi.getGallery());

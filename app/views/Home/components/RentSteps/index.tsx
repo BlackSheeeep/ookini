@@ -73,10 +73,9 @@ const steps = [
 ];
 const RentSteps: React.FunctionComponent<IRentStepsProps> = (props) => {
   const { stores } = homeStore;
-  const storeInfo = useRecoilValue(stores);
   const [current, setCurrent] = React.useState(0);
 
-  const infos = storeInfo.map((item: any) => ({
+  const infos = stores.map((item: any) => ({
     storeName: item.storeName,
     tel: item?.tel,
     address: item?.storePath,

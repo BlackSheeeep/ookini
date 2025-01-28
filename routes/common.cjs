@@ -8,6 +8,7 @@ const pool = mysql.createPool({
   database: "kimono", // 数据库名称
   waitForConnections: true,
   connectionLimit: 10,
+  idleTimeout: 60000, // 空闲连接超时时间（毫秒）
   queueLimit: 0,
 });
 module.exports.connection = pool;
@@ -21,5 +22,7 @@ module.exports.request = (method, path, params = {}) => {
   return axios[method](
     module.exports.baseUrl + (Array.isArray(path) ? path.join("/") : path),
     params
-  );
+  )
+    .then((res) => [null, res])
+    .catch((err) => [err, null]);
 };

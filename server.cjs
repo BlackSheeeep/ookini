@@ -2,6 +2,8 @@ const { createRequestHandler } = require("@remix-run/express");
 const express = require("express");
 const reservationRoutes = require("./routes/reservation.cjs");
 const recommendSightsRoutes = require("./routes/recommend_sights.cjs");
+const feeplanningRoutes = require("./routes/feeplanning.cjs");
+const storesRoutes = require("./routes/stores.cjs");
 const axios = require("axios");
 (async function () {
   const viteDevServer =
@@ -16,6 +18,8 @@ const axios = require("axios");
   const app = express();
   app.use("/api/res", reservationRoutes);
   app.use("/api/recommend_sights", recommendSightsRoutes);
+  app.use("/api/feeplannings", feeplanningRoutes);
+  app.use("/api/stores", storesRoutes);
   // app.use("/wp-json/wp/v2", async (req, res) => {
   //   const method = req.method.toLowerCase();
   //   console.log(req.baseUrl);

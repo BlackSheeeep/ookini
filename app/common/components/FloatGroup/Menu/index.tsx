@@ -10,7 +10,6 @@ import {
 import { Badge, Flex, Menu, MenuProps, message } from "antd";
 import * as React from "react";
 import ModuleScss from "./Menu.module.scss";
-import { reservationStore } from "../Reservation/store";
 import { Link, useNavigate } from "react-router-dom";
 import { GALLERY_TYPE } from "~/common/constants";
 // import translate from "translate";
@@ -22,8 +21,8 @@ interface IMenuBarProps {}
 //   const trans = document.getElementById(":0.container");
 //   if (trans) trans.style.display = "none";
 const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
-  const { reservationStore }: Record<string, any> = useLoaderData();
-  const { news, stores, feeplans: feePlans } = reservationStore;
+  const { globalStore } = useLoaderData();
+  const { news } = globalStore;
   const [gtc, setgtc] = React.useState<HTMLElement>();
   const navigate = useNavigate();
 
@@ -119,29 +118,17 @@ const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
       },
     },
     {
-      label: "プラン",
       key: "feePlanDetail",
       icon: <ScheduleOutlined />,
       popupClassName: ModuleScss.subMenu,
-      children: feePlans?.map?.((plan: { id: number; pagetitle: string }) => ({
-        label: (
-          <Link to={`/feePlanDetail?id=${plan.id}`}>{plan.pagetitle}</Link>
-        ),
-        key: plan.id,
-      })),
+      label: <Link to={"/feeplannings"}>プラン</Link>,
     },
 
     {
-      label: "店舗",
       key: "storeDetail",
       icon: <ShopOutlined />,
       popupClassName: ModuleScss.subMenu,
-      children: stores?.map?.((store: { id: number; storeName: string }) => ({
-        label: (
-          <Link to={`/storeDetail?id=${store.id}`}>{store.storeName}</Link>
-        ),
-        key: store.id,
-      })),
+      label: <Link to={`/stores`}>店舗</Link>,
     },
 
     gtc
@@ -151,25 +138,6 @@ const MenuBar: React.FunctionComponent<IMenuBarProps> = (props) => {
             gtc?.querySelector(".goog-te-gadget-simple")?.click();
           },
           key: "translate",
-          //   children: languages.map((item: { label: string; value: string }) => ({
-          //     ...item,
-          //     onClick: () => {
-          //       if (gtc) {
-          //         console.log(gtc);
-          //         gtc.setAttribute("value", item.value);
-          //         const triggerEvent = (element, eventName) => {
-          //           const event = new Event(eventName);
-          //           element.dispatchEvent(event);
-          //         };
-          //         triggerEvent(gtc, "change");
-          //         // _.set(
-          //         //   google,
-          //         //   ["style", "display"],
-          //         //   _.get(google, "style.display") === "none" ? "unset" : "none"
-          //         // );
-          //       }
-          //     },
-          //   })) as any[],
           icon: <TranslationOutlined />,
         }
       : null,

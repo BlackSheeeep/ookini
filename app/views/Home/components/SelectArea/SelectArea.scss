@@ -1,0 +1,19 @@
+.select-area {
+  margin: 12px 24px;
+  display: flex;
+  gap: 24px;
+  border-radius: 24px;
+
+  @media (max-width: $mobile-width) {
+    .ant-tag {
+      font-size: 14px;
+      display: inline-block;
+      padding: 8px 24px !important;
+    }
+  }
+  .ant-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+}

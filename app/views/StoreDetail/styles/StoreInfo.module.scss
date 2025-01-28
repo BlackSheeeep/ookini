@@ -1,0 +1,60 @@
+.container {
+  margin: 0 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  :global {
+    .storeName {
+      text-align: center;
+      margin: 3rem 0 2rem 0;
+    }
+
+    .storeNavigation {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+
+      .ant-card-head {
+        padding: 0 4rem;
+      }
+
+      .ant-card-body {
+        padding: 4rem 4rem 0;
+      }
+
+      h5.ant-typography {
+        margin: 0;
+      }
+    }
+  }
+}
+.card {
+  :global {
+    .ant-card-body {
+      padding: 0;
+    }
+  }
+}
+.mobileContainer {
+  margin: 0 3rem;
+  :global {
+    .storeName {
+      margin: 5rem 0 4rem 0;
+    }
+
+    .detailDescriptions {
+      margin-top: 3rem;
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 1rem 2rem 0;
+    }
+  }
+}
+.carouselContainer {
+  width: $full-screen-width;
+  :global {
+    .swiper-slide {
+      width: 33.3% !important;
+    }
+  }
+}

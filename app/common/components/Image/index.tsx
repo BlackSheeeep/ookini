@@ -44,7 +44,7 @@ function useQueue(): [boolean, () => void] {
 }
 interface ICommonImageProps extends ImageProps {}
 const reg = /^http:\/\/8\.209\.245\.194/gi;
-
+const reg2 = /^https:\/\/address-ookini.com/gi;
 const CommonImage: React.FunctionComponent<ICommonImageProps> = (props) => {
   const { src, ...restProps } = props;
   if (!src) return null;
@@ -52,6 +52,9 @@ const CommonImage: React.FunctionComponent<ICommonImageProps> = (props) => {
 
   if (reg.test(realSrc)) {
     realSrc = _.replace(realSrc, reg, "http://cdn.address-ookini.com");
+  }
+  if (reg2.test(realSrc)) {
+    realSrc = _.replace(realSrc, reg2, "https://cdn.address-ookini.com");
   }
   if (!src) {
     return (

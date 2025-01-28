@@ -1,5 +1,4 @@
 import React from "react";
-import homeStore from "~/views/Home/store";
 import Carousel from "./components/Carousel";
 import MenuAnchor from "./components/MenuAnchor";
 import FeePlan from "./components/FeePlan";
@@ -11,15 +10,20 @@ import FQA from "./components/FAQ";
 import RecommendSpot from "./components/RecommendSpot";
 import Blogs from "../Blog/List";
 import { Divider } from "antd";
-
+import { atom } from "recoil";
+import SelectArea from "./components/SelectArea";
+export const selectedArea = atom({
+  key: "selectedArea",
+  default: null,
+});
 export const Home = () => {
-  homeStore.useInit();
   //@ts-ignore
   return (
     //@ts-ignore
     <>
       <Carousel />
       <MenuAnchor />
+      <SelectArea />
       <FeePlan />
       <Divider />
       <Stores />

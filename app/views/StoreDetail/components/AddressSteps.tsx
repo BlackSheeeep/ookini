@@ -9,7 +9,6 @@ const Step = Steps.Step;
 const AddressSteps = () => {
   const { storeDetail } = useLoaderData<IStoreDetailData>();
   const { storeInfo = {} } = storeDetail;
-  console.log("storeINfo", storeInfo);
   const isMobile = utils.isMobileDevice;
   // 图片 URL
   const imageUrl1 = "https://via.placeholder.com/150";
@@ -20,12 +19,12 @@ const AddressSteps = () => {
       {/* 头部 */}
       <CommonTitle
         subTitle="Way To Store"
-        title={`ookini ${storeInfo.store_name}の行き方`}
+        title={`ookini ${storeInfo?.store_name}の行き方`}
       ></CommonTitle>
 
       {/* 内容区域 */}
       <Steps direction="vertical" current={3}>
-        {storeInfo.address_details.map((item) => {
+        {storeInfo?.address_details?.map((item) => {
           return (
             <Step
               key={item.id}

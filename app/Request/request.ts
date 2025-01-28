@@ -3,7 +3,7 @@ import lodash from "lodash";
 
 // 创建 axios 实例
 const instance = axios.create({
-  baseURL: "https://address-ookini.com/api", // 基础 URL
+  //   baseURL: "https://address-ookini.com/api", // 基础 URL
   timeout: 10000, // 请求超时时间（10 秒）
   headers: {
     "Content-Type": "application/json", // 默认请求头
@@ -56,12 +56,12 @@ export default function (
   method: "post" | "get" | "delete",
   path: string[],
   reqConfig?: AxiosRequestConfig & { params?: Record<string, any> }
-) {
+): Promise<any[]> {
   const config = lodash.merge({}, reqConfig);
   // ${
   //     method === "get" && params
   //       ? `?${Object.entries(params)
-  //           .map(([key, item]) => `${key}=${item}`)
+  //           .map(([key, item]) =>    `${key}=${item}`)
   //           .join("&")}`
   //       : ""
   //   }

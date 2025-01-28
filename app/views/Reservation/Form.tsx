@@ -33,6 +33,7 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 
 import Ensure from "./Ensure";
 import { useTranslation } from "react-i18next";
+import request from "~/Request/request";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 const MAX_STEP = 4;
@@ -87,12 +88,17 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
   const [disabled_date, setDisabled] = React.useState([]);
   React.useEffect(() => {
     (async () => {
-      const [err, res] = await utils.resolvePromise(
-        axios.get("api/res/disabled_date")
-      );
+      if (current != 1) return;
+      const storeId = forms[0]?.getFieldValue("store_id");
+
+      const [err, res] = await request("get", ["res", "disabled_date"], {
+        params: {
+          store_id: storeId,
+        },
+      });
       setDisabled(res.data);
     })();
-  }, []);
+  }, [current]);
   React.useEffect(() => {
     (async () => {
       const date = forms[1].getFieldValue("reservation_date");
@@ -175,7 +181,6 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
         }
       })
       .catch((e) => {
-        console.log(e);
         message.error(
           "予約が失敗しました。しばらくお待ちいただくか、ページをリフレッシュしてください"
         );
@@ -294,8 +299,9 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
                   <Checkbox
                     key={store.id}
                     value={store.id}
+                    disabled={store.enable_reservation == "0"}
                     onClick={() => {
-                      forms[0]?.setFieldValue("store_name", store.storeName);
+                      forms[0]?.setFieldValue("store_name", store.store_name);
                       setCurrent(current + 1);
                     }}
                     className="reservation__check-store"
@@ -323,8 +329,18 @@ const ReservationForm: React.FunctionComponent<IFormDialogProps> = (props) => {
                       )}
 
                       <span className="reservation__store-name">
-                        {store.storeName}
+                        {store.store_name}
                       </span>
+                      {store.enable_reservation == "0" ? (
+                        <div
+                          style={{
+                            position: "absolute",
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "rgba(255,255,255,0.5)",
+                          }}
+                        />
+                      ) : null}
                     </div>
                   </Checkbox>
                 );

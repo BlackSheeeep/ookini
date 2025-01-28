@@ -1,0 +1,74 @@
+.container {
+  width: 100%;
+  padding: 0 1rem;
+  display: flex;
+  :global {
+    .ant-typography-secondary {
+      margin-bottom: 1rem;
+    }
+  }
+}
+.storeCard {
+  margin: 0 2rem;
+  min-width: 300px;
+  height: fit-content;
+}
+.titleContent {
+  margin-left: 1rem;
+  max-width: 15rem;
+  max-height: 14rem;
+  overflow: hidden;
+}
+.storeContainer {
+  width: 100%;
+  display: flex;
+}
+.storePath {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  font-size: 16px;
+  padding: 1rem 0;
+  white-space: normal;
+}
+.collapse {
+}
+.image {
+  width: 14rem !important;
+}
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 !important;
+}
+
+@media screen and (max-width: $mobile-width) {
+  .storeCard {
+    width: 90rem;
+    height: fit-content;
+    margin: 0 0 3rem;
+  }
+  .container {
+    margin-top: 2rem;
+  }
+  .title {
+    overflow: visible;
+  }
+  .image {
+    width: 35rem !important;
+  }
+  .storePath {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .titleContent {
+    max-width: 35rem;
+    margin-left: 2rem;
+    max-height: 35rem;
+  }
+  .storeContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

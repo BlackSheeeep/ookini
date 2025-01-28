@@ -8,6 +8,29 @@ import request from "~/Request/request";
 class StoreDetail extends BaseStore {
   storeInfo = null;
   recommendSights = null;
+  feeplannings = null;
+  otherStores = null;
+  async getFeeplannings(storeId: number) {
+    const [err, res] = await request("get", [
+      "feeplannings",
+      "group_by_store",
+      storeId.toString(),
+    ]);
+    if (err) return Promise.reject();
+    this.feeplannings = res.data;
+  }
+  async getOtherStores(areaId: number) {
+    const [err, res] = await request("get", [
+      "stores",
+      "group_by_area",
+      `${areaId.toString()}`,
+    ]);
+    if (err) {
+      console.log(err);
+      return Promise.reject();
+    }
+    this.otherStores = res.data.filter((item) => item.id != this.storeInfo?.id);
+  }
   async getRecommendSights(storeId: number) {
     const [err, res] = await request("get", [
       "recommend_sights",
@@ -21,7 +44,8 @@ class StoreDetail extends BaseStore {
       wordpressRequest("get", ["stores", "list", `${id.toString()}`])
     );
     if (err) return Promise.reject();
-    this.storeInfo = { ..._.get(res, "data") };
+    this.storeInfo = res.data;
+    await this.getOtherStores(this.storeInfo?.area?.[0]?.id);
   }
 }
 

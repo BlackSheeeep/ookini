@@ -7,12 +7,7 @@ import { loaderInit } from "~/common/utils/commonLoader";
 
 export async function loader({ request }: any) {
   const { ret, promises } = loaderInit({ request });
-  // globalThis.baseURL = `http://8.209.245.194/wp-json`;
-  await Promise.all([
-    homeStore.init(),
-    homeStore.getHairGallery(),
-    ...promises,
-  ]);
+  await Promise.all([homeStore.init(), ...promises]);
   return { homeStore, ...ret };
 }
 export type HomeLoader = typeof loader;

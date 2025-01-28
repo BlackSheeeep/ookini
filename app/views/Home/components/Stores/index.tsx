@@ -17,19 +17,19 @@ import CommonImage from "~/common/components/Image";
 import Loading from "~/common/components/Loading";
 import { useLoaderData } from "@remix-run/react";
 import { HomeLoader } from "~/routes/_index";
-const { Title, Text } = Typography;
+import StoreCard from "~/common/components/StoreCard";
+import { useRecoilValue } from "recoil";
+import { selectedArea } from "../..";
 
 interface IStoresProps {}
 
 const Stores: React.FunctionComponent<IStoresProps> = (props) => {
   const storesId = HOME_KEYS.storeList;
   const {
-    reservationStore: { stores },
+    homeStore: { stores },
   } = useLoaderData<HomeLoader>();
   const internalStores = stores;
-  const gotoDetail = (id: number) => {
-    utils.goto(`/storeDetail?id=${id}`);
-  };
+  const selected = useRecoilValue(selectedArea);
   return (
     <Flex
       id={storesId}
@@ -39,7 +39,7 @@ const Stores: React.FunctionComponent<IStoresProps> = (props) => {
     >
       <CommonTitle
         level={4}
-        title="ookini着物レンタルの店舗"
+        title={`ookini着物${selected?.area_name}の店舗`}
         subTitle="Store Information"
         style={{ marginBottom: "2rem" }}
       />
@@ -51,77 +51,12 @@ const Stores: React.FunctionComponent<IStoresProps> = (props) => {
           vertical={utils.isMobileDevice ? true : false}
           className={StoresScss.storeContainer}
         >
-          {internalStores.map?.(
-            (storeInfo: Record<string, any>, id: number) => {
+          {internalStores
+            .filter((store) => store.area[0]?.id == selected?.id)
+            .map?.((storeInfo: Record<string, any>, id: number) => {
               if (!storeInfo) return null;
-
-              const items = [
-                {
-                  key: "1",
-                  label: storeInfo?.store_intro_title,
-                  children: (
-                    <Popover>
-                      <Text>{storeInfo?.store_intro_content}</Text>
-                    </Popover>
-                  ),
-                },
-                {
-                  key: "2",
-                  label: storeInfo?.details_title,
-                  children: <Text>{storeInfo?.details_content}</Text>,
-                },
-              ];
-              return (
-                <Card
-                  key={"store_" + id}
-                  hoverable
-                  className={StoresScss.storeCard}
-                >
-                  <Flex justify="space-between">
-                    <CommonImage
-                      className={StoresScss.image}
-                      src={storeInfo.storeImage}
-                    />
-                    <Flex
-                      flex={1}
-                      justify="space-between"
-                      vertical
-                      className={StoresScss.titleContent}
-                    >
-                      <Title
-                        className={StoresScss.title}
-                        ellipsis={{
-                          rows: 1,
-                          expandable: false,
-                          tooltip: storeInfo.store_name,
-                        }}
-                        level={5}
-                        content={storeInfo.store_name}
-                      >
-                        {storeInfo.store_name}
-                      </Title>
-                      <Text type="secondary" className={StoresScss.storePath}>
-                        {storeInfo.store_address}
-                      </Text>
-                      <Button
-                        size="middle"
-                        type="primary"
-                        onClick={() => gotoDetail(storeInfo.id)}
-                      >
-                        詳しく
-                      </Button>
-                    </Flex>
-                  </Flex>
-                  <Divider></Divider>
-                  <Collapse
-                    size="small"
-                    className={StoresScss.collapse}
-                    items={items}
-                  />
-                </Card>
-              );
-            }
-          )}
+              return <StoreCard storeInfo={storeInfo} />;
+            })}
         </Flex>
       )}
     </Flex>

@@ -59,16 +59,34 @@ function isTimeInRange(targetTime, from_date, to_date) {
 const express = require("express");
 const router = express.Router();
 router.get("/disabled_date", async (req, res) => {
-  const { data = [{}] } = await request("get", ["reservation", "config"]);
-  const { disabled_date, reservation_times } = data[0];
+  const storeId = req.query.store_id;
+  const promises = Promise.all([
+    request("get", ["stores", "list", storeId?.toString() || ""]),
+    request("get", ["reservation", "config"]),
+  ]);
+  const [[err, storeData], [, timeData]] = await promises;
+  //   const [err, result] = await request("get", [
+  //     "stores",
+  //     "list",
+  //     storeId.toString(),
+  //   ]);
+  //   const { data = [{}] } = await request("get", ["reservation", "config"]);
+  if (err) {
+    res.sendStatus(500);
+    res.send(JSON.stringify(err));
+    return;
+  }
+  const { reservation_times } = timeData.data?.[0] || {};
+  const { data = {} } = storeData;
   const ret = [];
-  disabled_date.forEach((item) => {
+  data.diabled_reseravtion_date?.forEach((item) => {
     const { from_date, to_date } = item;
-    const hitDays = getHitDays(
-      from_date,
-      to_date,
-      reservation_times.map((item) => item.reservation_time)
-    );
+    const hitDays =
+      getHitDays(
+        from_date,
+        to_date,
+        reservation_times.map((item) => item.reservation_time)
+      ) || [];
 
     ret.push(...hitDays);
   });
@@ -77,9 +95,19 @@ router.get("/disabled_date", async (req, res) => {
 // 中间件：处理 GET /reservation/detail 请求
 router.get("/detail", async (req, res) => {
   const date = req.query.date || "";
-  const storeId = req.query.store_id;
+  const storeId = req.query.store_id || "";
+  const promises = Promise.all([
+    request("get", ["stores", "list", storeId || ""]),
+    request("get", ["reservation", "config"]),
+  ]);
+  const [[err, storeData], [, timeData]] = await promises;
 
-  const { data = [{}] } = await request("get", ["reservation", "config"]);
+  if (err) {
+    res.sendStatus(500);
+    res.send(JSON.stringify(err));
+    return;
+  }
+  const { data = {} } = storeData;
   // const { data: reservations } = await request("get", [
   //   "reservation",
   //   "metadata?status=draft",
@@ -87,11 +115,12 @@ router.get("/detail", async (req, res) => {
   const [reservations, fields] = await connection.execute(
     "SELECT * FROM `wp_pods_reservations`"
   );
-  const { reservation_times = [], disabled_date } = data[0];
-  const reservation = Array.isArray(data)
+  const { reservation_times = [] } = timeData.data?.[0] || {};
+  const { disabled_reservation_date = [] } = data;
+  const reservation = Array.isArray(reservation_times)
     ? reservation_times.map((item) => {
         const totalTime = date + " " + item["reservation_time"] || "";
-        const isDisabled = disabled_date.some((disabled) =>
+        const isDisabled = disabled_reservation_date.some((disabled) =>
           isTimeInRange(totalTime, disabled.from_date, disabled.to_date)
         );
         const sum = date
@@ -119,13 +148,8 @@ router.get("/detail", async (req, res) => {
           disabled: isDisabled,
         };
       })
-    : undefined;
-
-  if (!reservation) {
-    return res.status(404).json({ error: "Reservation not found" });
-  }
-
-  res.send(JSON.stringify(reservation));
+    : [];
+  res.send(JSON.stringify(reservation || []));
 });
 
 module.exports = router;

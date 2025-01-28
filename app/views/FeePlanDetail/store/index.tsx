@@ -3,11 +3,13 @@ import Loading from "~/common/components/Loading";
 import utils from "~/common/utils";
 import { createUseStoreData } from "~/common/utils/hooks";
 import _ from "lodash";
-import { wordpressApi } from "~/Request";
+import wordpressRequest from "~/Request/wordpressRequest";
 class FeePlanStore extends BaseStore {
   currFeePlan = null;
   async getCurrFeePlan(id: number | string) {
-    const [err, res] = await utils.resolvePromise(wordpressApi.getFeePlan(id));
+    const [err, res] = await utils.resolvePromise(
+      wordpressRequest("get", ["feeplannings", "list", id.toString()])
+    );
     if (err) return Promise.reject();
     this.currFeePlan = _.get(res, "data");
   }
